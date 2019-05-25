@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<workspace>
+  <batchBuild>
+    <batchDefinition>
+      <name>all</name>
+      <member>
+        <project>aliyundemo</project>
+        <configuration>flexspi_nor_debug</configuration>
+      </member>
+      <member>
+        <project>aliyundemo</project>
+        <configuration>flexspi_nor_release</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>flexspi_nor_debug</name>
+      <member>
+        <project>aliyundemo</project>
+        <configuration>flexspi_nor_debug</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>flexspi_nor_release</name>
+      <member>
+        <project>aliyundemo</project>
+        <configuration>flexspi_nor_release</configuration>
+      </member>
+    </batchDefinition>
+  </batchBuild>
+  <project>
+    <path>$WS_DIR$/aliyundemo.ewp</path>
+  </project>
+</workspace>
