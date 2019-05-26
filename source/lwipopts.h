@@ -4,7 +4,7 @@
  * This file is based on \src\include\lwip\opt.h
  ******************************************************************************
  * Copyright (c) 2013-2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -12,8 +12,6 @@
 
 #ifndef __LWIPOPTS_H__
 #define __LWIPOPTS_H__
-#define USE_RTOS 1
-#if USE_RTOS
 
 /**
  * SYS_LIGHTWEIGHT_PROT==1: if you want inter-task protection for certain
@@ -26,10 +24,12 @@
  * NO_SYS==0: Use RTOS
  */
 #define NO_SYS 0
+
 /**
  * LWIP_NETCONN==1: Enable Netconn API (require to use api_lib.c)
  */
 #define LWIP_NETCONN 1
+
 /**
  * LWIP_SOCKET==1: Enable Socket API (require to use sockets.c)
  */
@@ -41,21 +41,7 @@
  */
 #define LWIP_SO_RCVTIMEO 1
 
-#else
-/**
- * NO_SYS==1: Bare metal lwIP
- */
-#define NO_SYS 1
-/**
- * LWIP_NETCONN==0: Disable Netconn API (require to use api_lib.c)
- */
-#define LWIP_NETCONN 0
-/**
- * LWIP_SOCKET==0: Disable Socket API (require to use sockets.c)
- */
-#define LWIP_SOCKET 0
 
-#endif
 /* ---------- Memory options ---------- */
 /**
  * MEM_ALIGNMENT: should be set to the alignment of the CPU
@@ -162,9 +148,20 @@
 #define TCP_LISTEN_BACKLOG 1
 #endif
 
+/* ---------- Network Interfaces options ---------- */
+/* Support netif api (in netifapi.c). */
+#ifndef LWIP_NETIF_API
+#define LWIP_NETIF_API 1
+#endif
+
 /* ---------- ICMP options ---------- */
 #ifndef LWIP_ICMP
 #define LWIP_ICMP 1
+#endif
+
+/* ---------- ICMP options ---------- */
+#ifndef LWIP_IGMP
+#define LWIP_IGMP 1
 #endif
 
 /* ---------- DHCP options ---------- */
@@ -175,10 +172,16 @@
 #define LWIP_DHCP 1
 #endif
 
+/* ---------- DNS options ---------- */
+#ifndef LWIP_DNS
+#define LWIP_DNS 1
+#endif
+
 /* ---------- UDP options ---------- */
 #ifndef LWIP_UDP
 #define LWIP_UDP 1
 #endif
+     
 #ifndef UDP_TTL
 #define UDP_TTL 255
 #endif

@@ -24,10 +24,9 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define AP_SSID "nxp"
-#define AP_PASS "NXP0123456789"
+#define AP_SSID "Neo's WIFI"
+#define AP_PASS "8220542Xy"
 #define AP_SEC WICED_SECURITY_WPA2_MIXED_PSK
-#define IPERF_SERVER_ADDRESS "192.168.2.101"
 
 /*******************************************************************************
  * Prototypes
@@ -37,6 +36,8 @@ extern void test_join(void);
 extern wwd_result_t test_scan();
 extern wiced_result_t wiced_wlan_connectivity_init(void);
 extern void add_wlan_interface(void);
+
+extern int linkkit_example_solo(int argc, char **argv);
 
 /*******************************************************************************
  * Variables
@@ -110,139 +111,20 @@ static void BOARD_InitNetwork()
     }
 }
 
-/* Report state => string */
-const char *report_type_str[] = {
-    "TCP_DONE_SERVER (RX)",        /* LWIPERF_TCP_DONE_SERVER,*/
-    "TCP_DONE_CLIENT (TX)",        /* LWIPERF_TCP_DONE_CLIENT,*/
-    "TCP_ABORTED_LOCAL",           /* LWIPERF_TCP_ABORTED_LOCAL, */
-    "TCP_ABORTED_LOCAL_DATAERROR", /* LWIPERF_TCP_ABORTED_LOCAL_DATAERROR, */
-    "TCP_ABORTED_LOCAL_TXERROR",   /* LWIPERF_TCP_ABORTED_LOCAL_TXERROR, */
-    "TCP_ABORTED_REMOTE",          /* LWIPERF_TCP_ABORTED_REMOTE, */
-};
 
-/** Prototype of a report function that is called when a session is finished.
-    This report function shows the test results. */
-static void lwiperf_report(void *arg,
-                           enum lwiperf_report_type report_type,
-                           const ip_addr_t *local_addr,
-                           u16_t local_port,
-                           const ip_addr_t *remote_addr,
-                           u16_t remote_port,
-                           u32_t bytes_transferred,
-                           u32_t ms_duration,
-                           u32_t bandwidth_kbitpsec)
-{
-    PRINTF("-------------------------------------------------\r\n");
-    if ((report_type < (sizeof(report_type_str) / sizeof(report_type_str[0]))) && local_addr && remote_addr)
-    {
-        PRINTF(" %s \r\n", report_type_str[report_type]);
-        PRINTF(" Local address : %u.%u.%u.%u ", ((u8_t *)local_addr)[0], ((u8_t *)local_addr)[1],
-               ((u8_t *)local_addr)[2], ((u8_t *)local_addr)[3]);
-        PRINTF(" Port %d \r\n", local_port);
-        PRINTF(" Remote address : %u.%u.%u.%u ", ((u8_t *)remote_addr)[0], ((u8_t *)remote_addr)[1],
-               ((u8_t *)remote_addr)[2], ((u8_t *)remote_addr)[3]);
-        PRINTF(" Port %d \r\n", remote_port);
-        PRINTF(" Bytes Transferred %d \r\n", bytes_transferred);
-        PRINTF(" Duration (ms) %d \r\n", ms_duration);
-        PRINTF(" Bandwidth (kbitpsec) %d \r\n", bandwidth_kbitpsec);
-    }
-    else
-    {
-        PRINTF(" IPERF Report error\r\n");
-    }
-}
-
-/** Lets user select a mode to run IPERF with. */
-static void select_mode(bool *server_mode,
-                        enum lwiperf_client_type *client_type)
-{
-    char option;
-
-    while (true)
-    {
-        PRINTF("Please select one of the following modes to run IPERF with:\r\n\r\n");
-        PRINTF("    1: server mode (RX only test)\r\n");
-        PRINTF("    2: client mode (TX only test)\r\n");
-        PRINTF("    3: client dual mode (TX and RX in parallel)\r\n");
-        PRINTF("    4: client tradeoff mode (TX and RX sequentially)\r\n\r\n");
-        PRINTF("Enter mode number: ");
-
-        option = GETCHAR();
-        PUTCHAR(option);
-        PRINTF("\r\n");
-
-        switch (option)
-        {
-            case '1':
-                *server_mode = true;
-                *client_type = LWIPERF_CLIENT;
-                return;
-            case '2':
-                *server_mode = false;
-                *client_type = LWIPERF_CLIENT;
-                return;
-            case '3':
-                *server_mode = false;
-                *client_type = LWIPERF_DUAL;
-                return;
-            case '4':
-                *server_mode = false;
-                *client_type = LWIPERF_TRADEOFF;
-                return;
-        }
-    }
-}
 
 /*!
  * @brief The main function containing client thread.
  */
-static void iperf_task(void *arg)
+static void linkkit_task(void *arg)
 {
-    bool server_mode;
-    enum lwiperf_client_type client_type;
-    void *iperf_session = NULL;
-    ip4_addr_t server_address;
-
-    BOARD_InitNetwork();
-
     PRINTF("\r\n************************************************\r\n");
-    PRINTF(" IPERF example\r\n");
+    PRINTF(" Link Kit example\r\n");
     PRINTF("************************************************\r\n");
 
-    select_mode(&server_mode, &client_type);
-
-    if (server_mode)
-    {
-        iperf_session = lwiperf_start_tcp_server(IP_ADDR_ANY, LWIPERF_TCP_PORT_DEFAULT, lwiperf_report, 0);
-    }
-    else
-    {
-        if (ipaddr_aton(IPERF_SERVER_ADDRESS, &server_address) && IP_IS_V4(&server_address))
-        {
-            iperf_session = lwiperf_start_tcp_client(&server_address, LWIPERF_TCP_PORT_DEFAULT, client_type, lwiperf_report, 0);
-        }
-        else
-        {
-            PRINTF("IPERF_SERVER_ADDRESS is not a valid IPv4 address!\r\n");
-        }
-    }
-
-    if (iperf_session == NULL)
-    {
-        PRINTF("IPERF initialization failed!\r\n");
-    }
-
-#if defined(INCLUDE_uxTaskGetStackHighWaterMark) && INCLUDE_uxTaskGetStackHighWaterMark
-    int32_t freeStack = uxTaskGetStackHighWaterMark(NULL);
-    PRINTF("Stack high water mark: %d\n", freeStack);
-#endif
-
-#if defined(configTOTAL_HEAP_SIZE)
-    int32_t freeHeap = xPortGetMinimumEverFreeHeapSize();
-    PRINTF("Minimum ever free heap size: %d\n", freeHeap);
-#endif
-
-    vTaskDelete(NULL);
+    BOARD_InitNetwork();
+    
+    linkkit_example_solo(NULL, NULL);
 }
 
 /*!
@@ -258,17 +140,14 @@ int main(void)
 
     tcpip_init(NULL, NULL);
 
-    if (xTaskCreate(iperf_task, "iperf_task", 1000, NULL, configMAX_PRIORITIES - 4 /*3*/, NULL) != pdPASS)
+    if (xTaskCreate(linkkit_task, "linkkit_task", 1000, NULL, configMAX_PRIORITIES - 4 /*3*/, NULL) != pdPASS)
     {
         PRINTF("Task creation failed!.\r\n");
         while (1)
             ;
     }
 
-    /* Run RTOS */
     vTaskStartScheduler();
 
-    /* Should not reach this statement */
-    for (;;)
-        ;
+    return 0;
 }

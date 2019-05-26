@@ -41,12 +41,13 @@
 #define configGW_ADDR2 1
 #define configGW_ADDR3 1
 
+struct netif fsl_netif0;
+
 /*!
  * @brief Initializes lwIP stack.
  */
 void add_wlan_interface_static(void)
 {
-    static struct netif fsl_netif0;
     ip4_addr_t fsl_netif0_ipaddr, fsl_netif0_netmask, fsl_netif0_gw;
 
     IP4_ADDR(&fsl_netif0_ipaddr, configIP_ADDR0, configIP_ADDR1, configIP_ADDR2, configIP_ADDR3);
@@ -73,7 +74,6 @@ void add_wlan_interface_static(void)
 
 void add_wlan_interface(void)
 {
-    static struct netif fsl_netif0;
     ip4_addr_t fsl_netif0_ipaddr, fsl_netif0_netmask, fsl_netif0_gw;
     struct dhcp *pdhcp;
 
