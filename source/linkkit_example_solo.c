@@ -26,6 +26,9 @@ int HAL_Snprintf(char *str, const int len, const char *fmt, ...);
     #include "at_api.h"
 #endif
 
+#include "board.h"
+#include "fsl_gpio.h"
+
 
 #define EXAMPLE_TRACE(...)                                          \
     do {                                                            \
@@ -35,12 +38,13 @@ int HAL_Snprintf(char *str, const int len, const char *fmt, ...);
     } while (0)
 
 #define EXAMPLE_MASTER_DEVID            (0)
-#define EXAMPLE_YIELD_TIMEOUT_MS        (200)
+#define EXAMPLE_YIELD_TIMEOUT_MS        (100)
 
 typedef struct {
     int master_devid;
     int cloud_connected;
     int master_initialized;
+    int LightSwitch;
 } user_example_ctx_t;
 
 /**
@@ -89,9 +93,19 @@ static int user_initialized(const int devid)
 static int user_report_reply_event_handler(const int devid, const int msgid, const int code, const char *reply,
         const int reply_len)
 {
-    EXAMPLE_TRACE("Message Post Reply Received, Message ID: %d, Code: %d, Reply: %.*s", msgid, code,
-                  reply_len,
-                  (reply == NULL)? ("NULL") : (reply));
+    char *p_buffer;
+    if (reply != NULL) {
+        p_buffer = HAL_Malloc(reply_len + 1);
+        memcpy(p_buffer, reply, reply_len);
+        p_buffer[reply_len] = '\0';
+    }
+    
+    EXAMPLE_TRACE("Message Post Reply Received, Message ID: %d, Code: %d, Reply: %s", msgid, code,
+                  (reply == NULL)? ("NULL") : (p_buffer));
+    
+    if (reply != NULL) {
+        HAL_Free(p_buffer);
+    }
     return 0;
 }
 
@@ -112,6 +126,28 @@ static int user_property_set_event_handler(const int devid, const char *request,
 {
     int res = 0;
     EXAMPLE_TRACE("Property Set Received, Request: %s", request);
+    
+    cJSON *p_root, *p_LightSwitch;
+    
+    p_root = cJSON_Parse(request);
+    if (p_root == NULL || !cJSON_IsObject(p_root)) {
+        HAL_Printf("JSON Parse Error\r\n");
+        return -1;
+    }
+    
+    p_LightSwitch = cJSON_GetObjectItemCaseSensitive(p_root, "LightSwitch");
+    if ((p_LightSwitch != NULL) && (cJSON_IsNumber(p_LightSwitch))) {
+        g_user_example_ctx.LightSwitch = p_LightSwitch->valueint;
+        HAL_Printf("LightSwitch changed remotely, %d\r\n", g_user_example_ctx.LightSwitch);
+        
+        if (g_user_example_ctx.LightSwitch == 1) {
+            USER_LED_ON();
+        } else {
+            USER_LED_OFF();
+        }
+    }
+    
+    cJSON_Delete(p_root);
 
     res = IOT_Linkkit_Report(EXAMPLE_MASTER_DEVID, ITM_MSG_POST_PROPERTY,
                              (unsigned char *)request, request_len);
@@ -220,11 +256,19 @@ static int user_cota_event_handler(int type, const char *config_id, int config_s
 
 void user_post_property(void)
 {
-    static int cnt = 0;
+    static int state = 0;
     int res = 0;
+    
+    if (state == 0) {
+        state = 1;
+        USER_LED_ON();
+    } else {
+        state = 0;
+        USER_LED_OFF();
+    }
 
     char property_payload[30] = {0};
-    HAL_Snprintf(property_payload, sizeof(property_payload), "{\"Counter\": %d}", cnt++);
+    HAL_Snprintf(property_payload, sizeof(property_payload), "{\"LightSwitch\": %d}", state);
 
     res = IOT_Linkkit_Report(EXAMPLE_MASTER_DEVID, ITM_MSG_POST_PROPERTY,
                              (unsigned char *)property_payload, strlen(property_payload));
@@ -236,7 +280,7 @@ void user_post_event(void)
 {
     int res = 0;
     char *event_id = "HardwareError";
-    char *event_payload = "{\"ErrorCode\": 0}";
+    char *event_payload = "{\"ErrorCode\": 1}";
 
     res = IOT_Linkkit_TriggerEvent(EXAMPLE_MASTER_DEVID, event_id, strlen(event_id),
                                    event_payload, strlen(event_payload));
@@ -277,7 +321,15 @@ int linkkit_example_solo(int argc, char **argv)
         return -1;
     }
 #endif
+    
 
+    gpio_pin_config_t led_config = {
+      .direction = kGPIO_DigitalOutput,
+      .outputLogic = 1U,
+    };
+
+    GPIO_PinInit(BOARD_USER_LED_GPIO, BOARD_USER_LED_GPIO_PIN, &led_config);    
+    
     memset(&g_user_example_ctx, 0, sizeof(user_example_ctx_t));
 
     HAL_GetProductKey(PRODUCT_KEY);
@@ -330,15 +382,18 @@ int linkkit_example_solo(int argc, char **argv)
     }
 
     while (1) {
+        
         IOT_Linkkit_Yield(EXAMPLE_YIELD_TIMEOUT_MS);
+        
+        cnt++;
 
         /* Post Proprety Example */
-        if ((cnt % 2) == 0) {
+        if ((cnt % 100) == 0) {
             user_post_property();
         }
 
         /* Post Event Example */
-        if ((cnt % 10) == 0) {
+        if ((cnt % 300) == 0) {
             user_post_event();
         }
     }
