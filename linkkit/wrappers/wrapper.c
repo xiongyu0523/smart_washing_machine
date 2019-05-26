@@ -28,10 +28,10 @@
 #define UINT32_IPADDR_TO_CSV_BYTES(a) ((uint8_t)((a) >> 24) & 0xFF), (uint8_t)(((a) >> 16) & 0xFF), (uint8_t)(((a) >> 8) & 0xFF), (uint8_t)((a)&0xFF)
 #define CSV_BYTES_TO_UINT32_IPADDR(a0, a1, a2, a3)  (((uint32_t)(a0)&0xFF) << 24) | (((uint32_t)(a1)&0xFF) << 16) | (((uint32_t)(a2)&0xFF) << 8) | ((uint32_t)(a3)&0xFF)
 
-static char _product_key[IOTX_PRODUCT_KEY_LEN + 1]       = "a1XGwg2WTT3";
-static char _product_secret[IOTX_PRODUCT_SECRET_LEN + 1] = "eqlHSVlE9arvbXYJ";
-static char _device_name[IOTX_DEVICE_NAME_LEN + 1]       = "V1lKTHntfe7DAkcZZsat";
-static char _device_secret[IOTX_DEVICE_SECRET_LEN + 1]   = "xVUIJqGw0VYx3d9p9z7EHQV0ZJgWu0ru";
+static char _product_key[IOTX_PRODUCT_KEY_LEN + 1]       = "a1ppLeSltxY";
+static char _product_secret[IOTX_PRODUCT_SECRET_LEN + 1] = "aWQVLdogekXgarmB";
+static char _device_name[IOTX_DEVICE_NAME_LEN + 1]       = "Z81ZiAJ1ZzWDaZ33pCod";
+static char _device_secret[IOTX_DEVICE_SECRET_LEN + 1]   = "9G3T5VarQBMiZ5S55kxW3O0PXBfY8oFL";
 
 uint64_t HAL_UptimeMs(void);
 
@@ -434,7 +434,22 @@ int HAL_Sys_Net_Is_Ready()
  */
 int HAL_TCP_Destroy(uintptr_t fd)
 {
-	return (int)1;
+    int rc;
+
+    /* Shutdown both send and receive operations. */
+    rc = shutdown((int) fd, 2);
+    if (0 != rc) {
+        printf("shutdown error\n");
+        return -1;
+    }
+
+    rc = close((int) fd);
+    if (0 != rc) {
+        printf("closesocket error\n");
+        return -1;
+    }
+
+    return 0;
 }
 
 
@@ -804,12 +819,18 @@ intptr_t HAL_UDP_create_without_connect(const char *host, unsigned short port)
 
     memset(&addr, 0, sizeof(struct sockaddr_in));
 
-    if (0 != setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR | SO_BROADCAST, &opt_val, sizeof(opt_val))) {
+    if (0 != setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &opt_val, sizeof(opt_val))) {
         printf("setsockopt");
         close(sockfd);
         return -1;
     }
 
+    if (0 != setsockopt(sockfd, SOL_SOCKET, SO_BROADCAST, &opt_val, sizeof(opt_val))) {
+        printf("setsockopt");
+        close(sockfd);
+        return -1;
+    }    
+    
     if (NULL == host) {
         addr.sin_addr.s_addr = htonl(INADDR_ANY);
     } else {

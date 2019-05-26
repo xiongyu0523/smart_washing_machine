@@ -41,6 +41,10 @@
  */
 #define LWIP_SO_RCVTIMEO 1
 
+/**
+ * SO_REUSE==1: Enable SO_REUSEADDR option.
+ */
+#define SO_REUSE         1
 
 /* ---------- Memory options ---------- */
 /**
