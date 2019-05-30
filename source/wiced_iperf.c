@@ -21,11 +21,15 @@
 #include "pin_mux.h"
 #include "clock_config.h"
 #include "fsl_common.h"
+
+#include "kv_api.h"
+#include "flexspi_hyper_flash_ops.h"
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define AP_SSID "Neo's WIFI"
-#define AP_PASS "8220542Xy"
+#define AP_SSID "MCUIOTGATEWAY"
+#define AP_PASS "NXP0123456789"
 #define AP_SEC WICED_SECURITY_WPA2_MIXED_PSK
 
 /*******************************************************************************
@@ -92,17 +96,21 @@ static void BOARD_InitNetwork()
 
             PRINTF("Joining : " AP_SSID "\n");
             (void)host_rtos_delay_milliseconds((uint32_t)1000);
-            err = wwd_wifi_join(&ap_ssid, AP_SEC, (uint8_t *)AP_PASS, sizeof(AP_PASS) - 1, NULL, WWD_STA_INTERFACE);
-            if (err != WWD_SUCCESS)
-            {
-                PRINTF("Failed to join  : " AP_SSID " \n");
-            }
-            else
-            {
-                PRINTF("Successfully joined : " AP_SSID "\n");
-                (void)host_rtos_delay_milliseconds((uint32_t)1000);
-                add_wlan_interface();
-            }
+            
+            do {
+                err = wwd_wifi_join(&ap_ssid, AP_SEC, (uint8_t *)AP_PASS, sizeof(AP_PASS) - 1, NULL, WWD_STA_INTERFACE);
+                if (err != WWD_SUCCESS)
+                {
+                    PRINTF("Failed to join  : " AP_SSID " \n");
+                }
+                else
+                {
+                    PRINTF("Successfully joined : " AP_SSID "\n");
+                    (void)host_rtos_delay_milliseconds((uint32_t)1000);
+                    add_wlan_interface();
+                    break;
+                }
+            } while (err != WWD_SUCCESS);
         }
     }
     else
@@ -138,6 +146,9 @@ int main(void)
     BOARD_USDHCClockConfiguration();
     BOARD_InitDebugConsole();
 
+    flexspi_hyper_flash_init();
+    kv_init();
+    
     tcpip_init(NULL, NULL);
 
     if (xTaskCreate(linkkit_task, "linkkit_task", 1000, NULL, configMAX_PRIORITIES - 4 /*3*/, NULL) != pdPASS)

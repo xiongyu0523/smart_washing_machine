@@ -288,7 +288,7 @@
                 <option>
                     <name>CCAllowList</name>
                     <version>1</version>
-                    <state>00100000</state>
+                    <state>00000000</state>
                 </option>
                 <option>
                     <name>CCDebugInfo</name>
@@ -344,7 +344,7 @@
                 </option>
                 <option>
                     <name>PreInclude</name>
-                    <state></state>
+                    <state>$PROJ_DIR$\source\app_preinclude.h</state>
                 </option>
                 <option>
                     <name>CompilerMisraOverride</name>
@@ -377,6 +377,8 @@
                     <state>$PROJ_DIR$/component/lists</state>
                     <state>$PROJ_DIR$/component/serial_manager</state>
                     <state>$PROJ_DIR$/component/uart</state>
+                    <state>$PROJ_DIR$/component/kv</state>
+                    <state>$PROJ_DIR$/component/kv/include</state>
                     <state>$PROJ_DIR$/device</state>
                     <state>$PROJ_DIR$/doc</state>
                     <state>$PROJ_DIR$/drivers</state>
@@ -431,7 +433,7 @@
                 </option>
                 <option>
                     <name>CCOptLevel</name>
-                    <state>2</state>
+                    <state>1</state>
                 </option>
                 <option>
                     <name>CCOptStrategy</name>
@@ -440,7 +442,7 @@
                 </option>
                 <option>
                     <name>CCOptLevelSlave</name>
-                    <state>2</state>
+                    <state>1</state>
                 </option>
                 <option>
                     <name>CompilerMisraRules98</name>
@@ -2800,6 +2802,39 @@
     <group>
         <name>component</name>
         <group>
+            <name>kv</name>
+            <group>
+                <name>include</name>
+                <file>
+                    <name>$PROJ_DIR$\component\kv\include\kv_adapt.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\component\kv\include\kv_api.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\component\kv\include\kv_conf.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\component\kv\include\kv_err.h</name>
+                </file>
+            </group>
+            <file>
+                <name>$PROJ_DIR$\component\kv\kv.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\component\kv\kv_adapt.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\component\kv\kv_cli.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\component\kv\kv_secure.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\component\kv\kv_types.h</name>
+            </file>
+        </group>
+        <group>
             <name>lists</name>
             <file>
                 <name>$PROJ_DIR$\component\lists\generic_list.c</name>
@@ -2860,6 +2895,12 @@
     <group>
         <name>drivers</name>
         <file>
+            <name>$PROJ_DIR$\drivers\fsl_cache.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\drivers\fsl_cache.h</name>
+        </file>
+        <file>
             <name>$PROJ_DIR$\drivers\fsl_clock.c</name>
         </file>
         <file>
@@ -2870,6 +2911,12 @@
         </file>
         <file>
             <name>$PROJ_DIR$\drivers\fsl_common.h</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\drivers\fsl_flexspi.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\drivers\fsl_flexspi.h</name>
         </file>
         <file>
             <name>$PROJ_DIR$\drivers\fsl_gpio.c</name>
@@ -4326,6 +4373,15 @@
     <group>
         <name>source</name>
         <file>
+            <name>$PROJ_DIR$\source\app_preinclude.h</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\source\flexspi_hyper_flash_ops.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\source\flexspi_hyper_flash_ops.h</name>
+        </file>
+        <file>
             <name>$PROJ_DIR$\source\FreeRTOSConfig.h</name>
         </file>
         <file>
@@ -4344,7 +4400,7 @@
             <name>$PROJ_DIR$\src\evkbimxrt1050.mac</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\src\MIMXRT1052xxxxx_ram.icf</name>
+            <name>$PROJ_DIR$\MIMXRT1052xxxxx_flexspi_nor.icf</name>
         </file>
     </group>
     <group>

@@ -29,7 +29,9 @@ define symbol m_interrupts_start       = 0x60002000;
 define symbol m_interrupts_end         = 0x600023FF;
 
 define symbol m_text_start             = 0x60002400;
-define symbol m_text_end               = 0x63FFFFFF;
+define symbol m_text_end               = 0x63BFFFFF;
+
+/* NOTE: Flash in range 0x63C0_0000 - 0x63FF_FFFF (4MB) is reserved for KV data */
 
 define symbol m_data_start             = 0x20000000;
 define symbol m_data_end               = 0x2001FFFF;
@@ -73,7 +75,12 @@ define block RW        { readwrite };
 define block ZI        { zi };
 define block NCACHE_VAR    { section NonCacheable , section NonCacheable.init };
 
-initialize by copy { readwrite, section .textrw };
+initialize by copy {
+  readwrite,
+  object flexspi_hyper_flash_ops.o,
+  object fsl_flexspi.o,
+  section .textrw
+};
 do not initialize  { section .noinit };
 
 place at address mem: m_interrupts_start    { readonly section .intvec };

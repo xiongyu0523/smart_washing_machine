@@ -22,6 +22,8 @@
 #include "sockets.h"
 #include "netdb.h"
 
+#include "kv_api.h"
+
 #define HAL_SEM_MAX_COUNT           (10)
 #define HAL_SEM_INIT_COUNT          (0)
 
@@ -144,13 +146,12 @@ int HAL_GetProductSecret(char *product_secret)
 
 int HAL_Kv_Get(const char *key, void *val, int *buffer_len)
 {
-	return (int)1;
+    return kv_item_get(key, val, buffer_len);
 }
 
-
 int HAL_Kv_Set(const char *key, const void *val, int len, int sync)
-{
-	return (int)1;
+{  
+    return kv_item_set(key, val, len);
 }
 
 

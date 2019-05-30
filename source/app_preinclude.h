@@ -1,0 +1,11 @@
+/* Copyright 2019 NXP */
+
+#ifndef APP_PREINCLUDE_H
+#define APP_PREINCLUDE_H
+
+#define FSL_DRIVER_TRANSFER_DOUBLE_WEAK_IRQ 0
+
+#define KV_CONFIG_TOTAL_SIZE             (4 * 1024 * 1024)
+#define KV_CONFIG_BLOCK_SIZE_BITS       18
+
+#endif /* APP_PREINCLUDE_H */
