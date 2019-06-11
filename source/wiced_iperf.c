@@ -149,7 +149,12 @@ void app_wait_wifi_connect(void ){
 
             if(HAL_Kv_Get("wifi_key", wifi_key, &key_len) == 0){
                if(key_len != 1){
-                  at_wifi_join(wifi_ssid,wifi_key);
+                 wiced_ssid_t ap_ssid = {0};
+                 
+                 ap_ssid.length = strlen(wifi_ssid);
+                 memcpy(ap_ssid.value,wifi_ssid,ap_ssid.length);
+                  
+                  wwd_wifi_join(&ap_ssid, AP_SEC, (uint8_t *)wifi_key, strlen(wifi_key), NULL, WWD_STA_INTERFACE);
                   HAL_Printf("join wifi:%s....\r\n",wifi_ssid);
                   HAL_SleepMs(2000);
                }
@@ -202,7 +207,11 @@ void app_process_recive_cmd(char *buff, uint8_t len){
 				HAL_Kv_Set("wifi_ssid", wifi_ssid, strlen(wifi_ssid), 0);
 				HAL_Kv_Set("wifi_key", wifi_key, strlen(wifi_key), 0);
 			}
-			//at_wifi_join(wifi_ssid,wifi_key);
+                        wiced_ssid_t ap_ssid = {0};
+
+                        ap_ssid.length = strlen(wifi_ssid);
+                        memcpy(ap_ssid.value,wifi_ssid,ap_ssid.length);
+                        wwd_wifi_join(&ap_ssid, AP_SEC, (uint8_t *)wifi_key, strlen(wifi_key), NULL, WWD_STA_INTERFACE);
                         HAL_Printf("join wifi:%s....\r\n",wifi_ssid);
 		}
 
@@ -210,7 +219,7 @@ void app_process_recive_cmd(char *buff, uint8_t len){
   	uint8_t value_invalid = 0xff;
 	HAL_Kv_Set("wifi_ssid", &value_invalid, 1, 0);
 	HAL_Kv_Set("wifi_key", &value_invalid, 1, 0);
-	//at_wifi_factory_new();
+	wwd_wifi_leave(WWD_STA_INTERFACE);
         HAL_Printf("Factory wifi module....\r\n");
   }else{
 
