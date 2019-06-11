@@ -4,30 +4,30 @@
     <batchDefinition>
       <name>all</name>
       <member>
-        <project>aliyundemo</project>
+        <project>smart_washing_machine</project>
         <configuration>flexspi_nor_debug</configuration>
       </member>
       <member>
-        <project>aliyundemo</project>
+        <project>smart_washing_machine</project>
         <configuration>flexspi_nor_release</configuration>
       </member>
     </batchDefinition>
     <batchDefinition>
       <name>flexspi_nor_debug</name>
       <member>
-        <project>aliyundemo</project>
+        <project>smart_washing_machine</project>
         <configuration>flexspi_nor_debug</configuration>
       </member>
     </batchDefinition>
     <batchDefinition>
       <name>flexspi_nor_release</name>
       <member>
-        <project>aliyundemo</project>
+        <project>smart_washing_machine</project>
         <configuration>flexspi_nor_release</configuration>
       </member>
     </batchDefinition>
   </batchBuild>
   <project>
-    <path>$WS_DIR$/aliyundemo.ewp</path>
+    <path>$WS_DIR$/smart_washing_machine.ewp</path>
   </project>
 </workspace>

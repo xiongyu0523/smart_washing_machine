@@ -8,7 +8,7 @@
       <cores selected="core0">
          <core name="Cortex-M7F" id="core0" description="M7 core"/>
       </cores>
-      <description>Configuration imported from C:\Users\nxa07532\aliyundemo</description>
+      <description>Configuration imported from C:\Users\nxa07532\smart_washing_machine</description>
    </common>
    <preferences>
       <validate_boot_init_only>true</validate_boot_init_only>

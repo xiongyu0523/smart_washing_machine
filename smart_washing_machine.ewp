@@ -826,7 +826,7 @@
                 </option>
                 <option>
                     <name>IlinkOutputFile</name>
-                    <state>aliyundemo.out</state>
+                    <state>smart_washing_machine.out</state>
                 </option>
                 <option>
                     <name>IlinkDebugInfoEnable</name>
@@ -1124,7 +1124,7 @@
                 </option>
                 <option>
                     <name>IlinkTrustzoneImportLibraryOut</name>
-                    <state>aliyundemo_import_lib.o</state>
+                    <state>smart_washing_machine_import_lib.o</state>
                 </option>
                 <option>
                     <name>OILinkExtraOption</name>
@@ -1968,7 +1968,7 @@
                 </option>
                 <option>
                     <name>IlinkOutputFile</name>
-                    <state>aliyundemo.out</state>
+                    <state>smart_washing_machine.out</state>
                 </option>
                 <option>
                     <name>IlinkDebugInfoEnable</name>

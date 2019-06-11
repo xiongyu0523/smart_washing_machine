@@ -1,0 +1,6 @@
+# Ignore build folders
+flexspi_nor_debug/
+flexspi_release_debug/
+settings/
+smart_washing_machine.dep
+smart_washing_machine.ewt
