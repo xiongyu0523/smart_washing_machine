@@ -22,18 +22,16 @@
 #include "sockets.h"
 #include "netdb.h"
 
-#include "kv_api.h"
-
 #define HAL_SEM_MAX_COUNT           (10)
 #define HAL_SEM_INIT_COUNT          (0)
 
 #define UINT32_IPADDR_TO_CSV_BYTES(a) ((uint8_t)((a) >> 24) & 0xFF), (uint8_t)(((a) >> 16) & 0xFF), (uint8_t)(((a) >> 8) & 0xFF), (uint8_t)((a)&0xFF)
 #define CSV_BYTES_TO_UINT32_IPADDR(a0, a1, a2, a3)  (((uint32_t)(a0)&0xFF) << 24) | (((uint32_t)(a1)&0xFF) << 16) | (((uint32_t)(a2)&0xFF) << 8) | ((uint32_t)(a3)&0xFF)
 
-static char _product_key[IOTX_PRODUCT_KEY_LEN + 1]       = "a1ppLeSltxY";
-static char _product_secret[IOTX_PRODUCT_SECRET_LEN + 1] = "aWQVLdogekXgarmB";
-static char _device_name[IOTX_DEVICE_NAME_LEN + 1]       = "Z81ZiAJ1ZzWDaZ33pCod";
-static char _device_secret[IOTX_DEVICE_SECRET_LEN + 1]   = "9G3T5VarQBMiZ5S55kxW3O0PXBfY8oFL";
+static char _product_key[IOTX_PRODUCT_KEY_LEN + 1]       = "a1I5Y6v8HwT";
+static char _product_secret[IOTX_PRODUCT_SECRET_LEN + 1] = "S56FG57Rqjr24CHo";
+static char _device_name[IOTX_DEVICE_NAME_LEN + 1]       = "smart_wm_test1";
+static char _device_secret[IOTX_DEVICE_SECRET_LEN + 1]   = "3qLxqnrCCxhEVJUJjq88jEYkPwi2CZCr";
 
 uint64_t HAL_UptimeMs(void);
 
@@ -424,6 +422,7 @@ int HAL_Sys_Net_Is_Ready()
 }
 
 
+
 /**
  * @brief Destroy the specific TCP connection.
  *
@@ -440,13 +439,13 @@ int HAL_TCP_Destroy(uintptr_t fd)
     /* Shutdown both send and receive operations. */
     rc = shutdown((int) fd, 2);
     if (0 != rc) {
-        printf("shutdown error\n");
+        PRINTF("shutdown error\n");
         return -1;
     }
 
     rc = close((int) fd);
     if (0 != rc) {
-        printf("closesocket error\n");
+        PRINTF("closesocket error\n");
         return -1;
     }
 
@@ -512,9 +511,9 @@ uintptr_t HAL_TCP_Establish(const char *host, uint16_t port)
     }
 
     if (-1 == rc) {
-        printf("fail to establish tcp\n");
+        PRINTF("fail to establish tcp\n");
     } else {
-        printf("success to establish tcp, fd=%d\n", rc);
+        PRINTF("success to establish tcp, fd=%d\n", rc);
     }
     freeaddrinfo(addrInfoList);
 
@@ -572,14 +571,14 @@ int32_t HAL_TCP_Read(uintptr_t fd, char *buf, uint32_t len, uint32_t timeout_ms)
             if (ret > 0) {
                 len_recv += ret;
             } else if (0 == ret) {
-                printf("connection is closed\n");
+                PRINTF("connection is closed\n");
                 err_code = -1;
                 break;
             } else {
                 if (EINTR == errno) {
                     continue;
                 }
-                printf("recv fail\n");
+                PRINTF("recv fail\n");
                 err_code = -2;
                 break;
             }
@@ -589,7 +588,7 @@ int32_t HAL_TCP_Read(uintptr_t fd, char *buf, uint32_t len, uint32_t timeout_ms)
             if (EINTR == errno) {
                 continue;
             }
-            printf("select-recv fail\n");
+            PRINTF("select-recv fail\n");
             err_code = -2;
             break;
         }
@@ -648,21 +647,21 @@ int32_t HAL_TCP_Write(uintptr_t fd, const char *buf, uint32_t len, uint32_t time
             ret = select(tcp_fd + 1, NULL, &sets, NULL, &timeout);
             if (ret > 0) {
                 if (0 == FD_ISSET(tcp_fd, &sets)) {
-                    printf("Should NOT arrive\n");
+                    PRINTF("Should NOT arrive\n");
                     /* If timeout in next loop, it will not sent any data */
                     ret = 0;
                     continue;
                 }
             } else if (0 == ret) {
-                printf("select-write timeout %d\n", tcp_fd);
+                PRINTF("select-write timeout %d\n", tcp_fd);
                 break;
             } else {
                 if (EINTR == errno) {
-                    printf("EINTR be caught\n");
+                    PRINTF("EINTR be caught\n");
                     continue;
                 }
 
-                printf("select-write fail, ret = select() = %d\n", ret);
+                PRINTF("select-write fail, ret = select() = %d\n", ret);
                 net_err = 1;
                 break;
             }
@@ -673,14 +672,14 @@ int32_t HAL_TCP_Write(uintptr_t fd, const char *buf, uint32_t len, uint32_t time
             if (ret > 0) {
                 len_sent += ret;
             } else if (0 == ret) {
-                printf("No data be sent\n");
+                PRINTF("No data be sent\n");
             } else {
                 if (EINTR == errno) {
-                    printf("EINTR be caught\n");
+                    PRINTF("EINTR be caught\n");
                     continue;
                 }
 
-                printf("send fail, ret = send() = %d\n", ret);
+                PRINTF("send fail, ret = send() = %d\n", ret);
                 net_err = 1;
                 break;
             }
@@ -811,7 +810,7 @@ intptr_t HAL_UDP_create_without_connect(const char *host, unsigned short port)
 
     sockfd = socket(AF_INET, SOCK_DGRAM, 0);
     if (sockfd < 0) {
-        printf("socket");
+        PRINTF("socket");
         return -1;
     }
     if (0 == port) {
@@ -821,13 +820,13 @@ intptr_t HAL_UDP_create_without_connect(const char *host, unsigned short port)
     memset(&addr, 0, sizeof(struct sockaddr_in));
 
     if (0 != setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &opt_val, sizeof(opt_val))) {
-        printf("setsockopt");
+        PRINTF("setsockopt");
         close(sockfd);
         return -1;
     }
 
     if (0 != setsockopt(sockfd, SOL_SOCKET, SO_BROADCAST, &opt_val, sizeof(opt_val))) {
-        printf("setsockopt");
+        PRINTF("setsockopt");
         close(sockfd);
         return -1;
     }    
@@ -840,7 +839,7 @@ intptr_t HAL_UDP_create_without_connect(const char *host, unsigned short port)
         } else {
             hp = gethostbyname(host);
             if (!hp) {
-                printf("can't resolute the host address \n");
+                PRINTF("can't resolute the host address \n");
                 close(sockfd);
                 return -1;
             }
@@ -855,7 +854,7 @@ intptr_t HAL_UDP_create_without_connect(const char *host, unsigned short port)
         close(sockfd);
         return -1;
     }
-    printf("success to establish udp, fd=%d", (int)sockfd);
+    PRINTF("success to establish udp, fd=%d", (int)sockfd);
 
     return (intptr_t)sockfd;
 }
@@ -877,7 +876,7 @@ int HAL_UDP_joinmulticast(intptr_t sockfd,
     socket_id = (int)sockfd;
     err = setsockopt(socket_id, IPPROTO_IP, IP_MULTICAST_LOOP, &loop, sizeof(loop));
     if (err < 0) {
-        printf("setsockopt");
+        PRINTF("setsockopt");
         return err;
     }
 
@@ -887,7 +886,7 @@ int HAL_UDP_joinmulticast(intptr_t sockfd,
     /*join to the multicast group*/
     err = setsockopt(socket_id, IPPROTO_IP, IP_ADD_MEMBERSHIP, &mreq, sizeof(mreq));
     if (err < 0) {
-        printf("setsockopt");
+        PRINTF("setsockopt");
         return err;
     }
 
@@ -956,7 +955,7 @@ int HAL_UDP_sendto(intptr_t sockfd,
     } else {
         hp = gethostbyname((char *)p_remote->addr);
         if (!hp) {
-            printf("can't resolute the host address \n");
+            PRINTF("can't resolute the host address \n");
             return -1;
         }
         ip = *(uint32_t *)(hp->h_addr);
@@ -984,7 +983,7 @@ int HAL_UDP_sendto(intptr_t sockfd,
     ret = sendto(sockfd, p_data, datalen, 0, (struct sockaddr *)&addr, sizeof(struct sockaddr_in));
 
     if (ret < 0) {
-        printf("sendto");
+        PRINTF("sendto");
     }
 
     return (ret) > 0 ? ret : -1;

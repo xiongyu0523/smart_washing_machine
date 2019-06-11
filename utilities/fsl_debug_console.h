@@ -34,14 +34,18 @@
  * Definitions
  ******************************************************************************/
 
+extern serial_handle_t g_serialHandle; /*!< serial manager handle */
+
 /*! @brief Definition select redirect toolchain printf, scanf to uart or not. */
 #define DEBUGCONSOLE_REDIRECT_TO_TOOLCHAIN 0U /*!< Select toolchain printf and scanf. */
 #define DEBUGCONSOLE_REDIRECT_TO_SDK 1U       /*!< Select SDK version printf, scanf. */
 #define DEBUGCONSOLE_DISABLE 2U               /*!< Disable debugconsole function. */
 
-/*! @brief Definition to select sdk or toolchain printf, scanf. */
+/*! @brief Definition to select sdk or toolchain printf, scanf. The macro only support
+ * to be redefined in project setting.
+ */
 #ifndef SDK_DEBUGCONSOLE
-#define SDK_DEBUGCONSOLE 1U
+#define SDK_DEBUGCONSOLE 0xffU
 #endif
 
 /*! @brief Definition to select redirect toolchain printf, scanf to uart or not. */
@@ -61,7 +65,7 @@
  *  if SDK_DEBUGCONSOLE defined to 0,it represents select toolchain printf, scanf.
  *  if SDK_DEBUGCONSOLE defined to 1,it represents select SDK version printf, scanf.
  *  if SDK_DEBUGCONSOLE defined to 2,it represents disable debugconsole function.
-*/
+ */
 #if SDK_DEBUGCONSOLE == DEBUGCONSOLE_DISABLE /* Disable debug console */
 #define PRINTF
 #define SCANF
@@ -73,11 +77,17 @@
 #define PUTCHAR DbgConsole_Putchar
 #define GETCHAR DbgConsole_Getchar
 #elif SDK_DEBUGCONSOLE == DEBUGCONSOLE_REDIRECT_TO_TOOLCHAIN /* Select printf, scanf, putchar, getchar of toolchain. \ \
-                                                                */
+                                                              */
 #define PRINTF printf
 #define SCANF scanf
 #define PUTCHAR putchar
 #define GETCHAR getchar
+#else
+#define PRINTF format_printf
+#define SCANF 
+#define PUTCHAR 
+#define GETCHAR 
+
 #endif /* SDK_DEBUGCONSOLE */
 
 /*******************************************************************************
@@ -102,7 +112,8 @@ extern "C" {
  * @param baudRate      The desired baud rate in bits per second.
  * @param device        Low level device type for the debug console, can be one of the following.
  *                      @arg kSerialPort_Uart,
- *                      @arg kSerialPort_UsbCdc.
+ *                      @arg kSerialPort_UsbCdc
+ *                      @arg kSerialPort_UsbCdcVirtual.
  * @param clkSrcFreq    Frequency of peripheral source clock.
  *
  * @return              Indicates whether initialization was successful or not.

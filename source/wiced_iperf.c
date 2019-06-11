@@ -28,9 +28,9 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define AP_SSID "MCUIOTGATEWAY"
-#define AP_PASS "NXP0123456789"
-#define AP_SEC WICED_SECURITY_WPA2_MIXED_PSK
+#define AP_SSID "iPhone"
+#define AP_PASS "12345678"
+#define AP_SEC WICED_SECURITY_WPA2_AES_PSK
 
 /*******************************************************************************
  * Prototypes
@@ -131,8 +131,93 @@ static void linkkit_task(void *arg)
     PRINTF("************************************************\r\n");
 
     BOARD_InitNetwork();
-    
-    linkkit_example_solo(NULL, NULL);
+    wm_run(NULL, NULL);
+   // linkkit_example_solo(NULL, NULL);
+}
+
+
+
+void app_wait_wifi_connect(void ){
+
+	char wifi_ssid[40]={0};
+	char wifi_key[40] = {0};
+	int ssid_len = 40;
+	int key_len = 40;
+	if(HAL_Kv_Get("wifi_ssid", wifi_ssid, &ssid_len) == 0){
+          if(ssid_len != 1 || wifi_ssid[0] != 0xff){
+
+
+            if(HAL_Kv_Get("wifi_key", wifi_key, &key_len) == 0){
+               if(key_len != 1){
+                  at_wifi_join(wifi_ssid,wifi_key);
+                  HAL_Printf("join wifi:%s....\r\n",wifi_ssid);
+                  HAL_SleepMs(2000);
+               }
+            }
+          }
+	}
+	if(!HAL_Wifi_Connected()){
+	    HAL_Printf("Wifi not connected, join the AP first\r\n");
+	    HAL_SleepMs(1000);
+	    while(!HAL_Wifi_Connected()){
+	      HAL_SleepMs(500);
+	    }
+	}
+
+}
+static uint8_t app_wifi_ib_same(char *ssid, char *key){
+	char wifi_ssid[40]={0};
+	char wifi_key[40] = {0};
+	int ssid_len = 40;
+	int key_len = 40;
+	if((HAL_Kv_Get("wifi_ssid", wifi_ssid, &ssid_len) == 0) && (strncmp(ssid,wifi_ssid,strlen(wifi_ssid)) == 0)){
+	    if((HAL_Kv_Get("wifi_key", wifi_key, &key_len) == 0) &&(strncmp(key,wifi_key,strlen(wifi_key)) == 0)){
+	 
+			HAL_Printf("Same WiFi IB inputed\r\n");
+			return 1;
+
+	    }
+	}
+	return 0;
+
+
+}
+
+void app_process_recive_cmd(char *buff, uint8_t len){
+  uint8_t ptr = 2;
+  uint8_t i = 0;
+  if(buff[0] == 'c'){//connect wifi
+		char wifi_ssid[40]={0};
+		char wifi_key[40] = {0};
+		if(buff[1] == ' '){
+			while(buff[ptr] != ' '){
+				wifi_ssid[i++] = buff[ptr++];
+			}
+			ptr++;
+			i=0;
+			while(buff[ptr] != '\r' && (ptr<len)){
+				wifi_key[i++] = buff[ptr++];
+			}
+			if(app_wifi_ib_same(wifi_ssid,wifi_key) == 0){
+				HAL_Kv_Set("wifi_ssid", wifi_ssid, strlen(wifi_ssid), 0);
+				HAL_Kv_Set("wifi_key", wifi_key, strlen(wifi_key), 0);
+			}
+			//at_wifi_join(wifi_ssid,wifi_key);
+                        HAL_Printf("join wifi:%s....\r\n",wifi_ssid);
+		}
+
+  }else if(buff[0] == 'f'){//factory new module
+  	uint8_t value_invalid = 0xff;
+	HAL_Kv_Set("wifi_ssid", &value_invalid, 1, 0);
+	HAL_Kv_Set("wifi_key", &value_invalid, 1, 0);
+	//at_wifi_factory_new();
+        HAL_Printf("Factory wifi module....\r\n");
+  }else{
+
+  	HAL_Printf("Unknown command\r\n");
+
+  }
+  
 }
 
 /*!
@@ -144,8 +229,9 @@ int main(void)
     BOARD_InitPins();
     BOARD_BootClockRUN();
     BOARD_USDHCClockConfiguration();
-    BOARD_InitDebugConsole();
-
+    //BOARD_InitDebugConsole();
+    log_init();
+	#if 1
     flexspi_hyper_flash_init();
     kv_init();
     
@@ -157,7 +243,7 @@ int main(void)
         while (1)
             ;
     }
-
+#endif
     vTaskStartScheduler();
 
     return 0;

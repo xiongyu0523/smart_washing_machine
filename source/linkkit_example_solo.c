@@ -268,7 +268,7 @@ void user_post_property(void)
     }
 
     char property_payload[30] = {0};
-    HAL_Snprintf(property_payload, sizeof(property_payload), "{\"LightSwitch\": %d}", state);
+    HAL_Snprintf(property_payload, sizeof(property_payload), "{\"WorkSwitch\": %d}", state);
 
     res = IOT_Linkkit_Report(EXAMPLE_MASTER_DEVID, ITM_MSG_POST_PROPERTY,
                              (unsigned char *)property_payload, strlen(property_payload));

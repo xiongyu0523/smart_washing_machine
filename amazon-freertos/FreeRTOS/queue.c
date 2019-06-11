@@ -1,6 +1,6 @@
 /*
- * FreeRTOS Kernel V10.1.1
- * Copyright (C) 2018 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ * FreeRTOS Kernel V10.2.0
+ * Copyright (C) 2019 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -94,7 +94,7 @@ zero. */
  * Items are queued by copy, not reference.  See the following link for the
  * rationale: https://www.freertos.org/Embedded-RTOS-Queues.html
  */
-typedef struct QueueDefinition /* The old naming convention is used to prevent breaking kernel aware debuggers. */
+typedef struct QueueDefinition 		/* The old naming convention is used to prevent breaking kernel aware debuggers. */
 {
 	int8_t *pcHead;					/*< Points to the beginning of the queue storage area. */
 	int8_t *pcWriteTo;				/*< Points to the free next place in the storage area. */
@@ -1416,6 +1416,8 @@ BaseType_t xQueueSemaphoreTake( QueueHandle_t xQueue, TickType_t xTicksToWait )
 BaseType_t xEntryTimeSet = pdFALSE;
 TimeOut_t xTimeOut;
 Queue_t * const pxQueue = xQueue;
+void *pvBuffer = NULL;
+(void)pvBuffer;
 
 #if( configUSE_MUTEXES == 1 )
 	BaseType_t xInheritanceOccurred = pdFALSE;

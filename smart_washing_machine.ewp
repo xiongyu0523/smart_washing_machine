@@ -227,7 +227,9 @@
                     <state>HIGH_SPEED_SDIO_CLOCK</state>
                     <state>PRINTF_ADVANCED_ENABLE=1</state>
                     <state>FSL_RTOS_FREE_RTOS</state>
+                    <state>USE_RTOS</state>
                     <state>WIFI_WICED</state>
+                    <state>MBEDTLS_CONFIG_FILE="ksdk_mbedtls_config.h"</state>
                 </option>
                 <option>
                     <name>CCPreprocFile</name>
@@ -288,7 +290,7 @@
                 <option>
                     <name>CCAllowList</name>
                     <version>1</version>
-                    <state>00000000</state>
+                    <state>00100000</state>
                 </option>
                 <option>
                     <name>CCDebugInfo</name>
@@ -418,6 +420,9 @@
                     <state>$PROJ_DIR$/linkkit/mqtt</state>
                     <state>$PROJ_DIR$/linkkit/wrappers</state>
                     <state>$PROJ_DIR$/linkkit/wrappers/external_libs</state>
+                    <state>$PROJ_DIR$\mbedtls\include\mbedtls</state>
+                    <state>$PROJ_DIR$\mbedtls\include</state>
+                    <state>$PROJ_DIR$\mbedtls\port\ksdk</state>
                 </option>
                 <option>
                     <name>CCStdIncCheck</name>
@@ -433,7 +438,7 @@
                 </option>
                 <option>
                     <name>CCOptLevel</name>
-                    <state>1</state>
+                    <state>2</state>
                 </option>
                 <option>
                     <name>CCOptStrategy</name>
@@ -442,7 +447,7 @@
                 </option>
                 <option>
                     <name>CCOptLevelSlave</name>
-                    <state>1</state>
+                    <state>2</state>
                 </option>
                 <option>
                     <name>CompilerMisraRules98</name>
@@ -771,7 +776,7 @@
                 </option>
                 <option>
                     <name>OOCOutputFile</name>
-                    <state></state>
+                    <state>smart_washing_machine.srec</state>
                 </option>
                 <option>
                     <name>OOCCommandLineProducer</name>
@@ -2913,6 +2918,12 @@
             <name>$PROJ_DIR$\drivers\fsl_common.h</name>
         </file>
         <file>
+            <name>$PROJ_DIR$\drivers\fsl_dcp.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\drivers\fsl_dcp.h</name>
+        </file>
+        <file>
             <name>$PROJ_DIR$\drivers\fsl_flexspi.c</name>
         </file>
         <file>
@@ -2934,6 +2945,12 @@
             <name>$PROJ_DIR$\drivers\fsl_lpuart.h</name>
         </file>
         <file>
+            <name>$PROJ_DIR$\drivers\fsl_trng.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\drivers\fsl_trng.h</name>
+        </file>
+        <file>
             <name>$PROJ_DIR$\drivers\fsl_usdhc.c</name>
         </file>
         <file>
@@ -2942,6 +2959,12 @@
     </group>
     <group>
         <name>linkkit</name>
+        <group>
+            <name>certs</name>
+            <file>
+                <name>$PROJ_DIR$\linkkit\certs\root_ca.c</name>
+            </file>
+        </group>
         <group>
             <name>coap_server</name>
             <group>
@@ -3034,6 +3057,9 @@
                     <name>awss_reset</name>
                     <file>
                         <name>$PROJ_DIR$\linkkit\dev_bind\impl\awss_reset\awss_dev_reset.c</name>
+                    </file>
+                    <file>
+                        <name>$PROJ_DIR$\linkkit\dev_bind\impl\awss_reset\awss_dev_reset.h</name>
                     </file>
                     <file>
                         <name>$PROJ_DIR$\linkkit\dev_bind\impl\awss_reset\awss_dev_reset_internal.h</name>
@@ -3476,6 +3502,15 @@
                 </file>
                 <file>
                     <name>$PROJ_DIR$\linkkit\wrappers\external_libs\cJSON.h</name>
+                </file>
+            </group>
+            <group>
+                <name>tls</name>
+                <file>
+                    <name>$PROJ_DIR$\linkkit\wrappers\tls\HAL_DTLS_mbedtls.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\linkkit\wrappers\tls\HAL_TLS_mbedtls.c</name>
                 </file>
             </group>
             <file>
@@ -4332,6 +4367,543 @@
         </file>
     </group>
     <group>
+        <name>mbedtls</name>
+        <group>
+            <name>include</name>
+            <group>
+                <name>mbedtls</name>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\aes.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\aesni.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\arc4.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\aria.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\asn1.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\asn1write.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\base64.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\bignum.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\blowfish.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\bn_mul.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\camellia.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\ccm.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\certs.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\chacha20.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\chachapoly.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\check_config.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\cipher.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\cipher_internal.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\cmac.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\compat-1.3.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\config.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\ctr_drbg.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\debug.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\des.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\dhm.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\ecdh.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\ecdsa.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\ecjpake.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\ecp.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\ecp_internal.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\entropy.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\entropy_poll.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\error.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\gcm.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\havege.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\hkdf.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\hmac_drbg.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\md.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\md2.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\md4.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\md5.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\md_internal.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\memory_buffer_alloc.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\net.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\net_sockets.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\nist_kw.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\oid.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\padlock.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\pem.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\pk.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\pk_internal.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\pkcs11.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\pkcs12.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\pkcs5.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\platform.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\platform_time.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\platform_util.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\poly1305.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\ripemd160.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\rsa.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\rsa_internal.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\sha1.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\sha256.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\sha512.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\ssl.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\ssl_cache.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\ssl_ciphersuites.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\ssl_cookie.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\ssl_internal.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\ssl_ticket.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\threading.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\timing.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\version.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\x509.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\x509_crl.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\x509_crt.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\x509_csr.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\include\mbedtls\xtea.h</name>
+                </file>
+            </group>
+        </group>
+        <group>
+            <name>library</name>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\.gitignore</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\aes.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\aesni.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\arc4.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\aria.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\asn1parse.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\asn1write.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\base64.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\bignum.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\blowfish.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\camellia.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\ccm.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\certs.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\chacha20.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\chachapoly.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\cipher.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\cipher_wrap.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\cmac.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\CMakeLists.txt</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\ctr_drbg.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\debug.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\des.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\dhm.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\ecdh.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\ecdsa.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\ecjpake.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\ecp.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\ecp_curves.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\entropy.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\entropy_poll.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\error.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\gcm.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\havege.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\hkdf.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\hmac_drbg.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\Makefile</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\md.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\md2.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\md4.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\md5.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\md_wrap.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\memory_buffer_alloc.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\net_sockets.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\nist_kw.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\oid.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\padlock.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\pem.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\pk.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\pk_wrap.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\pkcs11.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\pkcs12.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\pkcs5.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\pkparse.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\pkwrite.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\platform.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\platform_util.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\poly1305.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\ripemd160.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\rsa.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\rsa_internal.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\sha1.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\sha256.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\sha512.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\ssl_cache.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\ssl_ciphersuites.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\ssl_cli.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\ssl_cookie.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\ssl_srv.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\ssl_ticket.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\ssl_tls.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\threading.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\timing.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\version.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\version_features.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\x509.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\x509_create.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\x509_crl.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\x509_crt.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\x509_csr.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\x509write_crt.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\x509write_csr.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\mbedtls\library\xtea.c</name>
+            </file>
+        </group>
+        <group>
+            <name>port</name>
+            <group>
+                <name>ksdk</name>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\port\ksdk\aes_alt.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\port\ksdk\aes_alt.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\port\ksdk\des_alt.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\port\ksdk\des_alt.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\port\ksdk\ecp_alt.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\port\ksdk\ecp_alt.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\port\ksdk\ecp_alt_ksdk.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\port\ksdk\ecp_curves_alt.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\port\ksdk\ksdk_mbedtls.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\port\ksdk\ksdk_mbedtls.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\port\ksdk\ksdk_mbedtls_config.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\port\ksdk\sha1_alt.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\mbedtls\port\ksdk\sha256_alt.h</name>
+                </file>
+            </group>
+        </group>
+    </group>
+    <group>
         <name>sdmmc</name>
         <group>
             <name>inc</name>
@@ -4388,7 +4960,13 @@
             <name>$PROJ_DIR$\source\linkkit_example_solo.c</name>
         </file>
         <file>
+            <name>$PROJ_DIR$\source\log.c</name>
+        </file>
+        <file>
             <name>$PROJ_DIR$\source\lwipopts.h</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\source\washing_machine.c</name>
         </file>
         <file>
             <name>$PROJ_DIR$\source\wiced_iperf.c</name>
@@ -4400,7 +4978,7 @@
             <name>$PROJ_DIR$\src\evkbimxrt1050.mac</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\MIMXRT1052xxxxx_flexspi_nor.icf</name>
+            <name>$PROJ_DIR$\src\MIMXRT1052xxxxx_ram.icf</name>
         </file>
     </group>
     <group>
