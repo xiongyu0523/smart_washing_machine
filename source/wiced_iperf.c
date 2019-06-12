@@ -93,7 +93,7 @@ static void BOARD_InitNetwork()
             {
                 PRINTF(" Scan Error \n");
             }
-
+#if 0
             PRINTF("Joining : " AP_SSID "\n");
             (void)host_rtos_delay_milliseconds((uint32_t)1000);
             
@@ -111,6 +111,7 @@ static void BOARD_InitNetwork()
                     break;
                 }
             } while (err != WWD_SUCCESS);
+#endif
         }
     }
     else
@@ -143,33 +144,42 @@ void app_wait_wifi_connect(void ){
 	char wifi_key[40] = {0};
 	int ssid_len = 40;
 	int key_len = 40;
-	if(HAL_Kv_Get("wifi_ssid", wifi_ssid, &ssid_len) == 0){
-          if(ssid_len != 1 || wifi_ssid[0] != 0xff){
+	wwd_result_t err = WWD_SUCCESS;
+	
+	while((wwd_wifi_get_ap_is_up() != WICED_TRUE)){
+		
+		if(HAL_Kv_Get("wifi_ssid", wifi_ssid, &ssid_len) == 0){
+		  if(ssid_len != 1 || wifi_ssid[0] != 0xff){
 
 
-            if(HAL_Kv_Get("wifi_key", wifi_key, &key_len) == 0){
-               if(key_len != 1){
-                 wiced_ssid_t ap_ssid = {0};
-                 
-                 ap_ssid.length = strlen(wifi_ssid);
-                 memcpy(ap_ssid.value,wifi_ssid,ap_ssid.length);
-                  
-                  wwd_wifi_join(&ap_ssid, AP_SEC, (uint8_t *)wifi_key, strlen(wifi_key), NULL, WWD_STA_INTERFACE);
-                  HAL_Printf("join wifi:%s....\r\n",wifi_ssid);
-                  HAL_SleepMs(2000);
-               }
-            }
-          }
-	}
-	if(!HAL_Wifi_Connected()){
-	    HAL_Printf("Wifi not connected, join the AP first\r\n");
-	    HAL_SleepMs(1000);
-	    while(!HAL_Wifi_Connected()){
-	      HAL_SleepMs(500);
-	    }
-	}
+		    if(HAL_Kv_Get("wifi_key", wifi_key, &key_len) == 0){
+		       if(key_len != 1){
+					wiced_ssid_t ap_ssid = {0};
 
+					ap_ssid.length = strlen(wifi_ssid);
+					memcpy(ap_ssid.value,wifi_ssid,ap_ssid.length);
+					err = wwd_wifi_join(&ap_ssid, AP_SEC, (uint8_t *)wifi_key, strlen(wifi_key), NULL, WWD_STA_INTERFACE);
+					if (err != WWD_SUCCESS)
+					{
+						PRINTF("Failed to join  : " AP_SSID " \n");
+					}
+					else
+					{
+						PRINTF("Successfully joined : " AP_SSID "\n");
+						(void)host_rtos_delay_milliseconds((uint32_t)1000);
+						add_wlan_interface();
+						break;
+					}
+		       }
+		    }
+		  }
+		}
+        PRINTF("Join AP failed by using KV info\r\n");
+        HAL_SleepMs(1000);
+    } 
 }
+
+
 static uint8_t app_wifi_ib_same(char *ssid, char *key){
 	char wifi_ssid[40]={0};
 	char wifi_key[40] = {0};
@@ -211,7 +221,7 @@ void app_process_recive_cmd(char *buff, uint8_t len){
 
                         ap_ssid.length = strlen(wifi_ssid);
                         memcpy(ap_ssid.value,wifi_ssid,ap_ssid.length);
-                        wwd_wifi_join(&ap_ssid, AP_SEC, (uint8_t *)wifi_key, strlen(wifi_key), NULL, WWD_STA_INTERFACE);
+                        //wwd_wifi_join(&ap_ssid, AP_SEC, (uint8_t *)wifi_key, strlen(wifi_key), NULL, WWD_STA_INTERFACE);
                         HAL_Printf("join wifi:%s....\r\n",wifi_ssid);
 		}
 

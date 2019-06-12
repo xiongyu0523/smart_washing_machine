@@ -699,6 +699,7 @@ int wm_run(int argc, char **argv)
     }
 #endif
     
+	app_wait_wifi_connect();
 
     gpio_pin_config_t led_config = {
       .direction = kGPIO_DigitalOutput,

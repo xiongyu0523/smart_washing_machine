@@ -37,7 +37,7 @@ int32_t kv_flash_read(uint32_t offset, void *buf, uint32_t nbytes)
 {
     uint32_t cpu_addr;
     
-    PRINTF("R - kv_flash_read, offset = %d, nbytes = %d\r\n", offset, nbytes);
+   // PRINTF("R - kv_flash_read, offset = %d, nbytes = %d\r\n", offset, nbytes);
     
     cpu_addr = FlexSPI_AMBA_BASE + KV_FLASH_BASE + offset;
     memcpy(buf, (void *)cpu_addr, nbytes);
@@ -58,7 +58,7 @@ int32_t kv_flash_write(uint32_t offset, void *buf, uint32_t nbytes)
     uint32_t sizeLeft = nbytes;
     const uint8_t *buffer = (const uint8_t *)buf;
     
-    PRINTF("P - kv_flash_write, offset = %d, nbytes = %d, [0]=%d, [1]=%d, [2]=%d, [3]=%d\r\n", offset, nbytes, buffer[0], buffer[1], buffer[2], buffer[3]);
+   // PRINTF("P - kv_flash_write, offset = %d, nbytes = %d, [0]=%d, [1]=%d, [2]=%d, [3]=%d\r\n", offset, nbytes, buffer[0], buffer[1], buffer[2], buffer[3]);
     
     uint32_t old_primask = DisableGlobalIRQ();
     
