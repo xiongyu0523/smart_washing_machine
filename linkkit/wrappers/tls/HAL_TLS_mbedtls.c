@@ -34,7 +34,7 @@
 #define GUIDER_PRE_ADDRESS                  ("100.67.80.107")
 
 #ifndef CONFIG_MBEDTLS_DEBUG_LEVEL
-    #define CONFIG_MBEDTLS_DEBUG_LEVEL 1
+    #define CONFIG_MBEDTLS_DEBUG_LEVEL 0
 #endif
 
 typedef struct _TLSDataParams {

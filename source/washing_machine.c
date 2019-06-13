@@ -19,6 +19,12 @@
     #include "at_api.h"
 #endif
 
+#include "FreeRTOS.h"
+#include "portmacro.h"
+#include "semphr.h"
+#include "timers.h"
+#include "queue.h"
+
 #include "board.h"
 #include "fsl_gpio.h"
 
@@ -38,6 +44,7 @@ typedef struct {
     int master_initialized;
     int LightSwitch;
 } wm_example_ctx_t;
+
 
 static wm_example_ctx_t g_wm_ctx;
 #if 0
@@ -98,6 +105,16 @@ const char *wm_properties[] = {"WorkSwitch","WorkState","ChildLockSwitch","Water
 
 #endif
 typedef enum{
+	WM_WM_STANDARD,
+	WM_WM_SOFT,
+	WM_WM_STRONG,
+	WM_WM_QUICK,
+	WM_WM_WOOL,
+	WM_WM_CHEMFIBER,
+	WM_WM_COTTON,
+	WM_WM_JEANS
+}wm_washing_mode_e;
+typedef enum{
 	WS_IDLE = 0,
 	WS_WORKING,
 	WS_FINISHED,
@@ -152,6 +169,152 @@ static wm_data_info_t wm_ib={
 	.target_wtem = 55,
 
 };
+
+static TimerHandle_t wm_second_timer = NULL;
+static QueueHandle_t wm_timer_event_mutex = NULL;
+
+typedef void (*wm_timer_cb_fun)(void *args);
+typedef void (*wm_periodic_cb_fun)(int cnt_left);
+
+typedef struct{
+	struct dlist_s *prev;
+	struct dlist_s *next;
+	int time_set;
+	int time_left;
+	wm_timer_cb_fun cb_function;
+	
+	void *cb_args;
+	wm_periodic_cb_fun pcb_function;
+	char timer_event_name[32];
+}wm_timer_event_t;
+
+typedef __PACKED_STRUCT{
+	bool work_switch;
+	wm_washing_mode_e wm;
+
+}wm_local_timer_cb_args_t;
+
+struct list_head wm_timer_event_head;
+void wm_property_post(wm_propertity_e epro);
+
+static void wm_s_timer_cb(TimerHandle_t cb_timerhdl){
+	xSemaphoreTake(wm_timer_event_mutex, portMAX_DELAY);
+	if(list_empty(&wm_timer_event_head)){
+
+		HAL_Printf("Error state, no items in the timer event list\r\n");
+		xTimerStop(wm_second_timer, 0);
+		return;
+	}
+	wm_timer_event_t *wte = (wm_timer_event_t *)wm_timer_event_head.next;
+	do{
+		if(wte->time_left > 0){
+			wte->time_left--;
+			if(wte->pcb_function){
+				wte->pcb_function(wte->time_left);
+			}
+		}else{
+		
+			if(wte->cb_function){
+				wte->cb_function(wte->cb_args);
+			}
+			
+			list_del((dlist_t *)wte);
+                        vPortFree(wte);
+			
+		}
+                wte= (wm_timer_event_t *)wte->next;
+		if(!wte){
+			break;
+		}
+	}while((void *)wte != (void *)&wm_timer_event_head);
+
+	if(list_empty(&wm_timer_event_head)){
+		HAL_Printf("All timer event handled, will stop the periodic timer\r\n");
+		xTimerStop(wm_second_timer, 0);
+	}
+	xSemaphoreGive(wm_timer_event_mutex);
+
+}
+
+
+static wm_timer_event_t *wm_s_timer_event_find(char *event_name){
+	if(list_empty(&wm_timer_event_head)){
+
+		return NULL;
+	}
+	wm_timer_event_t *wte = (wm_timer_event_t *)wm_timer_event_head.next;
+	do{
+		if(!strcmp(event_name,wte->timer_event_name)){
+
+			return wte;
+		}
+                wte= (wm_timer_event_t *)wte->next;
+		if(!wte){
+			break;
+		}
+	}while((void *)wte != (void *)&wm_timer_event_head);
+	return NULL;
+
+
+}
+
+static void wm_s_timer_start(int time_s, wm_timer_cb_fun cb_function, void *cb_args, wm_periodic_cb_fun pcb, char *event_name){
+	
+	if(list_empty(&wm_timer_event_head)){
+		xTimerStart(wm_second_timer,pdMS_TO_TICKS(1000));
+	}
+	
+	xSemaphoreTake(wm_timer_event_mutex, portMAX_DELAY);
+	wm_timer_event_t *wme = wm_s_timer_event_find(event_name);
+	if(!wme){
+		wme = pvPortMalloc(sizeof(wm_timer_event_t));
+	}else{
+
+		list_del((dlist_t *)wme);
+	}
+	if(!wme){
+		xSemaphoreGive(wm_timer_event_mutex);
+
+		return;
+	}
+	memset(wme,0,sizeof(*wme));
+	wme->time_left = time_s;
+	wme->time_set = time_s;
+	wme->cb_args = cb_args;
+	wme->cb_function = cb_function;
+	wme->pcb_function = pcb;
+	strncpy(wme->timer_event_name,event_name,strlen(event_name));
+	list_add((dlist_t *)wme,&wm_timer_event_head);
+	xSemaphoreGive(wm_timer_event_mutex);
+
+}
+
+static void wm_s_timer_stop(char *timer_name){
+	xSemaphoreTake(wm_timer_event_mutex, portMAX_DELAY);
+	if(!list_empty(&wm_timer_event_head)){
+		
+		wm_timer_event_t *wte = (wm_timer_event_t *)wm_timer_event_head.next;
+		do{
+			if(!strcmp(timer_name,wte->timer_event_name)){
+				list_del((dlist_t *)wte);
+				vPortFree(wte);
+				break;
+			}
+            wte= (wm_timer_event_t *)wte->next;
+			if(!wte){
+				break;
+			}
+		}while((void *)wte != (void *)&wm_timer_event_head);
+		if(list_empty(&wm_timer_event_head)){
+			xTimerStop(wm_second_timer, 0);
+			HAL_Printf("wm timer stopped\r\n");
+		}
+	}
+	xSemaphoreGive(wm_timer_event_mutex);
+}
+
+
+
 
 
 
@@ -347,6 +510,7 @@ static void wm_property_ib_set(wm_propertity_e epro, cJSON *cvalue){
 		}
 		break;
 		default:{
+			HAL_Printf("Local wm ib cannot loacted\r\n");
 		break;
 		}
         }
@@ -372,6 +536,92 @@ static int wm_property_hal_set(cJSON *proot){
 
 }
 
+static void wm_reservation_timeout_cb(void *args){
+	HAL_Printf("Reservation timer callbacked, work minutes %d\r\n",args);	
+	wm_ib.reserv_time = 0.00;
+	//wm_property_post(PROPERTIY_RTIMER);
+}
+
+static void wm_reservation_periodic_cb(int cnt_left){
+	HAL_Printf("Reservation:%d\r\n",cnt_left);
+
+
+}
+
+static void wm_localtimer_timeout_cb(void *args){
+
+
+  int cb_set = (int )args;
+  HAL_Printf("Local timer callbacked, work switch %d, washing mode %d,valid %d\r\n",cb_set&0xff,(cb_set>>8)&0xff,(cb_set>>16)&0xff);
+  
+
+}
+
+static void wm_local_periodic_cb(int cnt_left){
+	HAL_Printf("Local:%d\r\n",cnt_left);
+
+
+
+}
+
+static void wm_reservation_timer_event_hdl(cJSON *rte){
+	cJSON *reserv_arr = cJSON_GetObjectItem(rte,"ReservationTimer");
+	  if(cJSON_IsNumber(reserv_arr)){
+			char timer_name[] = "reservation_timer";
+			wm_s_timer_start(reserv_arr->valueint * 60,wm_reservation_timeout_cb,(void *)reserv_arr->valueint,wm_reservation_periodic_cb,timer_name);
+			HAL_Printf("Reservation timer started, seconds %d\r\n",reserv_arr->valueint * 60);
+	  }
+
+}
+
+
+
+static void wm_local_timer_event_hdl(cJSON *rte){
+	cJSON *local_arr = cJSON_GetObjectItem(rte,"LocalTimer");
+	
+	char timer_name[] = "local_timer";
+	//wm_s_timer_start(reserv_arr->valueint * 60,wm_reservation_timeout_cb,(void *)reserv_arr->valueint,timer_name);
+	//HAL_Printf("Reservation timer started, seconds %d\r\n",reserv_arr->valueint * 60);
+	uint32_t arrysize = cJSON_GetArraySize(local_arr);
+	cJSON *arr_item = local_arr->child;
+	cJSON *enable = cJSON_GetObjectItem(arr_item,"Enable");
+	if(enable){
+		if(enable->valueint == 0){//local timer disable
+			wm_s_timer_stop(timer_name);
+		}else{
+			cJSON *timer = cJSON_GetObjectItem(arr_item,"Timer");
+			cJSON *work_switch = cJSON_GetObjectItem(arr_item,"WorkSwitch");
+			cJSON *washing_mode = cJSON_GetObjectItem(arr_item,"WashingMode");
+			cJSON *valid = cJSON_GetObjectItem(arr_item,"IsVaild");
+			int cb_args = 0;
+			cb_args |= work_switch->valueint;//work switch
+			cb_args |= washing_mode->valueint << 8;//washing mode
+			cb_args |= valid->valueint << 16;//valid
+			//extract time
+			int time_s = 0;
+			int i=0,j=0,k=0;
+			char minutes_hour[8]={0};
+			while(timer->valuestring[i]!='*'){
+				while(timer->valuestring[i] != ' '){
+					minutes_hour[j++] = timer->valuestring[i++];
+				}
+				if(k == 0){
+					time_s = atoi(minutes_hour)*60;
+					k = 1;
+				}else{
+					time_s += atoi(minutes_hour)*60*60;
+					break;
+				}
+				i++;
+				j=0;
+			}
+			wm_s_timer_start(time_s,wm_localtimer_timeout_cb,(void *)cb_args,wm_local_periodic_cb,timer_name);
+			HAL_Printf("Local timer started, seconds %d\r\n",time_s);
+		}
+
+	}
+}
+
 /** recv event post response message from cloud **/
 static int wm_property_set_event_handler(const int devid, const char *request, const int request_len)
 {
@@ -385,8 +635,14 @@ static int wm_property_set_event_handler(const int devid, const char *request, c
         HAL_Printf("JSON Parse Error\r\n");
         return -1;
     }
-    
-    wm_property_hal_set(p_root);
+    if(cJSON_GetObjectItem(p_root,"ReservationTimer") != NULL){
+      	wm_reservation_timer_event_hdl(p_root);
+    }else if(cJSON_GetObjectItem(p_root,"LocalTimer") != NULL){
+    	wm_local_timer_event_hdl(p_root);
+
+	}else{
+      wm_property_hal_set(p_root);
+    }
     
     cJSON_Delete(p_root);
 
@@ -527,31 +783,31 @@ static int wm_build_property_name_value(char *out, wm_propertity_e epro){
 		}
 		break;
 		case PROPERTIY_LTIME:{
-			offset += HAL_Snprintf(out + offset,64, "%f}", wm_ib.left_time);
+			offset += HAL_Snprintf(out + offset,64, "%.2f}", wm_ib.left_time);
 
 
 		}
 		break;
 		case PROPERTIY_SOTIME:{
-			offset += HAL_Snprintf(out + offset,64, "%f}", wm_ib.soak_time);
+			offset += HAL_Snprintf(out + offset,64, "%.2f}", wm_ib.soak_time);
 
 
 		}
 		break;
 		case PROPERTIY_WTIME:{
-			offset += HAL_Snprintf(out + offset,64, "%f}", wm_ib.wash_time);
+			offset += HAL_Snprintf(out + offset,64, "%.2f}", wm_ib.wash_time);
 
 
 		}
 		break;
 		case PROPERTIY_RTIME:{
-			offset += HAL_Snprintf(out + offset,64, "%f}", wm_ib.rinsh_time);
+			offset += HAL_Snprintf(out + offset,64, "%.2f}", wm_ib.rinsh_time);
 
 
 		}
 		break;
 		case PROPERTIY_SPTIME:{
-			offset += HAL_Snprintf(out + offset,64, "%f}", wm_ib.spin_time);
+			offset += HAL_Snprintf(out + offset,64, "%.2f}", wm_ib.spin_time);
 
 
 		}
@@ -563,18 +819,18 @@ static int wm_build_property_name_value(char *out, wm_propertity_e epro){
 		}
 		break;
 		case PROPERTIY_TSSPEED:{
-			offset += HAL_Snprintf(out + offset,64, "%f}", wm_ib.target_ss);
+			offset += HAL_Snprintf(out + offset,64, "%.2f}", wm_ib.target_ss);
 
 
 		}
 		break;
 		case PROPERTIY_TWTEM:{
-			offset += HAL_Snprintf(out + offset,64, "%f}", wm_ib.target_wtem);
+			offset += HAL_Snprintf(out + offset,64, "%.2f}", wm_ib.target_wtem);
 
 		}
 		break;
 		case PROPERTIY_DTIME:{
-			offset += HAL_Snprintf(out + offset,64, "%f}", wm_ib.dry_time);
+			offset += HAL_Snprintf(out + offset,64, "%.2f}", wm_ib.dry_time);
 
 		}
 		break;
@@ -584,17 +840,17 @@ static int wm_build_property_name_value(char *out, wm_propertity_e epro){
 		}
 		break;
 		case PROPERTIY_TDETERGENT:{
-			offset += HAL_Snprintf(out + offset,64, "%f}", wm_ib.target_detergent);
+			offset += HAL_Snprintf(out + offset,64, "%.2f}", wm_ib.target_detergent);
 
 		}
 		break;
 		case PROPERTIY_TSOFTENER:{
-			offset += HAL_Snprintf(out + offset,64, "%f}", wm_ib.target_softener);
+			offset += HAL_Snprintf(out + offset,64, "%.2f}", wm_ib.target_softener);
 
 		}
 		break;
 		case PROPERTIY_TDISINFECTAN:{
-			offset += HAL_Snprintf(out + offset,64, "%f}", wm_ib.target_disinfectant);
+			offset += HAL_Snprintf(out + offset,64, "%.2f}", wm_ib.target_disinfectant);
 
 		}
 		break;
@@ -614,7 +870,7 @@ static int wm_build_property_name_value(char *out, wm_propertity_e epro){
 		}
 		break;
 		case PROPERTIY_RTIMER:{
-			offset += HAL_Snprintf(out + offset,64, "%f}", wm_ib.reserv_time);
+			offset += HAL_Snprintf(out + offset,64, "%.2f}", wm_ib.reserv_time);
 
 		}
 		break;
@@ -684,6 +940,20 @@ void wm_deviceinfo_delete(void)
     EXAMPLE_TRACE("Device Info Delete Message ID: %d", res);
 }
 
+static void wm_init(void ){
+	if(wm_second_timer == NULL){
+		wm_second_timer = xTimerCreate("wm_second_timer", pdMS_TO_TICKS(1000), pdTRUE, NULL, (TimerCallbackFunction_t)wm_s_timer_cb);
+		if(wm_timer_event_mutex == NULL){
+			wm_timer_event_mutex = (QueueHandle_t )xSemaphoreCreateMutex();
+			if(wm_timer_event_mutex == NULL){
+
+				HAL_Printf("wm_timer_event_mutex create failed\r\n");
+			}
+		}
+		list_init(&wm_timer_event_head);
+	}	
+}
+
 
 int wm_run(int argc, char **argv)
 {
@@ -700,6 +970,7 @@ int wm_run(int argc, char **argv)
 #endif
     
 	app_wait_wifi_connect();
+	wm_init();
 
     gpio_pin_config_t led_config = {
       .direction = kGPIO_DigitalOutput,
@@ -765,7 +1036,7 @@ int wm_run(int argc, char **argv)
 
         /* Post Event Example */
         if ((cnt % 300) == 0) {
-            wm_property_post(PROPERTIY_WLEVEL);
+            wm_property_post(PROPERTIY_WSWITCH);
         }
     }
 }
