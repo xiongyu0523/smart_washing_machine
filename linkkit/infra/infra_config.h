@@ -34,6 +34,7 @@
 #define DEVICE_MODEL_ENABLED
 #define DEVICE_MODEL_SHADOW
 #define HAL_KV
+#define SUPPORT_TLS
 #define HAL_CRYPTO
 #define HAL_UDP
 #define COAP_PACKET

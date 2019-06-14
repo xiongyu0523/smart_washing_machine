@@ -37,7 +37,7 @@ int32_t kv_flash_read(uint32_t offset, void *buf, uint32_t nbytes)
 {
     uint32_t cpu_addr;
     
-    PRINTF("R - kv_flash_read, offset = %d, nbytes = %d\r\n", offset, nbytes);
+   // PRINTF("R - kv_flash_read, offset = %d, nbytes = %d\r\n", offset, nbytes);
     
     cpu_addr = FlexSPI_AMBA_BASE + KV_FLASH_BASE + offset;
     memcpy(buf, (void *)cpu_addr, nbytes);
@@ -58,10 +58,9 @@ int32_t kv_flash_write(uint32_t offset, void *buf, uint32_t nbytes)
     uint32_t sizeLeft = nbytes;
     const uint8_t *buffer = (const uint8_t *)buf;
     
-    PRINTF("P - kv_flash_write, offset = %d, nbytes = %d, [0]=%d, [1]=%d, [2]=%d, [3]=%d\r\n", offset, nbytes, buffer[0], buffer[1], buffer[2], buffer[3]);
+   // PRINTF("P - kv_flash_write, offset = %d, nbytes = %d, [0]=%d, [1]=%d, [2]=%d, [3]=%d\r\n", offset, nbytes, buffer[0], buffer[1], buffer[2], buffer[3]);
     
     uint32_t old_primask = DisableGlobalIRQ();
-    
     phy_address = KV_FLASH_BASE + offset;
     
    /* Check if the startaddress is the page size aligned */
@@ -140,7 +139,7 @@ int32_t kv_flash_write(uint32_t offset, void *buf, uint32_t nbytes)
         
         DCACHE_InvalidateByRange(FlexSPI_AMBA_BASE + phy_address, FLASH_PAGE_SIZE_BYTES);
     }
-    
+    EnableGlobalIRQ(old_primask);
     return 0;
 }
 
@@ -153,13 +152,11 @@ int32_t kv_flash_erase(uint32_t offset, uint32_t size)
     PRINTF("E - kv_flash_erase, offset = %d, size = %d\r\n", offset, size);
     
     uint32_t old_primask = DisableGlobalIRQ();
-    
     if (flexspi_nor_flash_erase_sector(FLEXSPI, KV_FLASH_BASE + offset) != kStatus_Success) {
         
         EnableGlobalIRQ(old_primask);
         return -1;
     }
-    
     EnableGlobalIRQ(old_primask);
     DCACHE_InvalidateByRange(FlexSPI_AMBA_BASE + KV_FLASH_BASE + offset, KV_FLASH_SECTOR_SIZE);
     return 0;
