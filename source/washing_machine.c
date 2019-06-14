@@ -27,6 +27,7 @@
 
 #include "board.h"
 #include "fsl_gpio.h"
+#include "washing_machine.h"
 
 #define EXAMPLE_TRACE(...)                                          \
     do {                                                            \
@@ -47,121 +48,12 @@ typedef struct {
 
 
 static wm_example_ctx_t g_wm_ctx;
-#if 0
-#define PROPERTIY_WSWITCH			"WorkSwitch"
-#define PROPERTIY_WSTATE			"WorkState"
-#define PROPERTIY_CLSWITCH			"ChildLockSwitch"
-#define PROPERTIY_WLEVEL			"WaterLevel"
-#define PROPERTIY_LTIME 			"LeftTime"
-#define PROPERTIY_SOTIME 			"SoakTime"
-#define PROPERTIY_WTIME 			"WashTime"
-#define PROPERTIY_RTIME 			"RinshTime"
-#define PROPERTIY_SPTIME 			"SpinTime"
-#define PROPERTIY_RTIMES 			"RinshTimes"
-#define PROPERTIY_TSSPEED 			"TargetSpinSpeed"
-#define PROPERTIY_TWTEM 			"TargetWaterTemperature"
-#define PROPERTIY_DTIME 			"DryTime"
-#define PROPERTIY_DSWITCH 			"DrySwitch"
-#define PROPERTIY_TDETERGENT 		"TargetDetergent"
-#define PROPERTIY_TSOFTENER 		"TargetSoftener"
-#define PROPERTIY_TDISINFECTAN 		"TargetDisinfectant"
-#define PROPERTIY_DOSTATE  		    "DoorOpeningState"
-#define PROPERTIY_PASWITCH  		    "PauseSwitch"
-#define PROPERTIY_DOPT  		    "DryOpt"
-#define PROPERTIY_RTIMER  		    "ReservationTimer"
-#define PROPERTIY_POSWITCH  		    "PowerSwitch"
-#else
-typedef enum{
-	PROPERTIY_WSWITCH,
-	PROPERTIY_WSTATE,
-	PROPERTIY_CLSWITCH,
-	PROPERTIY_WLEVEL,
-	PROPERTIY_LTIME,
-	PROPERTIY_SOTIME,
-	PROPERTIY_WTIME,
-	PROPERTIY_RTIME,
-	PROPERTIY_SPTIME,
-	PROPERTIY_RTIMES,
-	PROPERTIY_TSSPEED,
-	PROPERTIY_TWTEM,
-	PROPERTIY_DTIME,
-	PROPERTIY_DSWITCH,
-	PROPERTIY_TDETERGENT,
-	PROPERTIY_TSOFTENER,
-	PROPERTIY_TDISINFECTAN,
-	PROPERTIY_DOSTATE,
-	PROPERTIY_PASWITCH,
-	PROPERTIY_DOPT,
-	PROPERTIY_RTIMER,
-	PROPERTIY_POSWITCH,
-	PROPERITY_ALL,
-}wm_propertity_e;
+
 const char *wm_properties[] = {"WorkSwitch","WorkState","ChildLockSwitch","WaterLevel","LeftTime",
 	"SoakTime","WashTime","RinshTime","SpinTime","RinshTimes","TargetSpinSpeed","TargetWaterTemperature",
 	"DryTime","DrySwitch","TargetDetergent","TargetSoftener","TargetDisinfectant","DoorOpeningState",
-	"PauseSwitch","DryOpt","ReservationTimer","PowerSwitch"};
+	"PauseSwitch","DryOpt","ReservationTimer","PowerSwitch","WashingMode"};
 
-
-
-#endif
-typedef enum{
-	WM_WM_STANDARD,
-	WM_WM_SOFT,
-	WM_WM_STRONG,
-	WM_WM_QUICK,
-	WM_WM_WOOL,
-	WM_WM_CHEMFIBER,
-	WM_WM_COTTON,
-	WM_WM_JEANS
-}wm_washing_mode_e;
-typedef enum{
-	WS_IDLE = 0,
-	WS_WORKING,
-	WS_FINISHED,
-	WS_RESERVATION,
-	WS_PAUSE,
-	WS_ERROR,
-	WS_SHUTDOWN
-}wm_work_state_e;
-
-typedef enum{
-	WL_LOW = 1,
-	WL_MIDDLE,
-	WL_HIGH
-
-}wm_water_level_e;
-typedef enum{
-	DO_NONE,
-	DO_WEAK,
-	DO_MIDDLE,
-	DO_HIGH
-}wm_dry_opt_e;
-
-
-typedef struct{
-	bool work_switch;
-	wm_work_state_e work_state;
-	bool clock_switch;
-	wm_water_level_e water_level;
-	float left_time;
-	float soak_time;
-	float wash_time;
-	float rinsh_time;
-	float spin_time;
-	int32_t rinsh_times;
-	int32_t target_ss;
-	float target_wtem;
-	float dry_time;
-	bool dry_switch;
-	float target_detergent;
-	float target_softener;
-	float target_disinfectant;
-	bool door_opening_state;
-	bool pause_switch;
-	wm_dry_opt_e dry_opt;
-	float reserv_time;
-	bool power_switch;
-}wm_data_info_t;
 
 static wm_data_info_t wm_ib={
 	.water_level = WL_HIGH,
@@ -170,32 +62,16 @@ static wm_data_info_t wm_ib={
 
 };
 
+
+
 static TimerHandle_t wm_second_timer = NULL;
 static QueueHandle_t wm_timer_event_mutex = NULL;
 
-typedef void (*wm_timer_cb_fun)(void *args);
-typedef void (*wm_periodic_cb_fun)(int cnt_left);
 
-typedef struct{
-	struct dlist_s *prev;
-	struct dlist_s *next;
-	int time_set;
-	int time_left;
-	wm_timer_cb_fun cb_function;
-	
-	void *cb_args;
-	wm_periodic_cb_fun pcb_function;
-	char timer_event_name[32];
-}wm_timer_event_t;
-
-typedef __PACKED_STRUCT{
-	bool work_switch;
-	wm_washing_mode_e wm;
-
-}wm_local_timer_cb_args_t;
 
 struct list_head wm_timer_event_head;
-void wm_property_post(wm_propertity_e epro);
+
+static void wm_property_ib_set(wm_propertity_e epro, cJSON *cvalue);
 
 static void wm_s_timer_cb(TimerHandle_t cb_timerhdl){
 	xSemaphoreTake(wm_timer_event_mutex, portMAX_DELAY);
@@ -314,6 +190,106 @@ static void wm_s_timer_stop(char *timer_name){
 }
 
 
+static void wm_reservation_timeout_cb(void *args){
+	HAL_Printf("Reservation timer callbacked, work minutes %d\r\n",args);
+	
+	wm_ib.reserv_time = 0;
+	wm_property_post(RESERVATION_TIMER_PRO);
+}
+
+static void wm_reservation_periodic_cb(int cnt_left){
+	HAL_Printf("Reservation:%d\r\n",cnt_left);
+
+
+}
+
+static void wm_localtimer_timeout_cb(void *args){
+
+
+  wm_local_timer_cb_args_t *cb_set = (wm_local_timer_cb_args_t *)args;
+   
+  HAL_Printf("Local timer callbacked, work switch %d, washing mode %d\r\n",cb_set->work_switch,cb_set->wm);
+
+  wm_ib.work_switch = cb_set->work_switch;
+  wm_ib.work_state = cb_set->wm;
+  wm_property_post(WORK_SW_PRO);
+  wm_property_post(WASHING_MODE_PRO);
+  #if 0
+  //Report event to cloud
+	char property_payload[256] = {0};
+	int offset = 0;
+	offset += HAL_Snprintf(property_payload + offset,64, "{\"LocalTimer\":[{");
+	offset += HAL_Snprintf(property_payload + offset,64, "{\"Timer\":%s,",cb_set->timer_value);
+	offset += HAL_Snprintf(property_payload + offset,64, "{\"WorkSwitch\":%d,",cb_set->work_switch);
+	offset += HAL_Snprintf(property_payload + offset,64, "{\"WashingMode\":%d,",cb_set->wm);
+	offset += HAL_Snprintf(property_payload + offset,64, "{\"IsValid\":%d",0);
+	offset += HAL_Snprintf(property_payload + offset,64, "}]}");
+
+
+	IOT_Linkkit_Report(EXAMPLE_MASTER_DEVID, ITM_MSG_POST_PROPERTY,
+									 (unsigned char *)property_payload, strlen(property_payload));
+	#endif
+
+}
+
+static void wm_local_periodic_cb(int cnt_left){
+	HAL_Printf("Local:%d\r\n",cnt_left);
+
+
+
+}
+
+
+static void wm_local_timer_event_hdl(cJSON *rte){
+	cJSON *local_arr = cJSON_GetObjectItem(rte,"LocalTimer");
+	
+	char timer_name[] = "local_timer";
+	//wm_s_timer_start(reserv_arr->valueint * 60,wm_reservation_timeout_cb,(void *)reserv_arr->valueint,timer_name);
+	//HAL_Printf("Reservation timer started, seconds %d\r\n",reserv_arr->valueint * 60);
+	uint32_t arrysize = cJSON_GetArraySize(local_arr);
+	cJSON *arr_item = local_arr->child;
+	cJSON *enable = cJSON_GetObjectItem(arr_item,"Enable");
+	if(enable){
+		if(enable->valueint == 0){//local timer disable
+			wm_s_timer_stop(timer_name);
+		}else{
+			cJSON *timer = cJSON_GetObjectItem(arr_item,"Timer");
+			cJSON *work_switch = cJSON_GetObjectItem(arr_item,"WorkSwitch");
+			cJSON *washing_mode = cJSON_GetObjectItem(arr_item,"WashingMode");
+			cJSON *valid = cJSON_GetObjectItem(arr_item,"IsVaild");
+			wm_local_timer_cb_args_t *lcb_args = pvPortMalloc(sizeof(wm_local_timer_cb_args_t));
+
+			if(!lcb_args){
+				return;
+			}
+			memset(lcb_args,0,sizeof(lcb_args));
+			lcb_args->work_switch = work_switch->valueint;//work switch
+			lcb_args->wm = washing_mode->valueint;//washing mode
+			//extract time
+			int time_s = 0;
+			int i=0,j=0,k=0;
+			char minutes_hour[8]={0};
+			strcpy(lcb_args->timer_value, timer->valuestring);
+			while(timer->valuestring[i]!='*'){
+				while(timer->valuestring[i] != ' '){
+					minutes_hour[j++] = timer->valuestring[i++];
+				}
+				if(k == 0){
+					time_s = atoi(minutes_hour)*60;
+					k = 1;
+				}else{
+					time_s += atoi(minutes_hour)*60*60;
+					break;
+				}
+				i++;
+				j=0;
+			}
+			wm_s_timer_start(time_s,wm_localtimer_timeout_cb,(void *)lcb_args,wm_local_periodic_cb,timer_name);
+			HAL_Printf("Local timer started, seconds %d\r\n",time_s);
+		}
+
+	}
+}
 
 
 
@@ -377,136 +353,152 @@ static int wm_trigger_event_reply_event_handler(const int devid, const int msgid
     return 0;
 }
 
-		
+static void wm_reservation_timer_set_hdl(int minutes){
+	
+	char timer_name[] = "reservation_timer";
+	wm_s_timer_start(minutes * 60,wm_reservation_timeout_cb,(void *)minutes,wm_reservation_periodic_cb,timer_name);
+	HAL_Printf("Reservation timer started, seconds %d\r\n",minutes * 60);
+	  
+
+}
+
 static void wm_property_ib_set(wm_propertity_e epro, cJSON *cvalue){
 	switch(epro){
-		case PROPERTIY_WSWITCH:{
+		case WORK_SW_PRO:{
 			if(cJSON_IsNumber(cvalue))
 				wm_ib.work_switch = cvalue->valueint;
 			
 		}
 		break;
-		case PROPERTIY_WSTATE:{
+		case WORK_ST_PRO:{
 			if(cJSON_IsNumber(cvalue))
 				wm_ib.work_state = cvalue->valueint;
 
 
 		}
 		break;
-		case PROPERTIY_CLSWITCH:{
+		case CHILD_LOCKSW_PRO:{
 			if(cJSON_IsNumber(cvalue))
 				wm_ib.clock_switch = cvalue->valueint;
 
 
 		}
 		break;
-		case PROPERTIY_WLEVEL:{
+		case WATER_LEVEL_PRO:{
 			if(cJSON_IsNumber(cvalue))
 				wm_ib.water_level = cvalue->valueint;
 
 		}
 		break;
-		case PROPERTIY_LTIME:{
+		case LEFT_TIME_PRO:{
 			if(cJSON_IsNumber(cvalue))
 				wm_ib.left_time = cvalue->valuedouble;
 		}
 		break;
-		case PROPERTIY_SOTIME:{
+		case SOAK_TIME_PRO:{
 			if(cJSON_IsNumber(cvalue))
 				wm_ib.soak_time = cvalue->valuedouble;
 
 		}
 		break;
-		case PROPERTIY_WTIME:{
+		case WASH_TIME_PRO:{
 			if(cJSON_IsNumber(cvalue))
 				wm_ib.wash_time = cvalue->valuedouble;
 
 		}
 		break;
-		case PROPERTIY_RTIME:{
+		case RINSH_TIME_PRO:{
 			
 		if(cJSON_IsNumber(cvalue))
 			wm_ib.rinsh_time = cvalue->valuedouble;
 
 		}
 		break;
-		case PROPERTIY_SPTIME:{
+		case SPINE_TIME_PRO:{
 			if(cJSON_IsNumber(cvalue))
 				wm_ib.spin_time = cvalue->valuedouble;
 
 		}
 		break;
-		case PROPERTIY_RTIMES:{
+		case RINSH_TIMES_PRO:{
 			if(cJSON_IsNumber(cvalue))
 				wm_ib.rinsh_times = cvalue->valueint;
 
 		}
 		break;
-		case PROPERTIY_TSSPEED:{
+		case TARGET_SPINSPEED_PRO:{
 			if(cJSON_IsNumber(cvalue))
 				wm_ib.target_ss = cvalue->valuedouble;
 	
 
 		}
 		break;
-		case PROPERTIY_TWTEM:{
+		case TARGET_WATERTEM_PRO:{
 			if(cJSON_IsNumber(cvalue))
 				wm_ib.target_wtem = cvalue->valuedouble;
 		}
 		break;
-		case PROPERTIY_DTIME:{
+		case DRY_TIME_PRO:{
 			if(cJSON_IsNumber(cvalue))
 				wm_ib.dry_time = cvalue->valuedouble;
 		}
 		break;
-		case PROPERTIY_DSWITCH:{
+		case DRY_SW_PRO:{
 			if(cJSON_IsNumber(cvalue))
 				wm_ib.dry_switch = cvalue->valueint;
 		}
 		break;
-		case PROPERTIY_TDETERGENT:{
+		case TARGET_DETERGENT_PRO:{
 			if(cJSON_IsNumber(cvalue))
 				wm_ib.target_detergent = cvalue->valuedouble;
 		}
 		break;
-		case PROPERTIY_TSOFTENER:{
+		case TARGET_SOFTENER_PRO:{
 			if(cJSON_IsNumber(cvalue))
 				wm_ib.target_softener = cvalue->valuedouble;
 
 		}
 		break;
-		case PROPERTIY_TDISINFECTAN:{
+		case TARGET_DISINFECTAN_PRO:{
 			if(cJSON_IsNumber(cvalue))
 				wm_ib.target_disinfectant = cvalue->valuedouble;
 
 		}
 		break;
-		case PROPERTIY_DOSTATE:{
+		case DOOR_OPENING_ST_PRO:{
 			if(cJSON_IsNumber(cvalue))
 				wm_ib.door_opening_state = cvalue->valueint;
 
 		}
 		break;
-		case PROPERTIY_PASWITCH:{
+		case PAUSE_SW_PRO:{
 			if(cJSON_IsNumber(cvalue))
 				wm_ib.pause_switch = cvalue->valueint;
 		}
 		break;
-		case PROPERTIY_DOPT:{
+		case DRY_OPT_PRO:{
 			if(cJSON_IsNumber(cvalue))
 				wm_ib.dry_opt = cvalue->valueint;
 
 		}
 		break;
-		case PROPERTIY_RTIMER:{
+		case RESERVATION_TIMER_PRO:{
 			if(cJSON_IsNumber(cvalue))
 				wm_ib.reserv_time = cvalue->valuedouble;
+			if(wm_ib.reserv_time){
+				wm_reservation_timer_set_hdl(wm_ib.reserv_time);
+			}
 	
 		}
 		break;
-		case PROPERTIY_POSWITCH:{
+		case POWER_SW_PRO:{
 			if(cJSON_IsNumber(cvalue))
 				wm_ib.power_switch = cvalue->valueint;
+		}
+		break;
+		case WASHING_MODE_PRO:{
+			if(cJSON_IsNumber(cvalue))
+				wm_ib.washing_mode = cvalue->valueint;
 		}
 		break;
 		default:{
@@ -520,7 +512,7 @@ static void wm_property_ib_set(wm_propertity_e epro, cJSON *cvalue){
 static int wm_property_hal_set(cJSON *proot){
 	cJSON *p_setv;
 	int i;
-	for(i=0;i<PROPERITY_ALL;i++){
+	for(i=0;i<ALL_PRO;i++){
 		p_setv = cJSON_GetObjectItemCaseSensitive(proot, wm_properties[i]);
 		if(p_setv){
 			break;
@@ -536,91 +528,7 @@ static int wm_property_hal_set(cJSON *proot){
 
 }
 
-static void wm_reservation_timeout_cb(void *args){
-	HAL_Printf("Reservation timer callbacked, work minutes %d\r\n",args);	
-	wm_ib.reserv_time = 0.00;
-	//wm_property_post(PROPERTIY_RTIMER);
-}
 
-static void wm_reservation_periodic_cb(int cnt_left){
-	HAL_Printf("Reservation:%d\r\n",cnt_left);
-
-
-}
-
-static void wm_localtimer_timeout_cb(void *args){
-
-
-  int cb_set = (int )args;
-  HAL_Printf("Local timer callbacked, work switch %d, washing mode %d,valid %d\r\n",cb_set&0xff,(cb_set>>8)&0xff,(cb_set>>16)&0xff);
-  
-
-}
-
-static void wm_local_periodic_cb(int cnt_left){
-	HAL_Printf("Local:%d\r\n",cnt_left);
-
-
-
-}
-
-static void wm_reservation_timer_event_hdl(cJSON *rte){
-	cJSON *reserv_arr = cJSON_GetObjectItem(rte,"ReservationTimer");
-	  if(cJSON_IsNumber(reserv_arr)){
-			char timer_name[] = "reservation_timer";
-			wm_s_timer_start(reserv_arr->valueint * 60,wm_reservation_timeout_cb,(void *)reserv_arr->valueint,wm_reservation_periodic_cb,timer_name);
-			HAL_Printf("Reservation timer started, seconds %d\r\n",reserv_arr->valueint * 60);
-	  }
-
-}
-
-
-
-static void wm_local_timer_event_hdl(cJSON *rte){
-	cJSON *local_arr = cJSON_GetObjectItem(rte,"LocalTimer");
-	
-	char timer_name[] = "local_timer";
-	//wm_s_timer_start(reserv_arr->valueint * 60,wm_reservation_timeout_cb,(void *)reserv_arr->valueint,timer_name);
-	//HAL_Printf("Reservation timer started, seconds %d\r\n",reserv_arr->valueint * 60);
-	uint32_t arrysize = cJSON_GetArraySize(local_arr);
-	cJSON *arr_item = local_arr->child;
-	cJSON *enable = cJSON_GetObjectItem(arr_item,"Enable");
-	if(enable){
-		if(enable->valueint == 0){//local timer disable
-			wm_s_timer_stop(timer_name);
-		}else{
-			cJSON *timer = cJSON_GetObjectItem(arr_item,"Timer");
-			cJSON *work_switch = cJSON_GetObjectItem(arr_item,"WorkSwitch");
-			cJSON *washing_mode = cJSON_GetObjectItem(arr_item,"WashingMode");
-			cJSON *valid = cJSON_GetObjectItem(arr_item,"IsVaild");
-			int cb_args = 0;
-			cb_args |= work_switch->valueint;//work switch
-			cb_args |= washing_mode->valueint << 8;//washing mode
-			cb_args |= valid->valueint << 16;//valid
-			//extract time
-			int time_s = 0;
-			int i=0,j=0,k=0;
-			char minutes_hour[8]={0};
-			while(timer->valuestring[i]!='*'){
-				while(timer->valuestring[i] != ' '){
-					minutes_hour[j++] = timer->valuestring[i++];
-				}
-				if(k == 0){
-					time_s = atoi(minutes_hour)*60;
-					k = 1;
-				}else{
-					time_s += atoi(minutes_hour)*60*60;
-					break;
-				}
-				i++;
-				j=0;
-			}
-			wm_s_timer_start(time_s,wm_localtimer_timeout_cb,(void *)cb_args,wm_local_periodic_cb,timer_name);
-			HAL_Printf("Local timer started, seconds %d\r\n",time_s);
-		}
-
-	}
-}
 
 /** recv event post response message from cloud **/
 static int wm_property_set_event_handler(const int devid, const char *request, const int request_len)
@@ -635,9 +543,7 @@ static int wm_property_set_event_handler(const int devid, const char *request, c
         HAL_Printf("JSON Parse Error\r\n");
         return -1;
     }
-    if(cJSON_GetObjectItem(p_root,"ReservationTimer") != NULL){
-      	wm_reservation_timer_event_hdl(p_root);
-    }else if(cJSON_GetObjectItem(p_root,"LocalTimer") != NULL){
+    if(cJSON_GetObjectItem(p_root,"LocalTimer") != NULL){
     	wm_local_timer_event_hdl(p_root);
 
 	}else{
@@ -753,129 +659,134 @@ static int wm_cota_event_handler(int type, const char *config_id, int config_siz
 
 static int wm_build_property_name_value(char *out, wm_propertity_e epro){
 	int offset = 0;
-	if(epro >= PROPERITY_ALL){
+	if(epro >= ALL_PRO){
 
 		return -1;
 	}
 	offset += HAL_Snprintf(out + offset,64, "{\"%s\": ", wm_properties[epro]);
 	switch(epro){
-		case PROPERTIY_WSWITCH:{
+		case WORK_SW_PRO:{
 			offset += HAL_Snprintf(out + offset,64, "%d}", wm_ib.work_switch);
 
 		}
 		break;
-		case PROPERTIY_WSTATE:{
+		case WORK_ST_PRO:{
 			offset += HAL_Snprintf(out + offset,64, "%d}", wm_ib.work_state);
 
 
 		}
 		break;
-		case PROPERTIY_CLSWITCH:{
+		case CHILD_LOCKSW_PRO:{
 			offset += HAL_Snprintf(out + offset,64, "%d}", wm_ib.clock_switch);
 
 
 		}
 		break;
-		case PROPERTIY_WLEVEL:{
+		case WATER_LEVEL_PRO:{
 			offset += HAL_Snprintf(out + offset,64, "%d}", wm_ib.water_level);
 
 
 		}
 		break;
-		case PROPERTIY_LTIME:{
+		case LEFT_TIME_PRO:{
 			offset += HAL_Snprintf(out + offset,64, "%.2f}", wm_ib.left_time);
 
 
 		}
 		break;
-		case PROPERTIY_SOTIME:{
+		case SOAK_TIME_PRO:{
 			offset += HAL_Snprintf(out + offset,64, "%.2f}", wm_ib.soak_time);
 
 
 		}
 		break;
-		case PROPERTIY_WTIME:{
+		case WASH_TIME_PRO:{
 			offset += HAL_Snprintf(out + offset,64, "%.2f}", wm_ib.wash_time);
 
 
 		}
 		break;
-		case PROPERTIY_RTIME:{
+		case RINSH_TIME_PRO:{
 			offset += HAL_Snprintf(out + offset,64, "%.2f}", wm_ib.rinsh_time);
 
 
 		}
 		break;
-		case PROPERTIY_SPTIME:{
+		case SPINE_TIME_PRO:{
 			offset += HAL_Snprintf(out + offset,64, "%.2f}", wm_ib.spin_time);
 
 
 		}
 		break;
-		case PROPERTIY_RTIMES:{
+		case RINSH_TIMES_PRO:{
 			offset += HAL_Snprintf(out + offset,64, "%d}", wm_ib.rinsh_times);
 
 
 		}
 		break;
-		case PROPERTIY_TSSPEED:{
+		case TARGET_SPINSPEED_PRO:{
 			offset += HAL_Snprintf(out + offset,64, "%.2f}", wm_ib.target_ss);
 
 
 		}
 		break;
-		case PROPERTIY_TWTEM:{
+		case TARGET_WATERTEM_PRO:{
 			offset += HAL_Snprintf(out + offset,64, "%.2f}", wm_ib.target_wtem);
 
 		}
 		break;
-		case PROPERTIY_DTIME:{
+		case DRY_TIME_PRO:{
 			offset += HAL_Snprintf(out + offset,64, "%.2f}", wm_ib.dry_time);
 
 		}
 		break;
-		case PROPERTIY_DSWITCH:{
+		case DRY_SW_PRO:{
 			offset += HAL_Snprintf(out + offset,64, "%d}", wm_ib.dry_switch);
 
 		}
 		break;
-		case PROPERTIY_TDETERGENT:{
+		case TARGET_DETERGENT_PRO:{
 			offset += HAL_Snprintf(out + offset,64, "%.2f}", wm_ib.target_detergent);
 
 		}
 		break;
-		case PROPERTIY_TSOFTENER:{
+		case TARGET_SOFTENER_PRO:{
 			offset += HAL_Snprintf(out + offset,64, "%.2f}", wm_ib.target_softener);
 
 		}
 		break;
-		case PROPERTIY_TDISINFECTAN:{
+		case TARGET_DISINFECTAN_PRO:{
 			offset += HAL_Snprintf(out + offset,64, "%.2f}", wm_ib.target_disinfectant);
 
 		}
 		break;
-		case PROPERTIY_DOSTATE:{
+		case DOOR_OPENING_ST_PRO:{
 			offset += HAL_Snprintf(out + offset,64, "%d}", wm_ib.door_opening_state);
 
 		}
 		break;
-		case PROPERTIY_PASWITCH:{
+		case PAUSE_SW_PRO:{
 			offset += HAL_Snprintf(out + offset,64, "%d}", wm_ib.pause_switch);
 
 		}
 		break;
-		case PROPERTIY_DOPT:{
+		case DRY_OPT_PRO:{
 			offset += HAL_Snprintf(out + offset,64, "%d}", wm_ib.dry_opt);
 
 		}
 		break;
-		case PROPERTIY_RTIMER:{
+		case RESERVATION_TIMER_PRO:{
 			offset += HAL_Snprintf(out + offset,64, "%.2f}", wm_ib.reserv_time);
 
 		}
 		break;
-		case PROPERTIY_POSWITCH:{
+		case POWER_SW_PRO:{
 			offset += HAL_Snprintf(out + offset,64, "%d}", wm_ib.power_switch);
+
+		}
+		break;
+		case WASHING_MODE_PRO:{
+			offset += HAL_Snprintf(out + offset,64, "%d}", wm_ib.washing_mode);
 
 		}
 		break;
@@ -889,14 +800,14 @@ static int wm_build_property_name_value(char *out, wm_propertity_e epro){
 }
 
 void wm_property_post(wm_propertity_e epro){
-	char property_payload[512] = {0};
+	char property_payload[128] = {0};
 	int offset = 0;
 
-	if(epro == PROPERITY_ALL){
+	if(epro == ALL_PRO){
 		
 		int i;
-		for(i=0;i<PROPERITY_ALL;i++){
-			offset = wm_build_property_name_value(property_payload+offset,(wm_propertity_e )i);
+		for(i=0;i<ALL_PRO;i++){
+			offset += wm_build_property_name_value(property_payload+offset,(wm_propertity_e )i);
 		}
 
 	}else{
@@ -1026,8 +937,8 @@ int wm_run(int argc, char **argv)
         EXAMPLE_TRACE("IOT_Linkkit_Connect Failed\n");
         return -1;
     }
-	//wm_property_post(PROPERITY_ALL);
-
+	//wm_property_post(ALL_PRO);
+	
     while (1) {
         
         IOT_Linkkit_Yield(EXAMPLE_YIELD_TIMEOUT_MS);
@@ -1035,8 +946,9 @@ int wm_run(int argc, char **argv)
         cnt++;
 
         /* Post Event Example */
-        if ((cnt % 300) == 0) {
-            wm_property_post(PROPERTIY_WSWITCH);
+        if ((cnt % 100) == 0) {
+            wm_property_post(WORK_ST_PRO);
+			//wm_property_post(WATER_LEVEL_PRO);
         }
     }
 }
