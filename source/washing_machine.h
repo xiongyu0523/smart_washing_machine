@@ -61,7 +61,8 @@ typedef enum{
 	WM_WM_WOOL,
 	WM_WM_CHEMFIBER,
 	WM_WM_COTTON,
-	WM_WM_JEANS
+	WM_WM_JEANS,
+	WM_WM_SELF
 }wm_washing_mode_e;
 typedef enum{
 	WS_IDLE = 0,

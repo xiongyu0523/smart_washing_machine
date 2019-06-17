@@ -43,7 +43,6 @@ typedef struct {
     int master_devid;
     int cloud_connected;
     int master_initialized;
-    int LightSwitch;
 } wm_example_ctx_t;
 
 
@@ -54,11 +53,21 @@ const char *wm_properties[] = {"WorkSwitch","WorkState","ChildLockSwitch","Water
 	"DryTime","DrySwitch","TargetDetergent","TargetSoftener","TargetDisinfectant","DoorOpeningState",
 	"PauseSwitch","DryOpt","ReservationTimer","PowerSwitch","WashingMode"};
 
-
+//Washing mode standard
 static wm_data_info_t wm_ib={
-	.water_level = WL_HIGH,
+	
+		.water_level = WL_MIDDLE,
 
-	.target_wtem = 55,
+		.soak_time = 10,
+		.wash_time = 35,
+
+		.rinsh_time = 5,
+		.rinsh_times = 2,
+
+		.spin_time = 5,
+		.target_wtem = 25,
+		.target_ss = 2500,
+
 
 };
 
@@ -362,11 +371,217 @@ static void wm_reservation_timer_set_hdl(int minutes){
 
 }
 
+
+void wm_ui_handle_work_switch_off(void ){
+	HAL_Printf("Washing Machine work switch off..\r\n");
+	HAL_Printf("Do UI update...\r\n");
+
+
+
+}
+
+void wm_ui_handle_work_switch_on(void ){
+	HAL_Printf("Washing Machine start..\r\n");
+	HAL_Printf("Do UI update..., washing mode %d, temp %.2f, spin %d, finsih time %.2f minutes\r\n",
+				wm_ib.washing_mode,wm_ib.target_wtem,wm_ib.target_ss,wm_ib.left_time);
+
+
+
+
+}
+
+
+void wm_washing_mode_set_handle(void ){
+	switch (wm_ib.washing_mode){
+	case WM_WM_STANDARD:{
+		wm_ib.water_level = WL_MIDDLE;
+		
+		wm_ib.soak_time = 10;
+		wm_ib.wash_time = 35;
+		
+		wm_ib.rinsh_time = 5;
+		wm_ib.rinsh_times = 2;
+		
+		wm_ib.spin_time = 5;
+		wm_ib.target_wtem = 25;
+		wm_ib.target_ss = 2500;
+
+	}
+	break;
+	case WM_WM_SOFT:{
+		wm_ib.water_level = WL_MIDDLE;
+		
+		wm_ib.soak_time = 20;
+		wm_ib.wash_time = 15;
+		
+		wm_ib.rinsh_time = 5;
+		wm_ib.rinsh_times = 3;
+		
+		wm_ib.spin_time = 3;
+		wm_ib.target_wtem = 30;
+		wm_ib.target_ss = 1500;
+
+	}
+	break;
+	case WM_WM_STRONG:{
+		wm_ib.water_level = WL_HIGH;
+		
+		wm_ib.soak_time = 20;
+		wm_ib.wash_time = 45;
+		
+		wm_ib.rinsh_time = 8;
+		wm_ib.rinsh_times = 3;
+		
+		wm_ib.spin_time = 5;
+		wm_ib.target_wtem = 25;
+		wm_ib.target_ss = 3000;
+
+	}
+	break;
+	case WM_WM_QUICK:{
+		wm_ib.water_level = WL_LOW;
+		
+		wm_ib.soak_time = 5;
+		wm_ib.wash_time = 10;
+		
+		wm_ib.rinsh_time = 2;
+		wm_ib.rinsh_times = 3;
+		
+		wm_ib.spin_time = 3;
+		wm_ib.target_wtem = 25;
+		wm_ib.target_ss = 2000;
+
+	}
+	break;
+	case WM_WM_WOOL:{
+		wm_ib.water_level = WL_LOW;
+		
+		wm_ib.soak_time = 25;
+		wm_ib.wash_time = 20;
+		
+		wm_ib.rinsh_time = 3;
+		wm_ib.rinsh_times = 3;
+		
+		wm_ib.spin_time = 3;
+		wm_ib.target_wtem = 45;
+		wm_ib.target_ss = 2000;
+
+	}
+	break;
+	case WM_WM_CHEMFIBER:{
+		wm_ib.water_level = WL_LOW;
+		
+		wm_ib.soak_time = 30;
+		wm_ib.wash_time = 20;
+		
+		wm_ib.rinsh_time = 5;
+		wm_ib.rinsh_times = 3;
+		
+		wm_ib.spin_time = 5;
+		wm_ib.target_wtem = 25;
+		wm_ib.target_ss = 2500;
+
+	}
+	break;
+	case WM_WM_COTTON:{
+		wm_ib.water_level = WL_LOW;
+		
+		wm_ib.soak_time = 20;
+		wm_ib.wash_time = 10;
+		
+		wm_ib.rinsh_time = 3;
+		wm_ib.rinsh_times = 2;
+		
+		wm_ib.spin_time = 5;
+		wm_ib.target_wtem = 30;
+		wm_ib.target_ss = 1000;
+
+	}
+	break;
+	case WM_WM_JEANS:{
+		wm_ib.water_level = WL_LOW;
+		
+		wm_ib.soak_time = 20;
+		wm_ib.wash_time = 10;
+		
+		wm_ib.rinsh_time = 3;
+		wm_ib.rinsh_times = 2;
+		
+		wm_ib.spin_time = 5;
+		wm_ib.target_wtem = 30;
+		wm_ib.target_ss = 1000;
+
+	}
+	break;
+	case WM_WM_SELF:{
+		wm_ib.water_level = WL_LOW;
+				
+		wm_ib.soak_time = 10;
+		wm_ib.wash_time = 5;
+		
+		wm_ib.rinsh_time = 3;
+		wm_ib.rinsh_times = 2;
+		
+		wm_ib.spin_time = 5;
+		wm_ib.target_wtem = 20;
+		wm_ib.target_ss = 1800;
+
+
+	}
+	break;
+	default:
+	break;
+
+}
+
+
+
+}
+
+static void wm_finishtimer_timeout_cb(void *args){
+
+   
+  HAL_Printf("Washing Finished\r\n");
+
+  wm_ib.work_state = WS_FINISHED;
+  wm_property_post(WASHING_MODE_PRO);
+
+
+}
+
+static void wm_finish_timer_periodic_cb(int cnt_left){
+	HAL_Printf("Finish Timer:%d\r\n",cnt_left);
+
+
+
+}
+
+void wm_work_switch_changed(void ){
+	if(wm_ib.work_switch == false){
+		
+		wm_s_timer_stop("local_timer");
+		wm_s_timer_stop("finish_timer");
+		wm_ui_handle_work_switch_off();
+		return;
+	}
+	wm_ib.left_time = wm_ib.soak_time + wm_ib.wash_time;
+	
+	wm_ib.left_time += wm_ib.rinsh_time*wm_ib.rinsh_times;
+	wm_ib.left_time += wm_ib.spin_time;
+	wm_ib.work_state = WS_WORKING;
+	wm_s_timer_start(wm_ib.left_time*60,wm_finishtimer_timeout_cb,NULL,wm_finish_timer_periodic_cb,"finish_timer");
+	wm_ui_handle_work_switch_on();
+
+
+}
+
 static void wm_property_ib_set(wm_propertity_e epro, cJSON *cvalue){
 	switch(epro){
 		case WORK_SW_PRO:{
-			if(cJSON_IsNumber(cvalue))
+			if(cJSON_IsNumber(cvalue)){
 				wm_ib.work_switch = cvalue->valueint;
+				wm_work_switch_changed();
+			}
 			
 		}
 		break;
@@ -497,8 +712,10 @@ static void wm_property_ib_set(wm_propertity_e epro, cJSON *cvalue){
 		}
 		break;
 		case WASHING_MODE_PRO:{
-			if(cJSON_IsNumber(cvalue))
+			if(cJSON_IsNumber(cvalue)){
 				wm_ib.washing_mode = cvalue->valueint;
+				wm_washing_mode_set_handle();
+			}
 		}
 		break;
 		default:{
@@ -519,13 +736,8 @@ static int wm_property_hal_set(cJSON *proot){
 		}
 	}
 	if(p_setv){
-
 		wm_property_ib_set(i,p_setv);
-
 	}
-
-
-
 }
 
 
@@ -800,7 +1012,12 @@ static int wm_build_property_name_value(char *out, wm_propertity_e epro){
 }
 
 void wm_property_post(wm_propertity_e epro){
-	char property_payload[128] = {0};
+	char *property_payload = HAL_Malloc(128);
+	if(property_payload == NULL){
+
+		return;
+	}
+	memset(property_payload,0,sizeof(*property_payload));
 	int offset = 0;
 
 	if(epro == ALL_PRO){
@@ -817,6 +1034,7 @@ void wm_property_post(wm_propertity_e epro){
 	
 	IOT_Linkkit_Report(EXAMPLE_MASTER_DEVID, ITM_MSG_POST_PROPERTY,
 									 (unsigned char *)property_payload, strlen(property_payload));
+	HAL_Free(property_payload);
 
 }
 
@@ -851,6 +1069,41 @@ void wm_deviceinfo_delete(void)
     EXAMPLE_TRACE("Device Info Delete Message ID: %d", res);
 }
 
+void wm_cli_process(char *inc, uint8_t len){
+	cJSON *csv = HAL_Malloc(sizeof(cJSON));
+	if(!csv){
+
+		return;
+	}
+	memset(csv,0,sizeof(*csv));
+	csv->type = cJSON_Number;
+
+	if(inc[1] == 's'){
+		
+		if(inc[3] == '0'){
+			csv->valueint = 0;
+
+		}else{
+			csv->valueint = 1;
+
+
+		}
+		
+		wm_property_ib_set(WORK_SW_PRO,csv);
+	}else if(inc[1] == 'm'){
+		char wm[4] = {0};
+		int i = 3,j=0;
+		
+		while(inc[i] && inc[i] != '\r'){
+			wm[j++] = inc[i++];
+			
+		}
+		csv->valueint = atoi(wm);
+		wm_property_ib_set(WASHING_MODE_PRO,csv);
+	}
+
+
+}
 static void wm_init(void ){
 	if(wm_second_timer == NULL){
 		wm_second_timer = xTimerCreate("wm_second_timer", pdMS_TO_TICKS(1000), pdTRUE, NULL, (TimerCallbackFunction_t)wm_s_timer_cb);

@@ -234,6 +234,10 @@ void app_process_recive_cmd(char *buff, uint8_t len){
 	HAL_Kv_Set("wifi_key", &value_invalid, 1, 0);
 	wwd_wifi_leave(WWD_STA_INTERFACE);
         HAL_Printf("Factory wifi module....\r\n");
+  }else if(buff[0] == 'w'){
+  	wm_cli_process(buff+1, len - 1);
+  	
+
   }else{
 
   	HAL_Printf("Unknown command\r\n");
