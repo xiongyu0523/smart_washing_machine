@@ -27,6 +27,7 @@
 
 #include "board.h"
 #include "fsl_gpio.h"
+#include "washing_machine.h"
 
 #define EXAMPLE_TRACE(...)                                          \
     do {                                                            \
@@ -42,160 +43,64 @@ typedef struct {
     int master_devid;
     int cloud_connected;
     int master_initialized;
-    int LightSwitch;
 } wm_example_ctx_t;
 
 
 static wm_example_ctx_t g_wm_ctx;
-#if 0
-#define PROPERTIY_WSWITCH			"WorkSwitch"
-#define PROPERTIY_WSTATE			"WorkState"
-#define PROPERTIY_CLSWITCH			"ChildLockSwitch"
-#define PROPERTIY_WLEVEL			"WaterLevel"
-#define PROPERTIY_LTIME 			"LeftTime"
-#define PROPERTIY_SOTIME 			"SoakTime"
-#define PROPERTIY_WTIME 			"WashTime"
-#define PROPERTIY_RTIME 			"RinshTime"
-#define PROPERTIY_SPTIME 			"SpinTime"
-#define PROPERTIY_RTIMES 			"RinshTimes"
-#define PROPERTIY_TSSPEED 			"TargetSpinSpeed"
-#define PROPERTIY_TWTEM 			"TargetWaterTemperature"
-#define PROPERTIY_DTIME 			"DryTime"
-#define PROPERTIY_DSWITCH 			"DrySwitch"
-#define PROPERTIY_TDETERGENT 		"TargetDetergent"
-#define PROPERTIY_TSOFTENER 		"TargetSoftener"
-#define PROPERTIY_TDISINFECTAN 		"TargetDisinfectant"
-#define PROPERTIY_DOSTATE  		    "DoorOpeningState"
-#define PROPERTIY_PASWITCH  		    "PauseSwitch"
-#define PROPERTIY_DOPT  		    "DryOpt"
-#define PROPERTIY_RTIMER  		    "ReservationTimer"
-#define PROPERTIY_POSWITCH  		    "PowerSwitch"
-#else
-typedef enum{
-	PROPERTIY_WSWITCH,
-	PROPERTIY_WSTATE,
-	PROPERTIY_CLSWITCH,
-	PROPERTIY_WLEVEL,
-	PROPERTIY_LTIME,
-	PROPERTIY_SOTIME,
-	PROPERTIY_WTIME,
-	PROPERTIY_RTIME,
-	PROPERTIY_SPTIME,
-	PROPERTIY_RTIMES,
-	PROPERTIY_TSSPEED,
-	PROPERTIY_TWTEM,
-	PROPERTIY_DTIME,
-	PROPERTIY_DSWITCH,
-	PROPERTIY_TDETERGENT,
-	PROPERTIY_TSOFTENER,
-	PROPERTIY_TDISINFECTAN,
-	PROPERTIY_DOSTATE,
-	PROPERTIY_PASWITCH,
-	PROPERTIY_DOPT,
-	PROPERTIY_RTIMER,
-	PROPERTIY_POSWITCH,
-	PROPERITY_ALL,
-}wm_propertity_e;
+
 const char *wm_properties[] = {"WorkSwitch","WorkState","ChildLockSwitch","WaterLevel","LeftTime",
 	"SoakTime","WashTime","RinshTime","SpinTime","RinshTimes","TargetSpinSpeed","TargetWaterTemperature",
 	"DryTime","DrySwitch","TargetDetergent","TargetSoftener","TargetDisinfectant","DoorOpeningState",
-	"PauseSwitch","DryOpt","ReservationTimer","PowerSwitch"};
+	"PauseSwitch","DryOpt","ReservationTimer","PowerSwitch","WashingMode"};
 
-
-
-#endif
-typedef enum{
-	WM_WM_STANDARD,
-	WM_WM_SOFT,
-	WM_WM_STRONG,
-	WM_WM_QUICK,
-	WM_WM_WOOL,
-	WM_WM_CHEMFIBER,
-	WM_WM_COTTON,
-	WM_WM_JEANS
-}wm_washing_mode_e;
-typedef enum{
-	WS_IDLE = 0,
-	WS_WORKING,
-	WS_FINISHED,
-	WS_RESERVATION,
-	WS_PAUSE,
-	WS_ERROR,
-	WS_SHUTDOWN
-}wm_work_state_e;
-
-typedef enum{
-	WL_LOW = 1,
-	WL_MIDDLE,
-	WL_HIGH
-
-}wm_water_level_e;
-typedef enum{
-	DO_NONE,
-	DO_WEAK,
-	DO_MIDDLE,
-	DO_HIGH
-}wm_dry_opt_e;
-
-
-typedef struct{
-	bool work_switch;
-	wm_work_state_e work_state;
-	bool clock_switch;
-	wm_water_level_e water_level;
-	float left_time;
-	float soak_time;
-	float wash_time;
-	float rinsh_time;
-	float spin_time;
-	int32_t rinsh_times;
-	int32_t target_ss;
-	float target_wtem;
-	float dry_time;
-	bool dry_switch;
-	float target_detergent;
-	float target_softener;
-	float target_disinfectant;
-	bool door_opening_state;
-	bool pause_switch;
-	wm_dry_opt_e dry_opt;
-	float reserv_time;
-	bool power_switch;
-}wm_data_info_t;
-
+//Washing mode standard
 static wm_data_info_t wm_ib={
-	.water_level = WL_HIGH,
+	
+		.water_level = WL_MIDDLE,
 
-	.target_wtem = 55,
+		.soak_time = 10,
+		.wash_time = 35,
+
+		.rinsh_time = 5,
+		.rinsh_times = 2,
+
+		.spin_time = 5,
+		.target_wtem = 35,
+		.target_ss = 1000,
+
 
 };
+
+static const uint8_t report_properties[]={WORK_SW_PRO,WORK_ST_PRO,LEFT_TIME_PRO,TARGET_WATERTEM_PRO,TARGET_SPINSPEED_PRO,DRY_SW_PRO,WASHING_MODE_PRO};
+
 
 static TimerHandle_t wm_second_timer = NULL;
 static QueueHandle_t wm_timer_event_mutex = NULL;
 
-typedef void (*wm_timer_cb_fun)(void *args);
-typedef void (*wm_periodic_cb_fun)(int cnt_left);
 
-typedef struct{
-	struct dlist_s *prev;
-	struct dlist_s *next;
-	int time_set;
-	int time_left;
-	wm_timer_cb_fun cb_function;
-	
-	void *cb_args;
-	wm_periodic_cb_fun pcb_function;
-	char timer_event_name[32];
-}wm_timer_event_t;
-
-typedef __PACKED_STRUCT{
-	bool work_switch;
-	wm_washing_mode_e wm;
-
-}wm_local_timer_cb_args_t;
 
 struct list_head wm_timer_event_head;
-void wm_property_post(wm_propertity_e epro);
+uint8_t report_pro_current; 
+bool report_started = false;
+
+
+static void wm_property_ib_set(wm_propertity_e epro, cJSON *cvalue);
+void wm_report_all_pro_to_cloud(void );
+
+static void wm_left_time_calculate(void ){
+	wm_ib.left_time = wm_ib.soak_time*60 + wm_ib.wash_time*60;
+			
+	wm_ib.left_time += wm_ib.rinsh_time*wm_ib.rinsh_times*60;
+	wm_ib.left_time += wm_ib.spin_time*60;
+
+
+}
+static void wm_ib_default_set(void ){
+	wm_ib.work_state = WS_IDLE;
+	report_pro_current = sizeof(report_properties);
+	wm_left_time_calculate();
+
+}
 
 static void wm_s_timer_cb(TimerHandle_t cb_timerhdl){
 	xSemaphoreTake(wm_timer_event_mutex, portMAX_DELAY);
@@ -314,6 +219,106 @@ static void wm_s_timer_stop(char *timer_name){
 }
 
 
+static void wm_reservation_timeout_cb(void *args){
+	HAL_Printf("Reservation timer callbacked, work minutes %d\r\n",args);
+	
+	wm_ib.reserv_time = 0;
+	wm_property_post(RESERVATION_TIMER_PRO);
+}
+
+static void wm_reservation_periodic_cb(int cnt_left){
+	HAL_Printf("Reservation:%d\r\n",cnt_left);
+
+
+}
+
+static void wm_localtimer_timeout_cb(void *args){
+
+
+  wm_local_timer_cb_args_t *cb_set = (wm_local_timer_cb_args_t *)args;
+   
+  HAL_Printf("Local timer callbacked, work switch %d, washing mode %d\r\n",cb_set->work_switch,cb_set->wm);
+
+  wm_ib.work_switch = cb_set->work_switch;
+  wm_ib.work_state = cb_set->wm;
+  wm_property_post(WORK_SW_PRO);
+  wm_property_post(WASHING_MODE_PRO);
+  #if 0
+  //Report event to cloud
+	char property_payload[256] = {0};
+	int offset = 0;
+	offset += HAL_Snprintf(property_payload + offset,64, "{\"LocalTimer\":[{");
+	offset += HAL_Snprintf(property_payload + offset,64, "{\"Timer\":%s,",cb_set->timer_value);
+	offset += HAL_Snprintf(property_payload + offset,64, "{\"WorkSwitch\":%d,",cb_set->work_switch);
+	offset += HAL_Snprintf(property_payload + offset,64, "{\"WashingMode\":%d,",cb_set->wm);
+	offset += HAL_Snprintf(property_payload + offset,64, "{\"IsValid\":%d",0);
+	offset += HAL_Snprintf(property_payload + offset,64, "}]}");
+
+
+	IOT_Linkkit_Report(EXAMPLE_MASTER_DEVID, ITM_MSG_POST_PROPERTY,
+									 (unsigned char *)property_payload, strlen(property_payload));
+	#endif
+
+}
+
+static void wm_local_periodic_cb(int cnt_left){
+	HAL_Printf("Local:%d\r\n",cnt_left);
+
+
+
+}
+
+
+static void wm_local_timer_event_hdl(cJSON *rte){
+	cJSON *local_arr = cJSON_GetObjectItem(rte,"LocalTimer");
+	
+	char timer_name[] = "local_timer";
+	//wm_s_timer_start(reserv_arr->valueint * 60,wm_reservation_timeout_cb,(void *)reserv_arr->valueint,timer_name);
+	//HAL_Printf("Reservation timer started, seconds %d\r\n",reserv_arr->valueint * 60);
+	uint32_t arrysize = cJSON_GetArraySize(local_arr);
+	cJSON *arr_item = local_arr->child;
+	cJSON *enable = cJSON_GetObjectItem(arr_item,"Enable");
+	if(enable){
+		if(enable->valueint == 0){//local timer disable
+			wm_s_timer_stop(timer_name);
+		}else{
+			cJSON *timer = cJSON_GetObjectItem(arr_item,"Timer");
+			cJSON *work_switch = cJSON_GetObjectItem(arr_item,"WorkSwitch");
+			cJSON *washing_mode = cJSON_GetObjectItem(arr_item,"WashingMode");
+			cJSON *valid = cJSON_GetObjectItem(arr_item,"IsVaild");
+			wm_local_timer_cb_args_t *lcb_args = pvPortMalloc(sizeof(wm_local_timer_cb_args_t));
+
+			if(!lcb_args){
+				return;
+			}
+			memset(lcb_args,0,sizeof(lcb_args));
+			lcb_args->work_switch = work_switch->valueint;//work switch
+			lcb_args->wm = washing_mode->valueint;//washing mode
+			//extract time
+			int time_s = 0;
+			int i=0,j=0,k=0;
+			char minutes_hour[8]={0};
+			strcpy(lcb_args->timer_value, timer->valuestring);
+			while(timer->valuestring[i]!='*'){
+				while(timer->valuestring[i] != ' '){
+					minutes_hour[j++] = timer->valuestring[i++];
+				}
+				if(k == 0){
+					time_s = atoi(minutes_hour)*60;
+					k = 1;
+				}else{
+					time_s += atoi(minutes_hour)*60*60;
+					break;
+				}
+				i++;
+				j=0;
+			}
+			wm_s_timer_start(time_s,wm_localtimer_timeout_cb,(void *)lcb_args,wm_local_periodic_cb,timer_name);
+			HAL_Printf("Local timer started, seconds %d\r\n",time_s);
+		}
+
+	}
+}
 
 
 
@@ -352,8 +357,10 @@ static int wm_report_reply_event_handler(const int devid, const int msgid, const
     char *p_buffer;
     if (reply != NULL) {
         p_buffer = HAL_Malloc(reply_len + 1);
-        memcpy(p_buffer, reply, reply_len);
-        p_buffer[reply_len] = '\0';
+		if(p_buffer){
+	        memcpy(p_buffer, reply, reply_len);
+	        p_buffer[reply_len] = '\0';
+		}
     }
     
     EXAMPLE_TRACE("Message Post Reply Received, Message ID: %d, Code: %d, Reply: %s", msgid, code,
@@ -362,6 +369,7 @@ static int wm_report_reply_event_handler(const int devid, const int msgid, const
     if (reply != NULL) {
         HAL_Free(p_buffer);
     }
+	wm_report_all_pro_to_cloud();
     return 0;
 }
 
@@ -377,136 +385,400 @@ static int wm_trigger_event_reply_event_handler(const int devid, const int msgid
     return 0;
 }
 
+static void wm_reservation_timer_set_hdl(int minutes){
+	
+	char timer_name[] = "reservation_timer";
+	wm_s_timer_start(minutes * 60,wm_reservation_timeout_cb,(void *)minutes,wm_reservation_periodic_cb,timer_name);
+	HAL_Printf("Reservation timer started, seconds %d\r\n",minutes * 60);
+	  
+
+}
+
+
+void wm_ui_handle_work_switch_off(void ){
+	HAL_Printf("Washing Machine work switch off..\r\n");
+	HAL_Printf("Do UI update...\r\n");
+	
+
+
+
+}
+
+void wm_ui_handle_work_switch_on(void ){
+	HAL_Printf("Washing Machine start..\r\n");
+	HAL_Printf("Do UI update..., washing mode %d, temp %.2f, spin %d, finsih time %.2f seconds\r\n",
+				wm_ib.washing_mode,wm_ib.target_wtem,wm_ib.target_ss,wm_ib.left_time);
+
+
+
+
+}
+
+void wm_dry_switch_set_handle(bool sws){
+	if(wm_ib.work_state == WS_WORKING){
+
+		HAL_Printf("Failed to set dry switch properties, stop it first\r\n");
+		return;
+	}
+	wm_ib.dry_switch = sws;
+	if(wm_ib.dry_switch){
+		wm_ib.left_time += 30*60;
+
+	}else{
+		wm_ib.left_time -= 30*60;
+	}
+
+
+
+}
+
+void wm_washing_mode_set_handle(wm_washing_mode_e  		      	 wm ){
+	if(wm_ib.work_state == WS_WORKING){
+
+		HAL_Printf("Failed to set washing mode properties, stop it first\r\n");
+		return;
+	}
+	wm_ib.washing_mode = wm;
+	switch (wm_ib.washing_mode){
+	case WM_WM_STANDARD:{
+		wm_ib.water_level = WL_MIDDLE;
 		
+		wm_ib.soak_time = 10;
+		wm_ib.wash_time = 35;
+		
+		wm_ib.rinsh_time = 5;
+		wm_ib.rinsh_times = 2;
+		
+		wm_ib.spin_time = 5;
+		wm_ib.target_wtem = 30;
+		wm_ib.target_ss = 1000;
+
+	}
+	break;
+	case WM_WM_SOFT:{
+		wm_ib.water_level = WL_MIDDLE;
+		
+		wm_ib.soak_time = 20;
+		wm_ib.wash_time = 15;
+		
+		wm_ib.rinsh_time = 5;
+		wm_ib.rinsh_times = 3;
+		
+		wm_ib.spin_time = 3;
+		wm_ib.target_wtem = 20;
+		wm_ib.target_ss = 800;
+
+	}
+	break;
+	case WM_WM_STRONG:{
+		wm_ib.water_level = WL_HIGH;
+		
+		wm_ib.soak_time = 20;
+		wm_ib.wash_time = 45;
+		
+		wm_ib.rinsh_time = 8;
+		wm_ib.rinsh_times = 3;
+		
+		wm_ib.spin_time = 5;
+		wm_ib.target_wtem = 70;
+		wm_ib.target_ss = 1400;
+
+	}
+	break;
+	case WM_WM_QUICK:{
+		wm_ib.water_level = WL_LOW;
+		
+		wm_ib.soak_time = 5;
+		wm_ib.wash_time = 10;
+		
+		wm_ib.rinsh_time = 2;
+		wm_ib.rinsh_times = 3;
+		
+		wm_ib.spin_time = 3;
+		wm_ib.target_wtem = 20;
+		wm_ib.target_ss = 1200;
+
+	}
+	break;
+	case WM_WM_WOOL:{
+		wm_ib.water_level = WL_LOW;
+		
+		wm_ib.soak_time = 25;
+		wm_ib.wash_time = 20;
+		
+		wm_ib.rinsh_time = 3;
+		wm_ib.rinsh_times = 3;
+		
+		wm_ib.spin_time = 3;
+		wm_ib.target_wtem = 40;
+		wm_ib.target_ss = 600;
+
+	}
+	break;
+	case WM_WM_CHEMFIBER:{
+		wm_ib.water_level = WL_LOW;
+		
+		wm_ib.soak_time = 30;
+		wm_ib.wash_time = 20;
+		
+		wm_ib.rinsh_time = 5;
+		wm_ib.rinsh_times = 3;
+		
+		wm_ib.spin_time = 5;
+		wm_ib.target_wtem = 50;
+		wm_ib.target_ss = 1200;
+
+	}
+	break;
+	case WM_WM_COTTON:{
+		wm_ib.water_level = WL_LOW;
+		
+		wm_ib.soak_time = 20;
+		wm_ib.wash_time = 10;
+		
+		wm_ib.rinsh_time = 3;
+		wm_ib.rinsh_times = 2;
+		
+		wm_ib.spin_time = 5;
+		wm_ib.target_wtem = 30;
+		wm_ib.target_ss = 1000;
+
+	}
+	break;
+	case WM_WM_JEANS:{
+		wm_ib.water_level = WL_LOW;
+		
+		wm_ib.soak_time = 20;
+		wm_ib.wash_time = 10;
+		
+		wm_ib.rinsh_time = 3;
+		wm_ib.rinsh_times = 2;
+		
+		wm_ib.spin_time = 5;
+		wm_ib.target_wtem = 40;
+		wm_ib.target_ss = 600;
+
+	}
+	break;
+	case WM_WM_SELF:{
+		wm_ib.water_level = WL_LOW;
+				
+		wm_ib.soak_time = 10;
+		wm_ib.wash_time = 5;
+		
+		wm_ib.rinsh_time = 3;
+		wm_ib.rinsh_times = 2;
+		
+		wm_ib.spin_time = 5;
+		wm_ib.target_wtem = 20;
+		wm_ib.target_ss = 1400;
+
+
+	}
+	break;
+	default:
+	break;
+
+}
+
+	wm_left_time_calculate();
+
+
+}
+
+static void wm_finishtimer_timeout_cb(void *args){
+
+   
+  HAL_Printf("Washing Finished\r\n");
+
+  wm_ib.work_state = WS_FINISHED;
+  wm_ib_default_set();
+  report_started = true;
+  wm_report_all_pro_to_cloud();
+
+
+}
+
+static void wm_finish_timer_periodic_cb(int cnt_left){
+	HAL_Printf("Finish Timer:%d\r\n",cnt_left);
+	
+	static int cnt = 0;
+	wm_ib.left_time--;
+	if(cnt++%10 == 0){
+		wm_property_post(LEFT_TIME_PRO);
+		
+	}
+
+		
+
+	
+
+}
+
+void wm_work_switch_changed(void ){
+	if(wm_ib.work_switch == false){
+		wm_ib.work_state = WS_PAUSE;
+		wm_s_timer_stop("local_timer");
+		wm_s_timer_stop("finish_timer");
+		wm_ui_handle_work_switch_off();
+	}else{
+		wm_left_time_calculate();
+		wm_ib.work_state = WS_WORKING;
+		wm_s_timer_start(wm_ib.left_time*60,wm_finishtimer_timeout_cb,NULL,wm_finish_timer_periodic_cb,"finish_timer");
+		wm_ui_handle_work_switch_on();
+	}
+
+	report_started = true;
+	wm_report_all_pro_to_cloud();
+
+
+}
+
 static void wm_property_ib_set(wm_propertity_e epro, cJSON *cvalue){
 	switch(epro){
-		case PROPERTIY_WSWITCH:{
-			if(cJSON_IsNumber(cvalue))
+		case WORK_SW_PRO:{
+			if(cJSON_IsNumber(cvalue)){
 				wm_ib.work_switch = cvalue->valueint;
+				wm_work_switch_changed();
+			}
 			
 		}
 		break;
-		case PROPERTIY_WSTATE:{
+		case WORK_ST_PRO:{
 			if(cJSON_IsNumber(cvalue))
 				wm_ib.work_state = cvalue->valueint;
 
 
 		}
 		break;
-		case PROPERTIY_CLSWITCH:{
+		case CHILD_LOCKSW_PRO:{
 			if(cJSON_IsNumber(cvalue))
 				wm_ib.clock_switch = cvalue->valueint;
 
 
 		}
 		break;
-		case PROPERTIY_WLEVEL:{
+		case WATER_LEVEL_PRO:{
 			if(cJSON_IsNumber(cvalue))
 				wm_ib.water_level = cvalue->valueint;
 
 		}
 		break;
-		case PROPERTIY_LTIME:{
+		case LEFT_TIME_PRO:{
 			if(cJSON_IsNumber(cvalue))
-				wm_ib.left_time = cvalue->valuedouble;
+				wm_ib.left_time = cvalue->valuedouble*60;
 		}
 		break;
-		case PROPERTIY_SOTIME:{
+		case SOAK_TIME_PRO:{
 			if(cJSON_IsNumber(cvalue))
 				wm_ib.soak_time = cvalue->valuedouble;
 
 		}
 		break;
-		case PROPERTIY_WTIME:{
+		case WASH_TIME_PRO:{
 			if(cJSON_IsNumber(cvalue))
 				wm_ib.wash_time = cvalue->valuedouble;
 
 		}
 		break;
-		case PROPERTIY_RTIME:{
+		case RINSH_TIME_PRO:{
 			
 		if(cJSON_IsNumber(cvalue))
 			wm_ib.rinsh_time = cvalue->valuedouble;
 
 		}
 		break;
-		case PROPERTIY_SPTIME:{
+		case SPINE_TIME_PRO:{
 			if(cJSON_IsNumber(cvalue))
 				wm_ib.spin_time = cvalue->valuedouble;
 
 		}
 		break;
-		case PROPERTIY_RTIMES:{
+		case RINSH_TIMES_PRO:{
 			if(cJSON_IsNumber(cvalue))
 				wm_ib.rinsh_times = cvalue->valueint;
 
 		}
 		break;
-		case PROPERTIY_TSSPEED:{
+		case TARGET_SPINSPEED_PRO:{
 			if(cJSON_IsNumber(cvalue))
-				wm_ib.target_ss = cvalue->valuedouble;
+				wm_ib.target_ss = cvalue->valueint;
 	
 
 		}
 		break;
-		case PROPERTIY_TWTEM:{
+		case TARGET_WATERTEM_PRO:{
 			if(cJSON_IsNumber(cvalue))
 				wm_ib.target_wtem = cvalue->valuedouble;
 		}
 		break;
-		case PROPERTIY_DTIME:{
+		case DRY_TIME_PRO:{
 			if(cJSON_IsNumber(cvalue))
 				wm_ib.dry_time = cvalue->valuedouble;
 		}
 		break;
-		case PROPERTIY_DSWITCH:{
-			if(cJSON_IsNumber(cvalue))
-				wm_ib.dry_switch = cvalue->valueint;
+		case DRY_SW_PRO:{
+			if(cJSON_IsNumber(cvalue)){
+				wm_dry_switch_set_handle(cvalue->valueint);
+				report_started = true;
+				wm_report_all_pro_to_cloud();
+			}
 		}
 		break;
-		case PROPERTIY_TDETERGENT:{
+		case TARGET_DETERGENT_PRO:{
 			if(cJSON_IsNumber(cvalue))
 				wm_ib.target_detergent = cvalue->valuedouble;
 		}
 		break;
-		case PROPERTIY_TSOFTENER:{
+		case TARGET_SOFTENER_PRO:{
 			if(cJSON_IsNumber(cvalue))
 				wm_ib.target_softener = cvalue->valuedouble;
 
 		}
 		break;
-		case PROPERTIY_TDISINFECTAN:{
+		case TARGET_DISINFECTAN_PRO:{
 			if(cJSON_IsNumber(cvalue))
 				wm_ib.target_disinfectant = cvalue->valuedouble;
 
 		}
 		break;
-		case PROPERTIY_DOSTATE:{
+		case DOOR_OPENING_ST_PRO:{
 			if(cJSON_IsNumber(cvalue))
 				wm_ib.door_opening_state = cvalue->valueint;
 
 		}
 		break;
-		case PROPERTIY_PASWITCH:{
+		case PAUSE_SW_PRO:{
 			if(cJSON_IsNumber(cvalue))
 				wm_ib.pause_switch = cvalue->valueint;
 		}
 		break;
-		case PROPERTIY_DOPT:{
+		case DRY_OPT_PRO:{
 			if(cJSON_IsNumber(cvalue))
 				wm_ib.dry_opt = cvalue->valueint;
 
 		}
 		break;
-		case PROPERTIY_RTIMER:{
+		case RESERVATION_TIMER_PRO:{
 			if(cJSON_IsNumber(cvalue))
 				wm_ib.reserv_time = cvalue->valuedouble;
+			if(wm_ib.reserv_time){
+				wm_reservation_timer_set_hdl(wm_ib.reserv_time);
+			}
 	
 		}
 		break;
-		case PROPERTIY_POSWITCH:{
+		case POWER_SW_PRO:{
 			if(cJSON_IsNumber(cvalue))
 				wm_ib.power_switch = cvalue->valueint;
+		}
+		break;
+		case WASHING_MODE_PRO:{
+			if(cJSON_IsNumber(cvalue)){
+				wm_washing_mode_set_handle(cvalue->valueint);
+				report_started = true;
+				wm_report_all_pro_to_cloud();
+			}
 		}
 		break;
 		default:{
@@ -520,107 +792,18 @@ static void wm_property_ib_set(wm_propertity_e epro, cJSON *cvalue){
 static int wm_property_hal_set(cJSON *proot){
 	cJSON *p_setv;
 	int i;
-	for(i=0;i<PROPERITY_ALL;i++){
+	for(i=0;i<ALL_PRO;i++){
 		p_setv = cJSON_GetObjectItemCaseSensitive(proot, wm_properties[i]);
 		if(p_setv){
 			break;
 		}
 	}
 	if(p_setv){
-
 		wm_property_ib_set(i,p_setv);
-
-	}
-
-
-
-}
-
-static void wm_reservation_timeout_cb(void *args){
-	HAL_Printf("Reservation timer callbacked, work minutes %d\r\n",args);	
-	wm_ib.reserv_time = 0.00;
-	//wm_property_post(PROPERTIY_RTIMER);
-}
-
-static void wm_reservation_periodic_cb(int cnt_left){
-	HAL_Printf("Reservation:%d\r\n",cnt_left);
-
-
-}
-
-static void wm_localtimer_timeout_cb(void *args){
-
-
-  int cb_set = (int )args;
-  HAL_Printf("Local timer callbacked, work switch %d, washing mode %d,valid %d\r\n",cb_set&0xff,(cb_set>>8)&0xff,(cb_set>>16)&0xff);
-  
-
-}
-
-static void wm_local_periodic_cb(int cnt_left){
-	HAL_Printf("Local:%d\r\n",cnt_left);
-
-
-
-}
-
-static void wm_reservation_timer_event_hdl(cJSON *rte){
-	cJSON *reserv_arr = cJSON_GetObjectItem(rte,"ReservationTimer");
-	  if(cJSON_IsNumber(reserv_arr)){
-			char timer_name[] = "reservation_timer";
-			wm_s_timer_start(reserv_arr->valueint * 60,wm_reservation_timeout_cb,(void *)reserv_arr->valueint,wm_reservation_periodic_cb,timer_name);
-			HAL_Printf("Reservation timer started, seconds %d\r\n",reserv_arr->valueint * 60);
-	  }
-
-}
-
-
-
-static void wm_local_timer_event_hdl(cJSON *rte){
-	cJSON *local_arr = cJSON_GetObjectItem(rte,"LocalTimer");
-	
-	char timer_name[] = "local_timer";
-	//wm_s_timer_start(reserv_arr->valueint * 60,wm_reservation_timeout_cb,(void *)reserv_arr->valueint,timer_name);
-	//HAL_Printf("Reservation timer started, seconds %d\r\n",reserv_arr->valueint * 60);
-	uint32_t arrysize = cJSON_GetArraySize(local_arr);
-	cJSON *arr_item = local_arr->child;
-	cJSON *enable = cJSON_GetObjectItem(arr_item,"Enable");
-	if(enable){
-		if(enable->valueint == 0){//local timer disable
-			wm_s_timer_stop(timer_name);
-		}else{
-			cJSON *timer = cJSON_GetObjectItem(arr_item,"Timer");
-			cJSON *work_switch = cJSON_GetObjectItem(arr_item,"WorkSwitch");
-			cJSON *washing_mode = cJSON_GetObjectItem(arr_item,"WashingMode");
-			cJSON *valid = cJSON_GetObjectItem(arr_item,"IsVaild");
-			int cb_args = 0;
-			cb_args |= work_switch->valueint;//work switch
-			cb_args |= washing_mode->valueint << 8;//washing mode
-			cb_args |= valid->valueint << 16;//valid
-			//extract time
-			int time_s = 0;
-			int i=0,j=0,k=0;
-			char minutes_hour[8]={0};
-			while(timer->valuestring[i]!='*'){
-				while(timer->valuestring[i] != ' '){
-					minutes_hour[j++] = timer->valuestring[i++];
-				}
-				if(k == 0){
-					time_s = atoi(minutes_hour)*60;
-					k = 1;
-				}else{
-					time_s += atoi(minutes_hour)*60*60;
-					break;
-				}
-				i++;
-				j=0;
-			}
-			wm_s_timer_start(time_s,wm_localtimer_timeout_cb,(void *)cb_args,wm_local_periodic_cb,timer_name);
-			HAL_Printf("Local timer started, seconds %d\r\n",time_s);
-		}
-
 	}
 }
+
+
 
 /** recv event post response message from cloud **/
 static int wm_property_set_event_handler(const int devid, const char *request, const int request_len)
@@ -635,9 +818,7 @@ static int wm_property_set_event_handler(const int devid, const char *request, c
         HAL_Printf("JSON Parse Error\r\n");
         return -1;
     }
-    if(cJSON_GetObjectItem(p_root,"ReservationTimer") != NULL){
-      	wm_reservation_timer_event_hdl(p_root);
-    }else if(cJSON_GetObjectItem(p_root,"LocalTimer") != NULL){
+    if(cJSON_GetObjectItem(p_root,"LocalTimer") != NULL){
     	wm_local_timer_event_hdl(p_root);
 
 	}else{
@@ -725,6 +906,7 @@ static int wm_fota_event_handler(int type, const char *version)
 
         IOT_Linkkit_Query(EXAMPLE_MASTER_DEVID, ITM_MSG_QUERY_FOTA_DATA, (unsigned char *)buffer, buffer_length);
     }
+	
 
     return 0;
 }
@@ -753,129 +935,134 @@ static int wm_cota_event_handler(int type, const char *config_id, int config_siz
 
 static int wm_build_property_name_value(char *out, wm_propertity_e epro){
 	int offset = 0;
-	if(epro >= PROPERITY_ALL){
+	if(epro >= ALL_PRO){
 
 		return -1;
 	}
 	offset += HAL_Snprintf(out + offset,64, "{\"%s\": ", wm_properties[epro]);
 	switch(epro){
-		case PROPERTIY_WSWITCH:{
+		case WORK_SW_PRO:{
 			offset += HAL_Snprintf(out + offset,64, "%d}", wm_ib.work_switch);
 
 		}
 		break;
-		case PROPERTIY_WSTATE:{
+		case WORK_ST_PRO:{
 			offset += HAL_Snprintf(out + offset,64, "%d}", wm_ib.work_state);
 
 
 		}
 		break;
-		case PROPERTIY_CLSWITCH:{
+		case CHILD_LOCKSW_PRO:{
 			offset += HAL_Snprintf(out + offset,64, "%d}", wm_ib.clock_switch);
 
 
 		}
 		break;
-		case PROPERTIY_WLEVEL:{
+		case WATER_LEVEL_PRO:{
 			offset += HAL_Snprintf(out + offset,64, "%d}", wm_ib.water_level);
 
 
 		}
 		break;
-		case PROPERTIY_LTIME:{
-			offset += HAL_Snprintf(out + offset,64, "%.2f}", wm_ib.left_time);
+		case LEFT_TIME_PRO:{
+			offset += HAL_Snprintf(out + offset,64, "%.2f}", wm_ib.left_time/60);
 
 
 		}
 		break;
-		case PROPERTIY_SOTIME:{
+		case SOAK_TIME_PRO:{
 			offset += HAL_Snprintf(out + offset,64, "%.2f}", wm_ib.soak_time);
 
 
 		}
 		break;
-		case PROPERTIY_WTIME:{
+		case WASH_TIME_PRO:{
 			offset += HAL_Snprintf(out + offset,64, "%.2f}", wm_ib.wash_time);
 
 
 		}
 		break;
-		case PROPERTIY_RTIME:{
+		case RINSH_TIME_PRO:{
 			offset += HAL_Snprintf(out + offset,64, "%.2f}", wm_ib.rinsh_time);
 
 
 		}
 		break;
-		case PROPERTIY_SPTIME:{
+		case SPINE_TIME_PRO:{
 			offset += HAL_Snprintf(out + offset,64, "%.2f}", wm_ib.spin_time);
 
 
 		}
 		break;
-		case PROPERTIY_RTIMES:{
+		case RINSH_TIMES_PRO:{
 			offset += HAL_Snprintf(out + offset,64, "%d}", wm_ib.rinsh_times);
 
 
 		}
 		break;
-		case PROPERTIY_TSSPEED:{
-			offset += HAL_Snprintf(out + offset,64, "%.2f}", wm_ib.target_ss);
+		case TARGET_SPINSPEED_PRO:{
+			offset += HAL_Snprintf(out + offset,64, "%d}", wm_ib.target_ss);
 
 
 		}
 		break;
-		case PROPERTIY_TWTEM:{
+		case TARGET_WATERTEM_PRO:{
 			offset += HAL_Snprintf(out + offset,64, "%.2f}", wm_ib.target_wtem);
 
 		}
 		break;
-		case PROPERTIY_DTIME:{
+		case DRY_TIME_PRO:{
 			offset += HAL_Snprintf(out + offset,64, "%.2f}", wm_ib.dry_time);
 
 		}
 		break;
-		case PROPERTIY_DSWITCH:{
+		case DRY_SW_PRO:{
 			offset += HAL_Snprintf(out + offset,64, "%d}", wm_ib.dry_switch);
 
 		}
 		break;
-		case PROPERTIY_TDETERGENT:{
+		case TARGET_DETERGENT_PRO:{
 			offset += HAL_Snprintf(out + offset,64, "%.2f}", wm_ib.target_detergent);
 
 		}
 		break;
-		case PROPERTIY_TSOFTENER:{
+		case TARGET_SOFTENER_PRO:{
 			offset += HAL_Snprintf(out + offset,64, "%.2f}", wm_ib.target_softener);
 
 		}
 		break;
-		case PROPERTIY_TDISINFECTAN:{
+		case TARGET_DISINFECTAN_PRO:{
 			offset += HAL_Snprintf(out + offset,64, "%.2f}", wm_ib.target_disinfectant);
 
 		}
 		break;
-		case PROPERTIY_DOSTATE:{
+		case DOOR_OPENING_ST_PRO:{
 			offset += HAL_Snprintf(out + offset,64, "%d}", wm_ib.door_opening_state);
 
 		}
 		break;
-		case PROPERTIY_PASWITCH:{
+		case PAUSE_SW_PRO:{
 			offset += HAL_Snprintf(out + offset,64, "%d}", wm_ib.pause_switch);
 
 		}
 		break;
-		case PROPERTIY_DOPT:{
+		case DRY_OPT_PRO:{
 			offset += HAL_Snprintf(out + offset,64, "%d}", wm_ib.dry_opt);
 
 		}
 		break;
-		case PROPERTIY_RTIMER:{
+		case RESERVATION_TIMER_PRO:{
 			offset += HAL_Snprintf(out + offset,64, "%.2f}", wm_ib.reserv_time);
 
 		}
 		break;
-		case PROPERTIY_POSWITCH:{
+		case POWER_SW_PRO:{
 			offset += HAL_Snprintf(out + offset,64, "%d}", wm_ib.power_switch);
+
+		}
+		break;
+		case WASHING_MODE_PRO:{
+			offset += HAL_Snprintf(out + offset,64, "%d}", wm_ib.washing_mode);
 
 		}
 		break;
@@ -889,14 +1076,19 @@ static int wm_build_property_name_value(char *out, wm_propertity_e epro){
 }
 
 void wm_property_post(wm_propertity_e epro){
-	char property_payload[512] = {0};
+	char *property_payload = HAL_Malloc(128);
+	if(property_payload == NULL){
+
+		return;
+	}
+	memset(property_payload,0,sizeof(*property_payload));
 	int offset = 0;
 
-	if(epro == PROPERITY_ALL){
+	if(epro == ALL_PRO){
 		
 		int i;
-		for(i=0;i<PROPERITY_ALL;i++){
-			offset = wm_build_property_name_value(property_payload+offset,(wm_propertity_e )i);
+		for(i=0;i<ALL_PRO;i++){
+			offset += wm_build_property_name_value(property_payload+offset,(wm_propertity_e )i);
 		}
 
 	}else{
@@ -906,6 +1098,7 @@ void wm_property_post(wm_propertity_e epro){
 	
 	IOT_Linkkit_Report(EXAMPLE_MASTER_DEVID, ITM_MSG_POST_PROPERTY,
 									 (unsigned char *)property_payload, strlen(property_payload));
+	HAL_Free(property_payload);
 
 }
 
@@ -940,6 +1133,62 @@ void wm_deviceinfo_delete(void)
     EXAMPLE_TRACE("Device Info Delete Message ID: %d", res);
 }
 
+void wm_cli_process(char *inc, uint8_t len){
+	cJSON *csv = HAL_Malloc(sizeof(cJSON));
+	if(!csv){
+
+		return;
+	}
+	memset(csv,0,sizeof(*csv));
+	csv->type = cJSON_Number;
+
+	if(inc[1] == 's'){
+		
+		if(inc[3] == '0'){
+			csv->valueint = 0;
+
+		}else{
+			csv->valueint = 1;
+
+
+		}
+		
+		wm_property_ib_set(WORK_SW_PRO,csv);
+	}else if(inc[1] == 'm'){
+		char wm[4] = {0};
+		int i = 3,j=0;
+		
+		while(inc[i] && inc[i] != '\r'){
+			wm[j++] = inc[i++];
+			
+		}
+		csv->valueint = atoi(wm);
+		wm_property_ib_set(WASHING_MODE_PRO,csv);
+	}
+
+
+}
+
+void wm_report_all_pro_to_cloud(void ){
+	if((report_pro_current == sizeof(report_properties)) && (report_started == false)){
+		HAL_Printf("report to cloud finished...\r\n");
+		return;
+	}
+	if(report_pro_current == sizeof(report_properties)){
+		report_pro_current = (wm_propertity_e )0;
+		
+
+	}
+	
+	wm_property_post(report_properties[report_pro_current++]);
+	if(report_pro_current >= sizeof(report_properties)){
+		report_started = false;
+		report_pro_current = sizeof(report_properties);
+		HAL_Printf("report to cloud finished, disable report started state...\r\n");
+	}
+}
+
+
 static void wm_init(void ){
 	if(wm_second_timer == NULL){
 		wm_second_timer = xTimerCreate("wm_second_timer", pdMS_TO_TICKS(1000), pdTRUE, NULL, (TimerCallbackFunction_t)wm_s_timer_cb);
@@ -952,6 +1201,8 @@ static void wm_init(void ){
 		}
 		list_init(&wm_timer_event_head);
 	}	
+	
+	wm_ib_default_set();
 }
 
 
@@ -1026,8 +1277,9 @@ int wm_run(int argc, char **argv)
         EXAMPLE_TRACE("IOT_Linkkit_Connect Failed\n");
         return -1;
     }
-	//wm_property_post(PROPERITY_ALL);
-
+	//wm_property_post(ALL_PRO);
+	report_started = true;
+	wm_report_all_pro_to_cloud();
     while (1) {
         
         IOT_Linkkit_Yield(EXAMPLE_YIELD_TIMEOUT_MS);
@@ -1035,8 +1287,9 @@ int wm_run(int argc, char **argv)
         cnt++;
 
         /* Post Event Example */
-        if ((cnt % 300) == 0) {
-            wm_property_post(PROPERTIY_WSWITCH);
+        if ((cnt % 500) == 0) {
+            wm_property_post(WORK_ST_PRO);
+			//wm_property_post(WATER_LEVEL_PRO);
         }
     }
 }

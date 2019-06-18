@@ -65,14 +65,14 @@ static void puti(int num, int base){
 static void DbgConsole_PrintCallback(char *buf, int32_t *indicator, char dbgVal, int len)
 {
     int i = 0;
-
     for (i = 0; i < len; i++)
     {
         if (((uint32_t)*indicator + 1UL) >= 128)
         {
 			int j=0;
-			while(i<(uint32_t)(*indicator)){
+			while(j<(uint32_t)(*indicator)){
 				printf_buffer[printf_w_ptr++ & PTR_MASK] = buf[j++];
+                                
 			}
             *indicator = 0;
         }
@@ -101,6 +101,7 @@ int format_printf(const char *formatString, ...)
 	while(i<logLength){
 		printf_buffer[printf_w_ptr++ & PTR_MASK] = printBuf[i++];
 	}
+
 	xSemaphoreGive(log_mutex);
     va_end(ap);
 	vTaskResume(log_task_handle);
