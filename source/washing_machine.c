@@ -65,12 +65,13 @@ static wm_data_info_t wm_ib={
 		.rinsh_times = 2,
 
 		.spin_time = 5,
-		.target_wtem = 25,
-		.target_ss = 2500,
+		.target_wtem = 35,
+		.target_ss = 1000,
 
 
 };
 
+static const uint8_t report_properties[]={WORK_SW_PRO,WORK_ST_PRO,LEFT_TIME_PRO,TARGET_WATERTEM_PRO,TARGET_SPINSPEED_PRO,DRY_SW_PRO,WASHING_MODE_PRO};
 
 
 static TimerHandle_t wm_second_timer = NULL;
@@ -79,8 +80,27 @@ static QueueHandle_t wm_timer_event_mutex = NULL;
 
 
 struct list_head wm_timer_event_head;
+uint8_t report_pro_current; 
+bool report_started = false;
+
 
 static void wm_property_ib_set(wm_propertity_e epro, cJSON *cvalue);
+void wm_report_all_pro_to_cloud(void );
+
+static void wm_left_time_calculate(void ){
+	wm_ib.left_time = wm_ib.soak_time*60 + wm_ib.wash_time*60;
+			
+	wm_ib.left_time += wm_ib.rinsh_time*wm_ib.rinsh_times*60;
+	wm_ib.left_time += wm_ib.spin_time*60;
+
+
+}
+static void wm_ib_default_set(void ){
+	wm_ib.work_state = WS_IDLE;
+	report_pro_current = sizeof(report_properties);
+	wm_left_time_calculate();
+
+}
 
 static void wm_s_timer_cb(TimerHandle_t cb_timerhdl){
 	xSemaphoreTake(wm_timer_event_mutex, portMAX_DELAY);
@@ -337,8 +357,10 @@ static int wm_report_reply_event_handler(const int devid, const int msgid, const
     char *p_buffer;
     if (reply != NULL) {
         p_buffer = HAL_Malloc(reply_len + 1);
-        memcpy(p_buffer, reply, reply_len);
-        p_buffer[reply_len] = '\0';
+		if(p_buffer){
+	        memcpy(p_buffer, reply, reply_len);
+	        p_buffer[reply_len] = '\0';
+		}
     }
     
     EXAMPLE_TRACE("Message Post Reply Received, Message ID: %d, Code: %d, Reply: %s", msgid, code,
@@ -347,6 +369,7 @@ static int wm_report_reply_event_handler(const int devid, const int msgid, const
     if (reply != NULL) {
         HAL_Free(p_buffer);
     }
+	wm_report_all_pro_to_cloud();
     return 0;
 }
 
@@ -375,6 +398,7 @@ static void wm_reservation_timer_set_hdl(int minutes){
 void wm_ui_handle_work_switch_off(void ){
 	HAL_Printf("Washing Machine work switch off..\r\n");
 	HAL_Printf("Do UI update...\r\n");
+	
 
 
 
@@ -382,7 +406,7 @@ void wm_ui_handle_work_switch_off(void ){
 
 void wm_ui_handle_work_switch_on(void ){
 	HAL_Printf("Washing Machine start..\r\n");
-	HAL_Printf("Do UI update..., washing mode %d, temp %.2f, spin %d, finsih time %.2f minutes\r\n",
+	HAL_Printf("Do UI update..., washing mode %d, temp %.2f, spin %d, finsih time %.2f seconds\r\n",
 				wm_ib.washing_mode,wm_ib.target_wtem,wm_ib.target_ss,wm_ib.left_time);
 
 
@@ -390,8 +414,31 @@ void wm_ui_handle_work_switch_on(void ){
 
 }
 
+void wm_dry_switch_set_handle(bool sws){
+	if(wm_ib.work_state == WS_WORKING){
 
-void wm_washing_mode_set_handle(void ){
+		HAL_Printf("Failed to set dry switch properties, stop it first\r\n");
+		return;
+	}
+	wm_ib.dry_switch = sws;
+	if(wm_ib.dry_switch){
+		wm_ib.left_time += 30*60;
+
+	}else{
+		wm_ib.left_time -= 30*60;
+	}
+
+
+
+}
+
+void wm_washing_mode_set_handle(wm_washing_mode_e  		      	 wm ){
+	if(wm_ib.work_state == WS_WORKING){
+
+		HAL_Printf("Failed to set washing mode properties, stop it first\r\n");
+		return;
+	}
+	wm_ib.washing_mode = wm;
 	switch (wm_ib.washing_mode){
 	case WM_WM_STANDARD:{
 		wm_ib.water_level = WL_MIDDLE;
@@ -403,8 +450,8 @@ void wm_washing_mode_set_handle(void ){
 		wm_ib.rinsh_times = 2;
 		
 		wm_ib.spin_time = 5;
-		wm_ib.target_wtem = 25;
-		wm_ib.target_ss = 2500;
+		wm_ib.target_wtem = 30;
+		wm_ib.target_ss = 1000;
 
 	}
 	break;
@@ -418,8 +465,8 @@ void wm_washing_mode_set_handle(void ){
 		wm_ib.rinsh_times = 3;
 		
 		wm_ib.spin_time = 3;
-		wm_ib.target_wtem = 30;
-		wm_ib.target_ss = 1500;
+		wm_ib.target_wtem = 20;
+		wm_ib.target_ss = 800;
 
 	}
 	break;
@@ -433,8 +480,8 @@ void wm_washing_mode_set_handle(void ){
 		wm_ib.rinsh_times = 3;
 		
 		wm_ib.spin_time = 5;
-		wm_ib.target_wtem = 25;
-		wm_ib.target_ss = 3000;
+		wm_ib.target_wtem = 70;
+		wm_ib.target_ss = 1400;
 
 	}
 	break;
@@ -448,8 +495,8 @@ void wm_washing_mode_set_handle(void ){
 		wm_ib.rinsh_times = 3;
 		
 		wm_ib.spin_time = 3;
-		wm_ib.target_wtem = 25;
-		wm_ib.target_ss = 2000;
+		wm_ib.target_wtem = 20;
+		wm_ib.target_ss = 1200;
 
 	}
 	break;
@@ -463,8 +510,8 @@ void wm_washing_mode_set_handle(void ){
 		wm_ib.rinsh_times = 3;
 		
 		wm_ib.spin_time = 3;
-		wm_ib.target_wtem = 45;
-		wm_ib.target_ss = 2000;
+		wm_ib.target_wtem = 40;
+		wm_ib.target_ss = 600;
 
 	}
 	break;
@@ -478,8 +525,8 @@ void wm_washing_mode_set_handle(void ){
 		wm_ib.rinsh_times = 3;
 		
 		wm_ib.spin_time = 5;
-		wm_ib.target_wtem = 25;
-		wm_ib.target_ss = 2500;
+		wm_ib.target_wtem = 50;
+		wm_ib.target_ss = 1200;
 
 	}
 	break;
@@ -508,8 +555,8 @@ void wm_washing_mode_set_handle(void ){
 		wm_ib.rinsh_times = 2;
 		
 		wm_ib.spin_time = 5;
-		wm_ib.target_wtem = 30;
-		wm_ib.target_ss = 1000;
+		wm_ib.target_wtem = 40;
+		wm_ib.target_ss = 600;
 
 	}
 	break;
@@ -524,7 +571,7 @@ void wm_washing_mode_set_handle(void ){
 		
 		wm_ib.spin_time = 5;
 		wm_ib.target_wtem = 20;
-		wm_ib.target_ss = 1800;
+		wm_ib.target_ss = 1400;
 
 
 	}
@@ -534,6 +581,7 @@ void wm_washing_mode_set_handle(void ){
 
 }
 
+	wm_left_time_calculate();
 
 
 }
@@ -544,33 +592,44 @@ static void wm_finishtimer_timeout_cb(void *args){
   HAL_Printf("Washing Finished\r\n");
 
   wm_ib.work_state = WS_FINISHED;
-  wm_property_post(WASHING_MODE_PRO);
+  wm_ib_default_set();
+  report_started = true;
+  wm_report_all_pro_to_cloud();
 
 
 }
 
 static void wm_finish_timer_periodic_cb(int cnt_left){
 	HAL_Printf("Finish Timer:%d\r\n",cnt_left);
+	
+	static int cnt = 0;
+	wm_ib.left_time--;
+	if(cnt++%10 == 0){
+		wm_property_post(LEFT_TIME_PRO);
+		
+	}
 
+		
 
+	
 
 }
 
 void wm_work_switch_changed(void ){
 	if(wm_ib.work_switch == false){
-		
+		wm_ib.work_state = WS_PAUSE;
 		wm_s_timer_stop("local_timer");
 		wm_s_timer_stop("finish_timer");
 		wm_ui_handle_work_switch_off();
-		return;
+	}else{
+		wm_left_time_calculate();
+		wm_ib.work_state = WS_WORKING;
+		wm_s_timer_start(wm_ib.left_time*60,wm_finishtimer_timeout_cb,NULL,wm_finish_timer_periodic_cb,"finish_timer");
+		wm_ui_handle_work_switch_on();
 	}
-	wm_ib.left_time = wm_ib.soak_time + wm_ib.wash_time;
-	
-	wm_ib.left_time += wm_ib.rinsh_time*wm_ib.rinsh_times;
-	wm_ib.left_time += wm_ib.spin_time;
-	wm_ib.work_state = WS_WORKING;
-	wm_s_timer_start(wm_ib.left_time*60,wm_finishtimer_timeout_cb,NULL,wm_finish_timer_periodic_cb,"finish_timer");
-	wm_ui_handle_work_switch_on();
+
+	report_started = true;
+	wm_report_all_pro_to_cloud();
 
 
 }
@@ -607,7 +666,7 @@ static void wm_property_ib_set(wm_propertity_e epro, cJSON *cvalue){
 		break;
 		case LEFT_TIME_PRO:{
 			if(cJSON_IsNumber(cvalue))
-				wm_ib.left_time = cvalue->valuedouble;
+				wm_ib.left_time = cvalue->valuedouble*60;
 		}
 		break;
 		case SOAK_TIME_PRO:{
@@ -643,7 +702,7 @@ static void wm_property_ib_set(wm_propertity_e epro, cJSON *cvalue){
 		break;
 		case TARGET_SPINSPEED_PRO:{
 			if(cJSON_IsNumber(cvalue))
-				wm_ib.target_ss = cvalue->valuedouble;
+				wm_ib.target_ss = cvalue->valueint;
 	
 
 		}
@@ -659,8 +718,11 @@ static void wm_property_ib_set(wm_propertity_e epro, cJSON *cvalue){
 		}
 		break;
 		case DRY_SW_PRO:{
-			if(cJSON_IsNumber(cvalue))
-				wm_ib.dry_switch = cvalue->valueint;
+			if(cJSON_IsNumber(cvalue)){
+				wm_dry_switch_set_handle(cvalue->valueint);
+				report_started = true;
+				wm_report_all_pro_to_cloud();
+			}
 		}
 		break;
 		case TARGET_DETERGENT_PRO:{
@@ -713,8 +775,9 @@ static void wm_property_ib_set(wm_propertity_e epro, cJSON *cvalue){
 		break;
 		case WASHING_MODE_PRO:{
 			if(cJSON_IsNumber(cvalue)){
-				wm_ib.washing_mode = cvalue->valueint;
-				wm_washing_mode_set_handle();
+				wm_washing_mode_set_handle(cvalue->valueint);
+				report_started = true;
+				wm_report_all_pro_to_cloud();
 			}
 		}
 		break;
@@ -843,6 +906,7 @@ static int wm_fota_event_handler(int type, const char *version)
 
         IOT_Linkkit_Query(EXAMPLE_MASTER_DEVID, ITM_MSG_QUERY_FOTA_DATA, (unsigned char *)buffer, buffer_length);
     }
+	
 
     return 0;
 }
@@ -901,7 +965,7 @@ static int wm_build_property_name_value(char *out, wm_propertity_e epro){
 		}
 		break;
 		case LEFT_TIME_PRO:{
-			offset += HAL_Snprintf(out + offset,64, "%.2f}", wm_ib.left_time);
+			offset += HAL_Snprintf(out + offset,64, "%.2f}", wm_ib.left_time/60);
 
 
 		}
@@ -937,7 +1001,7 @@ static int wm_build_property_name_value(char *out, wm_propertity_e epro){
 		}
 		break;
 		case TARGET_SPINSPEED_PRO:{
-			offset += HAL_Snprintf(out + offset,64, "%.2f}", wm_ib.target_ss);
+			offset += HAL_Snprintf(out + offset,64, "%d}", wm_ib.target_ss);
 
 
 		}
@@ -1104,6 +1168,27 @@ void wm_cli_process(char *inc, uint8_t len){
 
 
 }
+
+void wm_report_all_pro_to_cloud(void ){
+	if((report_pro_current == sizeof(report_properties)) && (report_started == false)){
+		HAL_Printf("report to cloud finished...\r\n");
+		return;
+	}
+	if(report_pro_current == sizeof(report_properties)){
+		report_pro_current = (wm_propertity_e )0;
+		
+
+	}
+	
+	wm_property_post(report_properties[report_pro_current++]);
+	if(report_pro_current >= sizeof(report_properties)){
+		report_started = false;
+		report_pro_current = sizeof(report_properties);
+		HAL_Printf("report to cloud finished, disable report started state...\r\n");
+	}
+}
+
+
 static void wm_init(void ){
 	if(wm_second_timer == NULL){
 		wm_second_timer = xTimerCreate("wm_second_timer", pdMS_TO_TICKS(1000), pdTRUE, NULL, (TimerCallbackFunction_t)wm_s_timer_cb);
@@ -1116,6 +1201,8 @@ static void wm_init(void ){
 		}
 		list_init(&wm_timer_event_head);
 	}	
+	
+	wm_ib_default_set();
 }
 
 
@@ -1191,7 +1278,8 @@ int wm_run(int argc, char **argv)
         return -1;
     }
 	//wm_property_post(ALL_PRO);
-	
+	report_started = true;
+	wm_report_all_pro_to_cloud();
     while (1) {
         
         IOT_Linkkit_Yield(EXAMPLE_YIELD_TIMEOUT_MS);
@@ -1199,7 +1287,7 @@ int wm_run(int argc, char **argv)
         cnt++;
 
         /* Post Event Example */
-        if ((cnt % 100) == 0) {
+        if ((cnt % 500) == 0) {
             wm_property_post(WORK_ST_PRO);
 			//wm_property_post(WATER_LEVEL_PRO);
         }
