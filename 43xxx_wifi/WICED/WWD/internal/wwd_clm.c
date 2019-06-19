@@ -39,7 +39,7 @@
 #include <stdlib.h>
 #include "wwd_assert.h"
 #include "wwd_debug.h"
-#include "resources.h"
+#include "chip_resources.h"
 #include "internal/wwd_sdpcm.h"
 #include "internal/wwd_internal.h"
 #include "internal/wwd_clm.h"

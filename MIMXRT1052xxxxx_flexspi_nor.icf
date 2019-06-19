@@ -39,6 +39,9 @@ define symbol m_data_end               = 0x2001FFFF;
 define symbol m_data2_start            = 0x20200000;
 define symbol m_data2_end              = 0x2023FFFF;
 
+define symbol m_ITCM_start             = 0x00000000;
+define symbol m_ITCM_end               = 0x0001FFFF;
+
 define exported symbol m_boot_hdr_conf_start = 0x60000000;
 define symbol m_boot_hdr_ivt_start           = 0x60001000;
 define symbol m_boot_hdr_boot_data_start     = 0x60001020;
@@ -67,6 +70,7 @@ define region TEXT_region = mem:[from m_interrupts_start to m_interrupts_end]
 
 define region DATA_region = mem:[from m_data_start to m_data_end-__size_cstack__];
 define region DATA2_region = mem:[from m_data2_start to m_data2_end];
+define region ITCM_region = mem:[from m_ITCM_start to m_ITCM_end];
 define region CSTACK_region = mem:[from m_data_end-__size_cstack__+1 to m_data_end];
 
 define block CSTACK    with alignment = 8, size = __size_cstack__   { };
@@ -74,6 +78,7 @@ define block HEAP      with alignment = 8, size = __size_heap__     { };
 define block RW        { readwrite };
 define block ZI        { zi };
 define block NCACHE_VAR    { section NonCacheable , section NonCacheable.init };
+define block FREERTOSHEAP { section FreeRTOSHeap };
 
 initialize by copy {
   readwrite,
@@ -98,4 +103,5 @@ place in DATA_region                        { block ZI };
 place in DATA_region                        { last block HEAP };
 place in DATA_region                        { block NCACHE_VAR };
 place in CSTACK_region                      { block CSTACK };
+place in ITCM_region                        { block FREERTOSHEAP };
 

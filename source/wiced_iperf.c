@@ -25,6 +25,8 @@
 #include "kv_api.h"
 #include "flexspi_hyper_flash_ops.h"
 
+#include "ewmain.h"
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -136,7 +138,35 @@ static void linkkit_task(void *arg)
    // linkkit_example_solo(NULL, NULL);
 }
 
+/*******************************************************************************
+* FUNCTION:
+*   GuiThread
+*
+* DESCRIPTION:
+*   The EwThread processes the Embeded Wizard application.
+*
+* ARGUMENTS:
+*   arg - not used.
+*
+* RETURN VALUE:
+*   None.
+*
+*******************************************************************************/
+static void GuiThread( void* arg )
+{
+  /* initialize Embedded Wizard application */
+  if ( EwInit() == 0 )
+    return;
 
+  EwPrintSystemInfo();
+
+  /* process the Embedded Wizard main loop */
+  while( EwProcess())
+    ;
+
+  /* de-initialize Embedded Wizard application */
+  EwDone();
+}
 
 void app_wait_wifi_connect(void ){
 
@@ -253,6 +283,8 @@ int main(void)
 {
     BOARD_ConfigMPU();
     BOARD_InitPins();
+    BOARD_InitI2C1Pins();
+    BOARD_InitSemcPins();
     BOARD_BootClockRUN();
     BOARD_USDHCClockConfiguration();
     //BOARD_InitDebugConsole();
@@ -263,6 +295,11 @@ int main(void)
     
     tcpip_init(NULL, NULL);
 
+    /* create thread that drives the Embedded Wizard GUI application... */
+    EwPrint( "Create UI thread...                          " );
+    xTaskCreate( GuiThread, "EmWi_Task", 1280, NULL, 0, NULL );
+    EwPrint( "[OK]\n" );
+    
     if (xTaskCreate(linkkit_task, "linkkit_task", 1000, NULL, configMAX_PRIORITIES - 4 /*3*/, NULL) != pdPASS)
     {
         PRINTF("Task creation failed!.\r\n");
