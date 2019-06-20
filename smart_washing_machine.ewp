@@ -231,6 +231,7 @@
                     <state>USE_RTOS</state>
                     <state>WIFI_WICED</state>
                     <state>MBEDTLS_CONFIG_FILE="ksdk_mbedtls_config.h"</state>
+                    <state>USB_STACK_FREERTOS</state>
                 </option>
                 <option>
                     <name>CCPreprocFile</name>
@@ -424,6 +425,10 @@
                     <state>$PROJ_DIR$\mbedtls\include\mbedtls</state>
                     <state>$PROJ_DIR$\mbedtls\include</state>
                     <state>$PROJ_DIR$\mbedtls\port\ksdk</state>
+                    <state>$PROJ_DIR$/usb/include</state>
+                    <state>$PROJ_DIR$/usb/osa</state>
+                    <state>$PROJ_DIR$/usb/phy</state>
+                    <state>$PROJ_DIR$/usb/device</state>
                 </option>
                 <option>
                     <name>CCStdIncCheck</name>
@@ -4958,6 +4963,12 @@
             <name>$PROJ_DIR$\source\FreeRTOSConfig.h</name>
         </file>
         <file>
+            <name>$PROJ_DIR$\source\ip_cmd.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\source\ip_cmd.h</name>
+        </file>
+        <file>
             <name>$PROJ_DIR$\source\linkkit_example_solo.c</name>
         </file>
         <file>
@@ -4965,6 +4976,27 @@
         </file>
         <file>
             <name>$PROJ_DIR$\source\lwipopts.h</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\source\shell.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\source\shell.h</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\source\usb_device_config.h</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\source\usb_device_descriptor.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\source\usb_device_descriptor.h</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\source\virtual_com.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\source\virtual_com.h</name>
         </file>
         <file>
             <name>$PROJ_DIR$\source\washing_machine.c</name>
@@ -4989,6 +5021,96 @@
         </file>
     </group>
     <group>
+        <name>usb</name>
+        <group>
+            <name>device</name>
+            <group>
+                <name>class</name>
+                <group>
+                    <name>cdc</name>
+                    <file>
+                        <name>$PROJ_DIR$\source\usb_device_cdc_acm.c</name>
+                    </file>
+                    <file>
+                        <name>$PROJ_DIR$\source\usb_device_cdc_acm.h</name>
+                    </file>
+                </group>
+                <file>
+                    <name>$PROJ_DIR$\source\usb_device_class.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\source\usb_device_class.h</name>
+                </file>
+            </group>
+            <group>
+                <name>include</name>
+                <file>
+                    <name>$PROJ_DIR$\usb\device\usb_device.h</name>
+                </file>
+            </group>
+            <group>
+                <name>source</name>
+                <group>
+                    <name>ehci</name>
+                    <file>
+                        <name>$PROJ_DIR$\usb\device\usb_device_ehci.c</name>
+                    </file>
+                    <file>
+                        <name>$PROJ_DIR$\usb\device\usb_device_ehci.h</name>
+                    </file>
+                    <file>
+                        <name>$PROJ_DIR$\usb\include\usb_ehci.h</name>
+                    </file>
+                </group>
+                <file>
+                    <name>$PROJ_DIR$\source\usb_device_ch9.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\source\usb_device_ch9.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\usb\device\usb_device_dci.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\usb\device\usb_device_dci.h</name>
+                </file>
+            </group>
+        </group>
+        <group>
+            <name>include</name>
+            <file>
+                <name>$PROJ_DIR$\usb\include\usb.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\usb\include\usb_misc.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\usb\include\usb_spec.h</name>
+            </file>
+        </group>
+        <group>
+            <name>osa</name>
+            <file>
+                <name>$PROJ_DIR$\usb\osa\usb_osa.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\usb\osa\usb_osa_freertos.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\usb\osa\usb_osa_freertos.h</name>
+            </file>
+        </group>
+        <group>
+            <name>phy</name>
+            <file>
+                <name>$PROJ_DIR$\usb\phy\usb_phy.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\usb\phy\usb_phy.h</name>
+            </file>
+        </group>
+    </group>
+    <group>
         <name>utilities</name>
         <file>
             <name>$PROJ_DIR$\utilities\fsl_assert.c</name>
@@ -5001,6 +5123,12 @@
         </file>
         <file>
             <name>$PROJ_DIR$\utilities\fsl_debug_console_conf.h</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\utilities\fsl_shell.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\utilities\fsl_shell.h</name>
         </file>
         <file>
             <name>$PROJ_DIR$\utilities\fsl_str.c</name>

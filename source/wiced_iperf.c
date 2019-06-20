@@ -131,6 +131,7 @@ static void linkkit_task(void *arg)
     PRINTF(" Link Kit example\r\n");
     PRINTF("************************************************\r\n");
 
+    ShellInit();
     BOARD_InitNetwork();
     wm_run(NULL, NULL);
    // linkkit_example_solo(NULL, NULL);
