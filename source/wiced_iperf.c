@@ -294,13 +294,13 @@ int main(void)
     kv_init();
     
     tcpip_init(NULL, NULL);
-
+#if 1
     /* create thread that drives the Embedded Wizard GUI application... */
     EwPrint( "Create UI thread...                          " );
-    xTaskCreate( GuiThread, "EmWi_Task", 1280, NULL, 0, NULL );
+    xTaskCreate( GuiThread, "EmWi_Task", 1280, NULL, 2, NULL );
     EwPrint( "[OK]\n" );
-    
-    if (xTaskCreate(linkkit_task, "linkkit_task", 1000, NULL, configMAX_PRIORITIES - 4 /*3*/, NULL) != pdPASS)
+#endif
+    if (xTaskCreate(linkkit_task, "linkkit_task", 1000, NULL, 3, NULL) != pdPASS)
     {
         PRINTF("Task creation failed!.\r\n");
         while (1)
