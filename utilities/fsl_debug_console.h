@@ -45,7 +45,7 @@ extern serial_handle_t g_serialHandle; /*!< serial manager handle */
  * to be redefined in project setting.
  */
 #ifndef SDK_DEBUGCONSOLE
-#define SDK_DEBUGCONSOLE 0xffU
+#define SDK_DEBUGCONSOLE DEBUGCONSOLE_REDIRECT_TO_SDK
 #endif
 
 /*! @brief Definition to select redirect toolchain printf, scanf to uart or not. */

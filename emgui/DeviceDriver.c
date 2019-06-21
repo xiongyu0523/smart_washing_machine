@@ -331,7 +331,7 @@ void DeviceDriver_updateWaterTemp(XInt32 aValue){
 }
 
 void DeviceDriver_updateSpinSpeed(XInt32 aValue){
-	WasherDeviceClass__OnSetSpinNumber( DeviceObject, aValue);
+	//WasherDeviceClass__OnSetSpinNumber( DeviceObject, aValue);
 }
 
 void DeviceDriver_updateLeftTime(XInt32 aValue){

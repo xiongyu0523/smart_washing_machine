@@ -189,7 +189,7 @@ static int32_t iwconfig(p_shell_context_t context, int32_t argc, char **argv)
                     if (strcmp(argv[4], "key") == 0) {
                         
                         // connect to AP with password
-                        
+                        app_process_wifi_config(argv[3],argv[5]);
                     } else {
                         goto err;
                     }
