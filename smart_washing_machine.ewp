@@ -221,16 +221,27 @@
                 <option>
                     <name>CCDefines</name>
                     <state>DEBUG</state>
+                    <state>SKIP_SYSCLK_INIT</state>
                     <state>XIP_EXTERNAL_FLASH=1</state>
                     <state>XIP_BOOT_HEADER_ENABLE=1</state>
+                    <state>XIP_BOOT_HEADER_DCD_ENABLE=1</state>
+                    <state>NDEBUG</state>
                     <state>CPU_MIMXRT1052DVL6B</state>
                     <state>HIGH_SPEED_SDIO_CLOCK</state>
                     <state>PRINTF_ADVANCED_ENABLE=1</state>
                     <state>PRINTF_FLOAT_ENABLE=1</state>
+                    <state>EW_MAX_SURFACE_CACHE_SIZE=0x200000</state>
+                    <state>EW_MAX_GLYPH_SURFACE_WIDTH=256</state>
+                    <state>EW_MAX_GLYPH_SURFACE_HEIGHT=256</state>
+                    <state>EW_USE_DOUBLE_BUFFER=1</state>
                     <state>FSL_RTOS_FREE_RTOS</state>
                     <state>USE_RTOS</state>
+                    <state>EW_USE_FREE_RTOS=1</state>
+                    <state>EW_SURFACE_ROTATION=0</state>
+                    <state>EW_FRAME_BUFFER_COLOR_FORMAT=EW_FRAME_BUFFER_COLOR_FORMAT_RGB565</state>
                     <state>WIFI_WICED</state>
                     <state>MBEDTLS_CONFIG_FILE="ksdk_mbedtls_config.h"</state>
+                    <state>USB_STACK_FREERTOS</state>
                 </option>
                 <option>
                     <name>CCPreprocFile</name>
@@ -385,6 +396,12 @@
                     <state>$PROJ_DIR$/device</state>
                     <state>$PROJ_DIR$/doc</state>
                     <state>$PROJ_DIR$/drivers</state>
+                    <state>$PROJ_DIR$/emgui</state>
+                    <state>$PROJ_DIR$/emgui/GeneratedCode</state>
+                    <state>$PROJ_DIR$/emgui/RGB565</state>
+                    <state>$PROJ_DIR$/emgui/RTE</state>
+                    <state>$PROJ_DIR$/emgui/TargetSpecific</state>
+                    <state>$PROJ_DIR$/emgui/TLSF</state>
                     <state>$PROJ_DIR$/lwip/port</state>
                     <state>$PROJ_DIR$/lwip/port/arch</state>
                     <state>$PROJ_DIR$/lwip/src</state>
@@ -405,6 +422,7 @@
                     <state>$PROJ_DIR$/sdmmc/port</state>
                     <state>$PROJ_DIR$/src</state>
                     <state>$PROJ_DIR$/startup</state>
+                    <state>$PROJ_DIR$/touchpanel</state>
                     <state>$PROJ_DIR$/utilities</state>
                     <state>$PROJ_DIR$/xip</state>
                     <state>$PROJ_DIR$/linkkit</state>
@@ -424,6 +442,10 @@
                     <state>$PROJ_DIR$\mbedtls\include\mbedtls</state>
                     <state>$PROJ_DIR$\mbedtls\include</state>
                     <state>$PROJ_DIR$\mbedtls\port\ksdk</state>
+                    <state>$PROJ_DIR$/usb/include</state>
+                    <state>$PROJ_DIR$/usb/osa</state>
+                    <state>$PROJ_DIR$/usb/phy</state>
+                    <state>$PROJ_DIR$/usb/device</state>
                 </option>
                 <option>
                     <name>CCStdIncCheck</name>
@@ -2536,10 +2558,10 @@
                                 <name>$PROJ_DIR$\43xxx_wifi\WICED\WWD\internal\chips\4343W\chip_constants.h</name>
                             </file>
                             <file>
-                                <name>$PROJ_DIR$\43xxx_wifi\WICED\WWD\internal\chips\4343W\resources.c</name>
+                                <name>$PROJ_DIR$\43xxx_wifi\WICED\WWD\internal\chips\4343W\chip_resources.c</name>
                             </file>
                             <file>
-                                <name>$PROJ_DIR$\43xxx_wifi\WICED\WWD\internal\chips\4343W\resources.h</name>
+                                <name>$PROJ_DIR$\43xxx_wifi\WICED\WWD\internal\chips\4343W\chip_resources.h</name>
                             </file>
                             <file>
                                 <name>$PROJ_DIR$\43xxx_wifi\WICED\WWD\internal\chips\4343W\wwd_ap.c</name>
@@ -2925,6 +2947,12 @@
             <name>$PROJ_DIR$\drivers\fsl_dcp.h</name>
         </file>
         <file>
+            <name>$PROJ_DIR$\drivers\fsl_elcdif.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\drivers\fsl_elcdif.h</name>
+        </file>
+        <file>
             <name>$PROJ_DIR$\drivers\fsl_flexspi.c</name>
         </file>
         <file>
@@ -2940,10 +2968,28 @@
             <name>$PROJ_DIR$\drivers\fsl_iomuxc.h</name>
         </file>
         <file>
+            <name>$PROJ_DIR$\drivers\fsl_lpi2c.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\drivers\fsl_lpi2c.h</name>
+        </file>
+        <file>
             <name>$PROJ_DIR$\drivers\fsl_lpuart.c</name>
         </file>
         <file>
             <name>$PROJ_DIR$\drivers\fsl_lpuart.h</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\drivers\fsl_pxp.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\drivers\fsl_pxp.h</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\drivers\fsl_snvs_hp.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\drivers\fsl_snvs_hp.h</name>
         </file>
         <file>
             <name>$PROJ_DIR$\drivers\fsl_trng.c</name>
@@ -2956,6 +3002,342 @@
         </file>
         <file>
             <name>$PROJ_DIR$\drivers\fsl_usdhc.h</name>
+        </file>
+    </group>
+    <group>
+        <name>emgui</name>
+        <group>
+            <name>GeneratedCode</name>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\_ApplicationApplication.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\_CoreCursorEvent.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\_CoreCursorGrabEvent.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\_CoreCursorHit.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\_CoreDialogContext.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\_CoreDragEvent.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\_CoreEvent.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\_CoreGroup.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\_CoreKeyEvent.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\_CoreKeyPressHandler.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\_CoreLayoutContext.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\_CoreLayoutQuadContext.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\_CoreModalContext.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\_CoreOutline.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\_CorePropertyObserver.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\_CoreQuadView.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\_CoreRectView.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\_CoreResource.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\_CoreRoot.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\_CoreSimpleTouchHandler.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\_CoreSlideTouchHandler.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\_CoreSystemEvent.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\_CoreSystemEventHandler.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\_CoreSystemEventTask.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\_CoreTask.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\_CoreTaskQueue.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\_CoreTimer.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\_CoreVerticalList.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\_CoreView.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\_EffectsEffect.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\_EffectsEffectTimerClass.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\_EffectsInt32Effect.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\_EffectsRectEffect.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\_EffectsTimingList.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\_GraphicsCanvas.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\_ResourcesBitmap.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\_ResourcesFont.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\_ViewsBorder.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\_ViewsFrame.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\_ViewsImage.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\_ViewsRectangle.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\_ViewsText.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\_WasherDeviceClass.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\_WasherHourItemL.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\_WasherHourItemS.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\_WasherMinItemL.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\_WasherMinItemS.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\_WasherOptItemL.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\_WasherOptItemS.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\_WasherOptList.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\_WasherProgItemL.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\_WasherProgItemS.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\_WasherProgList.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\_WasherSpinItemL.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\_WasherSpinItemS.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\_WasherSpinList.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\_WasherStartButton.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\_WasherTempItemL.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\_WasherTempItemS.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\_WasherTempList.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\_WasherTimeList.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\_WasherWasher.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\Application.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\Application.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\Core.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\Core.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\Effects.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\Effects.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\ewlocale.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\Graphics.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\Graphics.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\Resources.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\Resources.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\Templates.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\Templates.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\Views.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\Views.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\Washer.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\GeneratedCode\Washer.h</name>
+            </file>
+        </group>
+        <group>
+            <name>RGB565</name>
+            <file>
+                <name>$PROJ_DIR$\emgui\RGB565\ewextgfx.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\RGB565\libewgfx-m7-iar.a</name>
+            </file>
+        </group>
+        <group>
+            <name>RTE</name>
+            <file>
+                <name>$PROJ_DIR$\emgui\RTE\ewextrte.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\RTE\libewrte-m7-iar.a</name>
+            </file>
+        </group>
+        <group>
+            <name>TargetSpecific</name>
+            <file>
+                <name>$PROJ_DIR$\emgui\TargetSpecific\ew_bsp_clock.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\TargetSpecific\ew_bsp_clock.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\TargetSpecific\ew_bsp_display.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\TargetSpecific\ew_bsp_display.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\TargetSpecific\ew_bsp_event.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\TargetSpecific\ew_bsp_event.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\TargetSpecific\ew_bsp_graphics.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\TargetSpecific\ew_bsp_graphics.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\TargetSpecific\ew_bsp_inout.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\TargetSpecific\ew_bsp_inout.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\TargetSpecific\ew_bsp_serial.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\TargetSpecific\ew_bsp_serial.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\TargetSpecific\ew_bsp_system.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\TargetSpecific\ew_bsp_system.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\TargetSpecific\ew_bsp_touch.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\TargetSpecific\ew_bsp_touch.h</name>
+            </file>
+        </group>
+        <group>
+            <name>TLSF</name>
+            <file>
+                <name>$PROJ_DIR$\emgui\TLSF\tlsf.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\TLSF\tlsf.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\emgui\TLSF\tlsfbits.h</name>
+            </file>
+        </group>
+        <file>
+            <name>$PROJ_DIR$\emgui\DeviceDriver.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\emgui\DeviceDriver.h</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\emgui\ewmain.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\emgui\ewmain.h</name>
         </file>
     </group>
     <group>
@@ -4958,6 +5340,12 @@
             <name>$PROJ_DIR$\source\FreeRTOSConfig.h</name>
         </file>
         <file>
+            <name>$PROJ_DIR$\source\ip_cmd.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\source\ip_cmd.h</name>
+        </file>
+        <file>
             <name>$PROJ_DIR$\source\linkkit_example_solo.c</name>
         </file>
         <file>
@@ -4965,6 +5353,27 @@
         </file>
         <file>
             <name>$PROJ_DIR$\source\lwipopts.h</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\source\shell.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\source\shell.h</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\source\usb_device_config.h</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\source\usb_device_descriptor.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\source\usb_device_descriptor.h</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\source\virtual_com.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\source\virtual_com.h</name>
         </file>
         <file>
             <name>$PROJ_DIR$\source\washing_machine.c</name>
@@ -4989,6 +5398,105 @@
         </file>
     </group>
     <group>
+        <name>touchpanel</name>
+        <file>
+            <name>$PROJ_DIR$\touchpanel\fsl_ft5406_rt.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\touchpanel\fsl_ft5406_rt.h</name>
+        </file>
+    </group>
+    <group>
+        <name>usb</name>
+        <group>
+            <name>device</name>
+            <group>
+                <name>class</name>
+                <group>
+                    <name>cdc</name>
+                    <file>
+                        <name>$PROJ_DIR$\source\usb_device_cdc_acm.c</name>
+                    </file>
+                    <file>
+                        <name>$PROJ_DIR$\source\usb_device_cdc_acm.h</name>
+                    </file>
+                </group>
+                <file>
+                    <name>$PROJ_DIR$\source\usb_device_class.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\source\usb_device_class.h</name>
+                </file>
+            </group>
+            <group>
+                <name>include</name>
+                <file>
+                    <name>$PROJ_DIR$\usb\device\usb_device.h</name>
+                </file>
+            </group>
+            <group>
+                <name>source</name>
+                <group>
+                    <name>ehci</name>
+                    <file>
+                        <name>$PROJ_DIR$\usb\device\usb_device_ehci.c</name>
+                    </file>
+                    <file>
+                        <name>$PROJ_DIR$\usb\device\usb_device_ehci.h</name>
+                    </file>
+                    <file>
+                        <name>$PROJ_DIR$\usb\include\usb_ehci.h</name>
+                    </file>
+                </group>
+                <file>
+                    <name>$PROJ_DIR$\source\usb_device_ch9.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\source\usb_device_ch9.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\usb\device\usb_device_dci.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\usb\device\usb_device_dci.h</name>
+                </file>
+            </group>
+        </group>
+        <group>
+            <name>include</name>
+            <file>
+                <name>$PROJ_DIR$\usb\include\usb.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\usb\include\usb_misc.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\usb\include\usb_spec.h</name>
+            </file>
+        </group>
+        <group>
+            <name>osa</name>
+            <file>
+                <name>$PROJ_DIR$\usb\osa\usb_osa.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\usb\osa\usb_osa_freertos.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\usb\osa\usb_osa_freertos.h</name>
+            </file>
+        </group>
+        <group>
+            <name>phy</name>
+            <file>
+                <name>$PROJ_DIR$\usb\phy\usb_phy.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\usb\phy\usb_phy.h</name>
+            </file>
+        </group>
+    </group>
+    <group>
         <name>utilities</name>
         <file>
             <name>$PROJ_DIR$\utilities\fsl_assert.c</name>
@@ -5001,6 +5509,12 @@
         </file>
         <file>
             <name>$PROJ_DIR$\utilities\fsl_debug_console_conf.h</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\utilities\fsl_shell.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\utilities\fsl_shell.h</name>
         </file>
         <file>
             <name>$PROJ_DIR$\utilities\fsl_str.c</name>

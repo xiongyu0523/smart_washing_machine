@@ -34,7 +34,7 @@
 /** @file
  * Defines WWD resource functions for BCM943340WCD1 platform
  */
-#include "resources.h"
+#include "chip_resources.h"
 #include "wifi_nvram_image.h"
 #include "platform/wwd_resource_interface.h"
 #include "wiced_resource.h"

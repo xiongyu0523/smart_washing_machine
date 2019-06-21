@@ -1,4 +1,4 @@
-#include "resources.h"
+#include "chip_resources.h"
 
 #if defined(WICED_MFG_TEST_APP)
 #include "4343WA1_mfg.h"
