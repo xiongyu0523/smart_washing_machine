@@ -65,7 +65,7 @@ static wm_data_info_t wm_ib={
 		.rinsh_times = 2,
 
 		.spin_time = WM_CONVERT_MINUTES2COUNT(5),
-		.target_wtem = 35,
+		.target_wtem = 40,
 		.target_ss = 1000,
 
 
@@ -786,6 +786,7 @@ static void wm_property_ib_set(wm_propertity_e epro, cJSON *cvalue){
 				wm_washing_mode_set_handle(cvalue->valueint);
 				report_started = true;
 				wm_report_all_pro_to_cloud();
+				wm_report_all_to_gui();
 			}
 		}
 		break;
@@ -1084,6 +1085,13 @@ static int wm_build_property_name_value(char *out, wm_propertity_e epro){
 }
 
 void wm_property_post(wm_propertity_e epro){
+	if(!g_wm_ctx.cloud_connected){
+
+		HAL_Printf("cloud not connected\r\n");
+		return;
+
+	}
+
 	char *property_payload = HAL_Malloc(128);
 	if(property_payload == NULL){
 
@@ -1196,6 +1204,23 @@ void wm_report_all_pro_to_cloud(void ){
 	}
 }
 
+void wm_report_all_to_gui(void ){
+	DeviceDriver_updateWashMode(wm_ib.washing_mode);
+	DeviceDriver_updateWaterTemp((wm_ib.target_wtem - 20)/10);
+	DeviceDriver_updateSpinSpeed((wm_ib.target_ss - 400)/200);
+	DeviceDriver_updateLeftTime(WM_CONVERT_COUNT2MINUTES(wm_ib.left_time));
+
+
+
+}
+
+
+void wm_report_all_enable(void ){
+	if(g_wm_ctx.cloud_connected){
+		report_started = true;
+	}
+
+}
 
 static void wm_init(void ){
 	if(wm_second_timer == NULL){
