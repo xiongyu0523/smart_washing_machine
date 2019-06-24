@@ -145,5 +145,5 @@ typedef struct{
 
 void wm_property_post(wm_propertity_e epro);
 void wm_report_all_to_gui(void );
-
+void wm_report_dryswitch_to_gui(void );
 #endif
