@@ -6983,6 +6983,15 @@ void CoreSlideTouchHandler_OnSetFriction( CoreSlideTouchHandler _this, XFloat va
   _this->frictFactor = value * 10000.000000f;
 }
 
+/* 'C' function for method : 'Core::SlideTouchHandler.OnSetEnabled()' */
+void CoreSlideTouchHandler_OnSetEnabled( CoreSlideTouchHandler _this, XBool value )
+{
+  if ( value )
+    CoreView__ChangeViewState( _this, CoreViewStateEnabled, 0 );
+  else
+    CoreView__ChangeViewState( _this, 0, CoreViewStateEnabled );
+}
+
 /* Variants derived from the class : 'Core::SlideTouchHandler' */
 EW_DEFINE_CLASS_VARIANTS( CoreSlideTouchHandler )
 EW_END_OF_CLASS_VARIANTS( CoreSlideTouchHandler )

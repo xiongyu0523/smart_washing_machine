@@ -61,6 +61,12 @@ EW_DEFINE_FIELDS( WasherDeviceClass, XObject )
   EW_OBJECT  ( HourUpdateEvent, CoreSystemEvent )
   EW_OBJECT  ( MinuteUpdateEvent, CoreSystemEvent )
   EW_OBJECT  ( RunningUpdateEvent, CoreSystemEvent )
+  EW_OBJECT  ( SetProgEvent,    CoreSystemEvent )
+  EW_OBJECT  ( SetTempEvent,    CoreSystemEvent )
+  EW_OBJECT  ( SetSpinEvent,    CoreSystemEvent )
+  EW_OBJECT  ( SetOptionEvent,  CoreSystemEvent )
+  EW_OBJECT  ( SetHourEvent,    CoreSystemEvent )
+  EW_OBJECT  ( SetMinuteEvent,  CoreSystemEvent )
   EW_PROPERTY( ProgramNumber,   XInt32 )
   EW_PROPERTY( TempNumber,      XInt32 )
   EW_PROPERTY( OptionNumber,    XInt32 )
@@ -140,16 +146,6 @@ void WasherDeviceClass__UpdateOption( void* _this, XInt32 aArg1 );
 
 /* This method is intended to be called by the device to notify the GUI application 
    about a particular system event. */
-void WasherDeviceClass_UpdateHour( WasherDeviceClass _this, XInt32 aArg1 );
-
-/* Wrapper function for the non virtual method : 'Washer::DeviceClass.UpdateHour()' */
-void WasherDeviceClass__UpdateHour( void* _this, XInt32 aArg1 );
-
-/* The following define announces the presence of the method Washer::DeviceClass.UpdateHour(). */
-#define _WasherDeviceClass__UpdateHour_
-
-/* This method is intended to be called by the device to notify the GUI application 
-   about a particular system event. */
 void WasherDeviceClass_UpdateMinute( WasherDeviceClass _this, XInt32 aArg1 );
 
 /* Wrapper function for the non virtual method : 'Washer::DeviceClass.UpdateMinute()' */
@@ -157,6 +153,16 @@ void WasherDeviceClass__UpdateMinute( void* _this, XInt32 aArg1 );
 
 /* The following define announces the presence of the method Washer::DeviceClass.UpdateMinute(). */
 #define _WasherDeviceClass__UpdateMinute_
+
+/* This method is intended to be called by the device to notify the GUI application 
+   about a particular system event. */
+void WasherDeviceClass_UpdateSecond( WasherDeviceClass _this, XInt32 aArg1 );
+
+/* Wrapper function for the non virtual method : 'Washer::DeviceClass.UpdateSecond()' */
+void WasherDeviceClass__UpdateSecond( void* _this, XInt32 aArg1 );
+
+/* The following define announces the presence of the method Washer::DeviceClass.UpdateSecond(). */
+#define _WasherDeviceClass__UpdateSecond_
 
 /* This method is intended to be called by the device to notify the GUI application 
    about a particular system event. */

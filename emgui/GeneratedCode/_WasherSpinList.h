@@ -109,6 +109,7 @@ EW_DEFINE_FIELDS( WasherSpinList, CoreGroup )
   EW_OBJECT  ( Int32Effect,     EffectsInt32Effect )
   EW_OBJECT  ( AutoDemoEffect,  EffectsInt32Effect )
   EW_OBJECT  ( SystemEventHandler, CoreSystemEventHandler )
+  EW_OBJECT  ( SetSpinEventHandler, CoreSystemEventHandler )
 EW_END_OF_FIELDS( WasherSpinList )
 
 /* Virtual Method Table (VMT) for the class : 'Washer::SpinList' */
@@ -183,6 +184,10 @@ void WasherSpinList_DeviceStart( WasherSpinList _this, XObject sender );
 
 /* 'C' function for method : 'Washer::SpinList.DeviceEnd()' */
 void WasherSpinList_DeviceEnd( WasherSpinList _this, XObject sender );
+
+/* This slot method is executed when the associated system event handler 'SystemEventHandler1' 
+   receives an event. */
+void WasherSpinList_onEventSet( WasherSpinList _this, XObject sender );
 
 #ifdef __cplusplus
   }

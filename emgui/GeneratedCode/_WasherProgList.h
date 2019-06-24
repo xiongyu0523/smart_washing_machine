@@ -109,6 +109,7 @@ EW_DEFINE_FIELDS( WasherProgList, CoreGroup )
   EW_OBJECT  ( Int32Effect,     EffectsInt32Effect )
   EW_OBJECT  ( AutoDemoEffect,  EffectsInt32Effect )
   EW_OBJECT  ( ProgramUpdateEventHandler, CoreSystemEventHandler )
+  EW_OBJECT  ( SetProgEventHandler, CoreSystemEventHandler )
 EW_END_OF_FIELDS( WasherProgList )
 
 /* Virtual Method Table (VMT) for the class : 'Washer::ProgList' */
@@ -183,6 +184,10 @@ void WasherProgList_DeviceStart( WasherProgList _this, XObject sender );
 
 /* 'C' function for method : 'Washer::ProgList.DeviceEnd()' */
 void WasherProgList_DeviceEnd( WasherProgList _this, XObject sender );
+
+/* This slot method is executed when the associated system event handler 'SystemEventHandler' 
+   receives an event. */
+void WasherProgList_onEventSet( WasherProgList _this, XObject sender );
 
 #ifdef __cplusplus
   }

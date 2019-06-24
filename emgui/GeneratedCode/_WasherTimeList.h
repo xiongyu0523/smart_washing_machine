@@ -120,6 +120,8 @@ EW_DEFINE_FIELDS( WasherTimeList, CoreGroup )
   EW_OBJECT  ( Int32EffectM,    EffectsInt32Effect )
   EW_OBJECT  ( HourEventHandler, CoreSystemEventHandler )
   EW_OBJECT  ( MinuteEventHandler, CoreSystemEventHandler )
+  EW_OBJECT  ( SetHourEventHandler, CoreSystemEventHandler )
+  EW_OBJECT  ( SetMinuteEventHandler, CoreSystemEventHandler )
 EW_END_OF_FIELDS( WasherTimeList )
 
 /* Virtual Method Table (VMT) for the class : 'Washer::TimeList' */
@@ -217,6 +219,14 @@ void WasherTimeList_onHourEvent( WasherTimeList _this, XObject sender );
 /* This slot method is executed when the associated system event handler 'SystemEventHandler' 
    receives an event. */
 void WasherTimeList_onMinuteEvent( WasherTimeList _this, XObject sender );
+
+/* This slot method is executed when the associated system event handler 'SystemEventHandler' 
+   receives an event. */
+void WasherTimeList_onHourEventSet( WasherTimeList _this, XObject sender );
+
+/* This slot method is executed when the associated system event handler 'SystemEventHandler' 
+   receives an event. */
+void WasherTimeList_onMinuteEventSet( WasherTimeList _this, XObject sender );
 
 #ifdef __cplusplus
   }
