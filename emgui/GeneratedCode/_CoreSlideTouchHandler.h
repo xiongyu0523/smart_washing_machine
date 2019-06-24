@@ -292,6 +292,9 @@ void CoreSlideTouchHandler_OnSetSnapNext( CoreSlideTouchHandler _this, XPoint va
 /* 'C' function for method : 'Core::SlideTouchHandler.OnSetFriction()' */
 void CoreSlideTouchHandler_OnSetFriction( CoreSlideTouchHandler _this, XFloat value );
 
+/* 'C' function for method : 'Core::SlideTouchHandler.OnSetEnabled()' */
+void CoreSlideTouchHandler_OnSetEnabled( CoreSlideTouchHandler _this, XBool value );
+
 #ifdef __cplusplus
   }
 #endif

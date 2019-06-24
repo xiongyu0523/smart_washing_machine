@@ -109,6 +109,7 @@ EW_DEFINE_FIELDS( WasherOptList, CoreGroup )
   EW_OBJECT  ( Int32Effect,     EffectsInt32Effect )
   EW_OBJECT  ( AutoDemoEffect,  EffectsInt32Effect )
   EW_OBJECT  ( SystemEventHandler, CoreSystemEventHandler )
+  EW_OBJECT  ( SetOptionEventHandler, CoreSystemEventHandler )
 EW_END_OF_FIELDS( WasherOptList )
 
 /* Virtual Method Table (VMT) for the class : 'Washer::OptList' */
@@ -183,6 +184,10 @@ void WasherOptList_DeviceEnd( WasherOptList _this, XObject sender );
 /* This slot method is executed when the associated system event handler 'SystemEventHandler' 
    receives an event. */
 void WasherOptList_onEvent( WasherOptList _this, XObject sender );
+
+/* This slot method is executed when the associated system event handler 'SystemEventHandler1' 
+   receives an event. */
+void WasherOptList_onEventSet( WasherOptList _this, XObject sender );
 
 #ifdef __cplusplus
   }

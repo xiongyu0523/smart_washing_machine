@@ -254,6 +254,12 @@ void WasherDeviceClass__Init( WasherDeviceClass _this, XObject aLink, XHandle aA
   CoreSystemEvent__Init( &_this->HourUpdateEvent, &_this->_XObject, 0 );
   CoreSystemEvent__Init( &_this->MinuteUpdateEvent, &_this->_XObject, 0 );
   CoreSystemEvent__Init( &_this->RunningUpdateEvent, &_this->_XObject, 0 );
+  CoreSystemEvent__Init( &_this->SetProgEvent, &_this->_XObject, 0 );
+  CoreSystemEvent__Init( &_this->SetTempEvent, &_this->_XObject, 0 );
+  CoreSystemEvent__Init( &_this->SetSpinEvent, &_this->_XObject, 0 );
+  CoreSystemEvent__Init( &_this->SetOptionEvent, &_this->_XObject, 0 );
+  CoreSystemEvent__Init( &_this->SetHourEvent, &_this->_XObject, 0 );
+  CoreSystemEvent__Init( &_this->SetMinuteEvent, &_this->_XObject, 0 );
 
   /* Setup the VMT pointer */
   _this->_VMT = EW_CLASS( WasherDeviceClass );
@@ -298,6 +304,12 @@ void WasherDeviceClass__ReInit( WasherDeviceClass _this )
   CoreSystemEvent__ReInit( &_this->HourUpdateEvent );
   CoreSystemEvent__ReInit( &_this->MinuteUpdateEvent );
   CoreSystemEvent__ReInit( &_this->RunningUpdateEvent );
+  CoreSystemEvent__ReInit( &_this->SetProgEvent );
+  CoreSystemEvent__ReInit( &_this->SetTempEvent );
+  CoreSystemEvent__ReInit( &_this->SetSpinEvent );
+  CoreSystemEvent__ReInit( &_this->SetOptionEvent );
+  CoreSystemEvent__ReInit( &_this->SetHourEvent );
+  CoreSystemEvent__ReInit( &_this->SetMinuteEvent );
 }
 
 /* Finalizer method for the class 'Washer::DeviceClass' */
@@ -314,6 +326,12 @@ void WasherDeviceClass__Done( WasherDeviceClass _this )
   CoreSystemEvent__Done( &_this->HourUpdateEvent );
   CoreSystemEvent__Done( &_this->MinuteUpdateEvent );
   CoreSystemEvent__Done( &_this->RunningUpdateEvent );
+  CoreSystemEvent__Done( &_this->SetProgEvent );
+  CoreSystemEvent__Done( &_this->SetTempEvent );
+  CoreSystemEvent__Done( &_this->SetSpinEvent );
+  CoreSystemEvent__Done( &_this->SetOptionEvent );
+  CoreSystemEvent__Done( &_this->SetHourEvent );
+  CoreSystemEvent__Done( &_this->SetMinuteEvent );
 
   /* Release all used strings */
   EwReleaseStrings( _this->WashingProgram );
@@ -400,8 +418,8 @@ void WasherDeviceClass_OnSetHour( WasherDeviceClass _this, XInt32 value )
   if ( value < 0 )
     value = 0;
 
-  if ( value > 23 )
-    value = 23;
+  if ( value > 59 )
+    value = 59;
 
   if ( value == _this->Hour )
     return;
@@ -411,7 +429,7 @@ void WasherDeviceClass_OnSetHour( WasherDeviceClass _this, XInt32 value )
     /* Implement here your C code to stop the brewing process in
       the device. If necessary, predeclare the C functions intended
       to be used here. For example: */
-    Device_SetHour( value );
+    Device_SetMinute( value );
   }
   EwNotifyRefObservers( EwNewRef( _this, WasherDeviceClass_OnGetHour, WasherDeviceClass_OnSetHour ), 
     0 );
@@ -434,7 +452,7 @@ void WasherDeviceClass_OnSetMinute( WasherDeviceClass _this, XInt32 value )
     /* Implement here your C code to stop the brewing process in
       the device. If necessary, predeclare the C functions intended
       to be used here. For example: */
-    Device_SetMinute( value );
+    Device_SetSecond( value );
   }
   EwNotifyRefObservers( EwNewRef( _this, WasherDeviceClass_OnGetMinute, WasherDeviceClass_OnSetMinute ), 
     0 );
@@ -494,6 +512,12 @@ void WasherDeviceClass_OnSetRunning( WasherDeviceClass _this, XBool value )
     return;
 
   _this->Running = value;
+  CoreSystemEvent_Trigger( &_this->SetProgEvent, 0, 0 );
+  CoreSystemEvent_Trigger( &_this->SetTempEvent, 0, 0 );
+  CoreSystemEvent_Trigger( &_this->SetSpinEvent, 0, 0 );
+  CoreSystemEvent_Trigger( &_this->SetOptionEvent, 0, 0 );
+  CoreSystemEvent_Trigger( &_this->SetHourEvent, 0, 0 );
+  CoreSystemEvent_Trigger( &_this->SetMinuteEvent, 0, 0 );
   {
     /* Implement here your C code to stop the brewing process in
       the device. If necessary, predeclare the C functions intended
@@ -581,13 +605,13 @@ void WasherDeviceClass__UpdateOption( void* _this, XInt32 aArg1 )
 
 /* This method is intended to be called by the device to notify the GUI application 
    about a particular system event. */
-void WasherDeviceClass_UpdateHour( WasherDeviceClass _this, XInt32 aArg1 )
+void WasherDeviceClass_UpdateMinute( WasherDeviceClass _this, XInt32 aArg1 )
 {
   if ( aArg1 < 0 )
     aArg1 = 0;
 
-  if ( aArg1 > 23 )
-    aArg1 = 23;
+  if ( aArg1 > 59 )
+    aArg1 = 59;
 
   if ( aArg1 == _this->Hour )
     return;
@@ -598,15 +622,15 @@ void WasherDeviceClass_UpdateHour( WasherDeviceClass _this, XInt32 aArg1 )
     0 );
 }
 
-/* Wrapper function for the non virtual method : 'Washer::DeviceClass.UpdateHour()' */
-void WasherDeviceClass__UpdateHour( void* _this, XInt32 aArg1 )
+/* Wrapper function for the non virtual method : 'Washer::DeviceClass.UpdateMinute()' */
+void WasherDeviceClass__UpdateMinute( void* _this, XInt32 aArg1 )
 {
-  WasherDeviceClass_UpdateHour((WasherDeviceClass)_this, aArg1 );
+  WasherDeviceClass_UpdateMinute((WasherDeviceClass)_this, aArg1 );
 }
 
 /* This method is intended to be called by the device to notify the GUI application 
    about a particular system event. */
-void WasherDeviceClass_UpdateMinute( WasherDeviceClass _this, XInt32 aArg1 )
+void WasherDeviceClass_UpdateSecond( WasherDeviceClass _this, XInt32 aArg1 )
 {
   if ( aArg1 < 0 )
     aArg1 = 0;
@@ -623,10 +647,10 @@ void WasherDeviceClass_UpdateMinute( WasherDeviceClass _this, XInt32 aArg1 )
     0 );
 }
 
-/* Wrapper function for the non virtual method : 'Washer::DeviceClass.UpdateMinute()' */
-void WasherDeviceClass__UpdateMinute( void* _this, XInt32 aArg1 )
+/* Wrapper function for the non virtual method : 'Washer::DeviceClass.UpdateSecond()' */
+void WasherDeviceClass__UpdateSecond( void* _this, XInt32 aArg1 )
 {
-  WasherDeviceClass_UpdateMinute((WasherDeviceClass)_this, aArg1 );
+  WasherDeviceClass_UpdateSecond((WasherDeviceClass)_this, aArg1 );
 }
 
 /* This method is intended to be called by the device to notify the GUI application 
@@ -638,6 +662,12 @@ void WasherDeviceClass_UpdateRunning( WasherDeviceClass _this, XBool aArg1 )
 
   _this->Running = aArg1;
   CoreSystemEvent_Trigger( &_this->RunningUpdateEvent, 0, 0 );
+  CoreSystemEvent_Trigger( &_this->SetProgEvent, 0, 0 );
+  CoreSystemEvent_Trigger( &_this->SetTempEvent, 0, 0 );
+  CoreSystemEvent_Trigger( &_this->SetSpinEvent, 0, 0 );
+  CoreSystemEvent_Trigger( &_this->SetOptionEvent, 0, 0 );
+  CoreSystemEvent_Trigger( &_this->SetHourEvent, 0, 0 );
+  CoreSystemEvent_Trigger( &_this->SetMinuteEvent, 0, 0 );
   EwNotifyRefObservers( EwNewRef( _this, WasherDeviceClass_OnGetRunning, WasherDeviceClass_OnSetRunning ), 
     0 );
 }
@@ -719,6 +749,7 @@ void WasherProgList__Init( WasherProgList _this, XObject aLink, XHandle aArg )
   EffectsInt32Effect__Init( &_this->Int32Effect, &_this->_XObject, 0 );
   EffectsInt32Effect__Init( &_this->AutoDemoEffect, &_this->_XObject, 0 );
   CoreSystemEventHandler__Init( &_this->ProgramUpdateEventHandler, &_this->_XObject, 0 );
+  CoreSystemEventHandler__Init( &_this->SetProgEventHandler, &_this->_XObject, 0 );
 
   /* Setup the VMT pointer */
   _this->_VMT = EW_CLASS( WasherProgList );
@@ -800,6 +831,9 @@ void WasherProgList__Init( WasherProgList _this, XObject aLink, XHandle aArg )
   _this->ProgramUpdateEventHandler.OnEvent = EwNewSlot( _this, WasherProgList_onEvent );
   CoreSystemEventHandler_OnSetEvent( &_this->ProgramUpdateEventHandler, &EwGetAutoObject( 
   &WasherDevice, WasherDeviceClass )->ProgramUpdateEvent );
+  _this->SetProgEventHandler.OnEvent = EwNewSlot( _this, WasherProgList_onEventSet );
+  CoreSystemEventHandler_OnSetEvent( &_this->SetProgEventHandler, &EwGetAutoObject( 
+  &WasherDevice, WasherDeviceClass )->SetProgEvent );
 }
 
 /* Re-Initializer for the class 'Washer::ProgList' */
@@ -822,6 +856,7 @@ void WasherProgList__ReInit( WasherProgList _this )
   EffectsInt32Effect__ReInit( &_this->Int32Effect );
   EffectsInt32Effect__ReInit( &_this->AutoDemoEffect );
   CoreSystemEventHandler__ReInit( &_this->ProgramUpdateEventHandler );
+  CoreSystemEventHandler__ReInit( &_this->SetProgEventHandler );
 }
 
 /* Finalizer method for the class 'Washer::ProgList' */
@@ -844,6 +879,7 @@ void WasherProgList__Done( WasherProgList _this )
   EffectsInt32Effect__Done( &_this->Int32Effect );
   EffectsInt32Effect__Done( &_this->AutoDemoEffect );
   CoreSystemEventHandler__Done( &_this->ProgramUpdateEventHandler );
+  CoreSystemEventHandler__Done( &_this->SetProgEventHandler );
 
   /* Don't forget to deinitialize the super class ... */
   CoreGroup__Done( &_this->_Super );
@@ -1084,6 +1120,25 @@ void WasherProgList_DeviceEnd( WasherProgList _this, XObject sender )
   _this->FadeCaption.Value2 = 255;
   EffectsEffect_OnSetEnabled((EffectsEffect)&_this->FadeCaption, 1 );
   CoreSimpleTouchHandler_OnSetEnabled( &_this->SimpleTouchHandler, 1 );
+}
+
+/* This slot method is executed when the associated system event handler 'SystemEventHandler' 
+   receives an event. */
+void WasherProgList_onEventSet( WasherProgList _this, XObject sender )
+{
+  /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
+  EW_UNUSED_ARG( sender );
+
+  if ( EwGetAutoObject( &WasherDevice, WasherDeviceClass )->Running )
+  {
+    CoreSimpleTouchHandler_OnSetEnabled( &_this->SimpleTouchHandler, 0 );
+    CoreSlideTouchHandler_OnSetEnabled( &_this->SlideTouchHandler, 0 );
+  }
+  else
+  {
+    CoreSimpleTouchHandler_OnSetEnabled( &_this->SimpleTouchHandler, 1 );
+    CoreSlideTouchHandler_OnSetEnabled( &_this->SlideTouchHandler, 1 );
+  }
 }
 
 /* Variants derived from the class : 'Washer::ProgList' */
@@ -2960,6 +3015,7 @@ void WasherTempList__Init( WasherTempList _this, XObject aLink, XHandle aArg )
   EffectsInt32Effect__Init( &_this->Int32Effect, &_this->_XObject, 0 );
   EffectsInt32Effect__Init( &_this->AutoDemoEffect, &_this->_XObject, 0 );
   CoreSystemEventHandler__Init( &_this->SystemEventHandler, &_this->_XObject, 0 );
+  CoreSystemEventHandler__Init( &_this->SetTempEventHandler, &_this->_XObject, 0 );
 
   /* Setup the VMT pointer */
   _this->_VMT = EW_CLASS( WasherTempList );
@@ -3056,6 +3112,9 @@ void WasherTempList__Init( WasherTempList _this, XObject aLink, XHandle aArg )
   _this->SystemEventHandler.OnEvent = EwNewSlot( _this, WasherTempList_onEvent );
   CoreSystemEventHandler_OnSetEvent( &_this->SystemEventHandler, &EwGetAutoObject( 
   &WasherDevice, WasherDeviceClass )->TempUpdateEvent );
+  _this->SetTempEventHandler.OnEvent = EwNewSlot( _this, WasherTempList_onEventSet );
+  CoreSystemEventHandler_OnSetEvent( &_this->SetTempEventHandler, &EwGetAutoObject( 
+  &WasherDevice, WasherDeviceClass )->SetTempEvent );
 }
 
 /* Re-Initializer for the class 'Washer::TempList' */
@@ -3080,6 +3139,7 @@ void WasherTempList__ReInit( WasherTempList _this )
   EffectsInt32Effect__ReInit( &_this->Int32Effect );
   EffectsInt32Effect__ReInit( &_this->AutoDemoEffect );
   CoreSystemEventHandler__ReInit( &_this->SystemEventHandler );
+  CoreSystemEventHandler__ReInit( &_this->SetTempEventHandler );
 }
 
 /* Finalizer method for the class 'Washer::TempList' */
@@ -3104,6 +3164,7 @@ void WasherTempList__Done( WasherTempList _this )
   EffectsInt32Effect__Done( &_this->Int32Effect );
   EffectsInt32Effect__Done( &_this->AutoDemoEffect );
   CoreSystemEventHandler__Done( &_this->SystemEventHandler );
+  CoreSystemEventHandler__Done( &_this->SetTempEventHandler );
 
   /* Don't forget to deinitialize the super class ... */
   CoreGroup__Done( &_this->_Super );
@@ -3470,6 +3531,25 @@ void WasherTempList_DeviceEnd( WasherTempList _this, XObject sender )
   CoreSimpleTouchHandler_OnSetEnabled( &_this->SimpleTouchHandler, 1 );
 }
 
+/* This slot method is executed when the associated system event handler 'SystemEventHandler1' 
+   receives an event. */
+void WasherTempList_onEventSet( WasherTempList _this, XObject sender )
+{
+  /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
+  EW_UNUSED_ARG( sender );
+
+  if ( EwGetAutoObject( &WasherDevice, WasherDeviceClass )->Running )
+  {
+    CoreSimpleTouchHandler_OnSetEnabled( &_this->SimpleTouchHandler, 0 );
+    CoreSlideTouchHandler_OnSetEnabled( &_this->SlideTouchHandler, 0 );
+  }
+  else
+  {
+    CoreSimpleTouchHandler_OnSetEnabled( &_this->SimpleTouchHandler, 1 );
+    CoreSlideTouchHandler_OnSetEnabled( &_this->SlideTouchHandler, 1 );
+  }
+}
+
 /* Variants derived from the class : 'Washer::TempList' */
 EW_DEFINE_CLASS_VARIANTS( WasherTempList )
 EW_END_OF_CLASS_VARIANTS( WasherTempList )
@@ -3730,6 +3810,7 @@ void WasherSpinList__Init( WasherSpinList _this, XObject aLink, XHandle aArg )
   EffectsInt32Effect__Init( &_this->Int32Effect, &_this->_XObject, 0 );
   EffectsInt32Effect__Init( &_this->AutoDemoEffect, &_this->_XObject, 0 );
   CoreSystemEventHandler__Init( &_this->SystemEventHandler, &_this->_XObject, 0 );
+  CoreSystemEventHandler__Init( &_this->SetSpinEventHandler, &_this->_XObject, 0 );
 
   /* Setup the VMT pointer */
   _this->_VMT = EW_CLASS( WasherSpinList );
@@ -3811,6 +3892,9 @@ void WasherSpinList__Init( WasherSpinList _this, XObject aLink, XHandle aArg )
   _this->SystemEventHandler.OnEvent = EwNewSlot( _this, WasherSpinList_onEvent );
   CoreSystemEventHandler_OnSetEvent( &_this->SystemEventHandler, &EwGetAutoObject( 
   &WasherDevice, WasherDeviceClass )->SpinUpdateEvent );
+  _this->SetSpinEventHandler.OnEvent = EwNewSlot( _this, WasherSpinList_onEventSet );
+  CoreSystemEventHandler_OnSetEvent( &_this->SetSpinEventHandler, &EwGetAutoObject( 
+  &WasherDevice, WasherDeviceClass )->SetSpinEvent );
 }
 
 /* Re-Initializer for the class 'Washer::SpinList' */
@@ -3833,6 +3917,7 @@ void WasherSpinList__ReInit( WasherSpinList _this )
   EffectsInt32Effect__ReInit( &_this->Int32Effect );
   EffectsInt32Effect__ReInit( &_this->AutoDemoEffect );
   CoreSystemEventHandler__ReInit( &_this->SystemEventHandler );
+  CoreSystemEventHandler__ReInit( &_this->SetSpinEventHandler );
 }
 
 /* Finalizer method for the class 'Washer::SpinList' */
@@ -3855,6 +3940,7 @@ void WasherSpinList__Done( WasherSpinList _this )
   EffectsInt32Effect__Done( &_this->Int32Effect );
   EffectsInt32Effect__Done( &_this->AutoDemoEffect );
   CoreSystemEventHandler__Done( &_this->SystemEventHandler );
+  CoreSystemEventHandler__Done( &_this->SetSpinEventHandler );
 
   /* Don't forget to deinitialize the super class ... */
   CoreGroup__Done( &_this->_Super );
@@ -4088,6 +4174,25 @@ void WasherSpinList_DeviceEnd( WasherSpinList _this, XObject sender )
   _this->FadeCaption.Value2 = 255;
   EffectsEffect_OnSetEnabled((EffectsEffect)&_this->FadeCaption, 1 );
   CoreSimpleTouchHandler_OnSetEnabled( &_this->SimpleTouchHandler, 1 );
+}
+
+/* This slot method is executed when the associated system event handler 'SystemEventHandler1' 
+   receives an event. */
+void WasherSpinList_onEventSet( WasherSpinList _this, XObject sender )
+{
+  /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
+  EW_UNUSED_ARG( sender );
+
+  if ( EwGetAutoObject( &WasherDevice, WasherDeviceClass )->Running )
+  {
+    CoreSimpleTouchHandler_OnSetEnabled( &_this->SimpleTouchHandler, 0 );
+    CoreSlideTouchHandler_OnSetEnabled( &_this->SlideTouchHandler, 0 );
+  }
+  else
+  {
+    CoreSimpleTouchHandler_OnSetEnabled( &_this->SimpleTouchHandler, 1 );
+    CoreSlideTouchHandler_OnSetEnabled( &_this->SlideTouchHandler, 1 );
+  }
 }
 
 /* Variants derived from the class : 'Washer::SpinList' */
@@ -4408,6 +4513,7 @@ void WasherOptList__Init( WasherOptList _this, XObject aLink, XHandle aArg )
   EffectsInt32Effect__Init( &_this->Int32Effect, &_this->_XObject, 0 );
   EffectsInt32Effect__Init( &_this->AutoDemoEffect, &_this->_XObject, 0 );
   CoreSystemEventHandler__Init( &_this->SystemEventHandler, &_this->_XObject, 0 );
+  CoreSystemEventHandler__Init( &_this->SetOptionEventHandler, &_this->_XObject, 0 );
 
   /* Setup the VMT pointer */
   _this->_VMT = EW_CLASS( WasherOptList );
@@ -4489,6 +4595,9 @@ void WasherOptList__Init( WasherOptList _this, XObject aLink, XHandle aArg )
   _this->SystemEventHandler.OnEvent = EwNewSlot( _this, WasherOptList_onEvent );
   CoreSystemEventHandler_OnSetEvent( &_this->SystemEventHandler, &EwGetAutoObject( 
   &WasherDevice, WasherDeviceClass )->OptionUpdateEvent );
+  _this->SetOptionEventHandler.OnEvent = EwNewSlot( _this, WasherOptList_onEventSet );
+  CoreSystemEventHandler_OnSetEvent( &_this->SetOptionEventHandler, &EwGetAutoObject( 
+  &WasherDevice, WasherDeviceClass )->SetOptionEvent );
 }
 
 /* Re-Initializer for the class 'Washer::OptList' */
@@ -4511,6 +4620,7 @@ void WasherOptList__ReInit( WasherOptList _this )
   EffectsInt32Effect__ReInit( &_this->Int32Effect );
   EffectsInt32Effect__ReInit( &_this->AutoDemoEffect );
   CoreSystemEventHandler__ReInit( &_this->SystemEventHandler );
+  CoreSystemEventHandler__ReInit( &_this->SetOptionEventHandler );
 }
 
 /* Finalizer method for the class 'Washer::OptList' */
@@ -4533,6 +4643,7 @@ void WasherOptList__Done( WasherOptList _this )
   EffectsInt32Effect__Done( &_this->Int32Effect );
   EffectsInt32Effect__Done( &_this->AutoDemoEffect );
   CoreSystemEventHandler__Done( &_this->SystemEventHandler );
+  CoreSystemEventHandler__Done( &_this->SetOptionEventHandler );
 
   /* Don't forget to deinitialize the super class ... */
   CoreGroup__Done( &_this->_Super );
@@ -4766,6 +4877,25 @@ void WasherOptList_onEvent( WasherOptList _this, XObject sender )
   val = EwGetAutoObject( &WasherDevice, WasherDeviceClass )->OptionNumber;
   CoreVerticalList_EnsureVisible( &_this->MainList, val, 1, 0, EwNewSlot( _this, 
   WasherOptList_DeviceEnd ));
+}
+
+/* This slot method is executed when the associated system event handler 'SystemEventHandler1' 
+   receives an event. */
+void WasherOptList_onEventSet( WasherOptList _this, XObject sender )
+{
+  /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
+  EW_UNUSED_ARG( sender );
+
+  if ( EwGetAutoObject( &WasherDevice, WasherDeviceClass )->Running )
+  {
+    CoreSimpleTouchHandler_OnSetEnabled( &_this->SimpleTouchHandler, 0 );
+    CoreSlideTouchHandler_OnSetEnabled( &_this->SlideTouchHandler, 0 );
+  }
+  else
+  {
+    CoreSimpleTouchHandler_OnSetEnabled( &_this->SimpleTouchHandler, 1 );
+    CoreSlideTouchHandler_OnSetEnabled( &_this->SlideTouchHandler, 1 );
+  }
 }
 
 /* Variants derived from the class : 'Washer::OptList' */
@@ -5484,6 +5614,8 @@ void WasherTimeList__Init( WasherTimeList _this, XObject aLink, XHandle aArg )
   EffectsInt32Effect__Init( &_this->Int32EffectM, &_this->_XObject, 0 );
   CoreSystemEventHandler__Init( &_this->HourEventHandler, &_this->_XObject, 0 );
   CoreSystemEventHandler__Init( &_this->MinuteEventHandler, &_this->_XObject, 0 );
+  CoreSystemEventHandler__Init( &_this->SetHourEventHandler, &_this->_XObject, 0 );
+  CoreSystemEventHandler__Init( &_this->SetMinuteEventHandler, &_this->_XObject, 0 );
 
   /* Setup the VMT pointer */
   _this->_VMT = EW_CLASS( WasherTimeList );
@@ -5508,7 +5640,7 @@ void WasherTimeList__Init( WasherTimeList _this, XObject aLink, XHandle aArg )
   CoreVerticalList_OnSetItemClass( &_this->BottomListH, EW_CLASS( WasherHourItemS ));
   CoreRectView__OnSetBounds( &_this->MainListH, _Const0064 );
   CoreVerticalList_OnSetItemHeight( &_this->MainListH, 96 );
-  CoreVerticalList_OnSetNoOfItems( &_this->MainListH, 24 );
+  CoreVerticalList_OnSetNoOfItems( &_this->MainListH, 60 );
   CoreVerticalList_OnSetItemClass( &_this->MainListH, EW_CLASS( WasherHourItemL ));
   CoreRectView__OnSetBounds( &_this->TopListH, _Const0065 );
   CoreGroup__OnSetOpacity( &_this->TopListH, 0 );
@@ -5628,6 +5760,12 @@ void WasherTimeList__Init( WasherTimeList _this, XObject aLink, XHandle aArg )
   _this->MinuteEventHandler.OnEvent = EwNewSlot( _this, WasherTimeList_onMinuteEvent );
   CoreSystemEventHandler_OnSetEvent( &_this->MinuteEventHandler, &EwGetAutoObject( 
   &WasherDevice, WasherDeviceClass )->MinuteUpdateEvent );
+  _this->SetHourEventHandler.OnEvent = EwNewSlot( _this, WasherTimeList_onHourEventSet );
+  CoreSystemEventHandler_OnSetEvent( &_this->SetHourEventHandler, &EwGetAutoObject( 
+  &WasherDevice, WasherDeviceClass )->SetHourEvent );
+  _this->SetMinuteEventHandler.OnEvent = EwNewSlot( _this, WasherTimeList_onMinuteEventSet );
+  CoreSystemEventHandler_OnSetEvent( &_this->SetMinuteEventHandler, &EwGetAutoObject( 
+  &WasherDevice, WasherDeviceClass )->SetMinuteEvent );
 }
 
 /* Re-Initializer for the class 'Washer::TimeList' */
@@ -5659,6 +5797,8 @@ void WasherTimeList__ReInit( WasherTimeList _this )
   EffectsInt32Effect__ReInit( &_this->Int32EffectM );
   CoreSystemEventHandler__ReInit( &_this->HourEventHandler );
   CoreSystemEventHandler__ReInit( &_this->MinuteEventHandler );
+  CoreSystemEventHandler__ReInit( &_this->SetHourEventHandler );
+  CoreSystemEventHandler__ReInit( &_this->SetMinuteEventHandler );
 }
 
 /* Finalizer method for the class 'Washer::TimeList' */
@@ -5690,6 +5830,8 @@ void WasherTimeList__Done( WasherTimeList _this )
   EffectsInt32Effect__Done( &_this->Int32EffectM );
   CoreSystemEventHandler__Done( &_this->HourEventHandler );
   CoreSystemEventHandler__Done( &_this->MinuteEventHandler );
+  CoreSystemEventHandler__Done( &_this->SetHourEventHandler );
+  CoreSystemEventHandler__Done( &_this->SetMinuteEventHandler );
 
   /* Don't forget to deinitialize the super class ... */
   CoreGroup__Done( &_this->_Super );
@@ -6050,6 +6192,44 @@ void WasherTimeList_onMinuteEvent( WasherTimeList _this, XObject sender )
   val = EwGetAutoObject( &WasherDevice, WasherDeviceClass )->Minute;
   CoreVerticalList_EnsureVisible( &_this->MainListM, val, 1, 0, EwNewSlot( _this, 
   WasherTimeList_DeviceEnd ));
+}
+
+/* This slot method is executed when the associated system event handler 'SystemEventHandler' 
+   receives an event. */
+void WasherTimeList_onHourEventSet( WasherTimeList _this, XObject sender )
+{
+  /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
+  EW_UNUSED_ARG( sender );
+
+  if ( EwGetAutoObject( &WasherDevice, WasherDeviceClass )->Running )
+  {
+    CoreSimpleTouchHandler_OnSetEnabled( &_this->SimpleTouchHandlerH, 0 );
+    CoreSlideTouchHandler_OnSetEnabled( &_this->SlideTouchHandlerH, 0 );
+  }
+  else
+  {
+    CoreSimpleTouchHandler_OnSetEnabled( &_this->SimpleTouchHandlerH, 1 );
+    CoreSlideTouchHandler_OnSetEnabled( &_this->SlideTouchHandlerH, 1 );
+  }
+}
+
+/* This slot method is executed when the associated system event handler 'SystemEventHandler' 
+   receives an event. */
+void WasherTimeList_onMinuteEventSet( WasherTimeList _this, XObject sender )
+{
+  /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
+  EW_UNUSED_ARG( sender );
+
+  if ( EwGetAutoObject( &WasherDevice, WasherDeviceClass )->Running )
+  {
+    CoreSimpleTouchHandler_OnSetEnabled( &_this->SimpleTouchHandlerM, 0 );
+    CoreSlideTouchHandler_OnSetEnabled( &_this->SlideTouchHandlerM, 0 );
+  }
+  else
+  {
+    CoreSimpleTouchHandler_OnSetEnabled( &_this->SimpleTouchHandlerM, 1 );
+    CoreSlideTouchHandler_OnSetEnabled( &_this->SlideTouchHandlerM, 1 );
+  }
 }
 
 /* Variants derived from the class : 'Washer::TimeList' */
@@ -8321,9 +8501,13 @@ void WasherStartButton_onEvent( WasherStartButton _this, XObject sender )
   else
   {
     if ( EwOnGetBool( _this->IsRunning ))
+    {
       ViewsRectangle_OnSetColor( &_this->Background, WasherStopColor );
+    }
     else
+    {
       ViewsRectangle_OnSetColor( &_this->Background, WasherStartColor );
+    }
   }
 }
 
