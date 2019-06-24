@@ -1947,6 +1947,15 @@ void ViewsText_OnSetOpacity( ViewsText _this, XInt32 value )
     CoreGroup__InvalidateArea( _this->Super2.Owner, _this->Super1.Bounds );
 }
 
+/* 'C' function for method : 'Views::Text.OnSetVisible()' */
+void ViewsText_OnSetVisible( ViewsText _this, XBool value )
+{
+  if ( value )
+    CoreView__ChangeViewState( _this, CoreViewStateVisible, 0 );
+  else
+    CoreView__ChangeViewState( _this, 0, CoreViewStateVisible );
+}
+
 /* The method IsBaseDirectionRTL() returns 'true' if the text specified in @String 
    starts with an RTL (right-to-left) character. This implies the base direction 
    of the entire text paragraph. If the text starts with an LTR (left-to-right) 

@@ -45,6 +45,7 @@
 #include "_CoreGroup.h"
 #include "_CoreSimpleTouchHandler.h"
 #include "_CoreSlideTouchHandler.h"
+#include "_CoreSystemEventHandler.h"
 #include "_CoreVerticalList.h"
 #include "_EffectsInt32Effect.h"
 #include "_ViewsRectangle.h"
@@ -117,6 +118,8 @@ EW_DEFINE_FIELDS( WasherTimeList, CoreGroup )
   EW_OBJECT  ( FadeListOut,     EffectsInt32Effect )
   EW_OBJECT  ( Int32EffectH,    EffectsInt32Effect )
   EW_OBJECT  ( Int32EffectM,    EffectsInt32Effect )
+  EW_OBJECT  ( HourEventHandler, CoreSystemEventHandler )
+  EW_OBJECT  ( MinuteEventHandler, CoreSystemEventHandler )
 EW_END_OF_FIELDS( WasherTimeList )
 
 /* Virtual Method Table (VMT) for the class : 'Washer::TimeList' */
@@ -200,6 +203,20 @@ void WasherTimeList_OnDragM( WasherTimeList _this, XObject sender );
 
 /* 'C' function for method : 'Washer::TimeList.OnReleaseM()' */
 void WasherTimeList_OnReleaseM( WasherTimeList _this, XObject sender );
+
+/* 'C' function for method : 'Washer::TimeList.DeviceStart()' */
+void WasherTimeList_DeviceStart( WasherTimeList _this, XObject sender );
+
+/* 'C' function for method : 'Washer::TimeList.DeviceEnd()' */
+void WasherTimeList_DeviceEnd( WasherTimeList _this, XObject sender );
+
+/* This slot method is executed when the associated system event handler 'SystemEventHandler' 
+   receives an event. */
+void WasherTimeList_onHourEvent( WasherTimeList _this, XObject sender );
+
+/* This slot method is executed when the associated system event handler 'SystemEventHandler' 
+   receives an event. */
+void WasherTimeList_onMinuteEvent( WasherTimeList _this, XObject sender );
 
 #ifdef __cplusplus
   }
