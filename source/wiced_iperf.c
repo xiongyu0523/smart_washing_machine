@@ -133,7 +133,7 @@ static void linkkit_task(void *arg)
     PRINTF(" Link Kit example\r\n");
     PRINTF("************************************************\r\n");
 
-    ShellInit();
+    
     BOARD_InitNetwork();
     wm_run(NULL, NULL);
    // linkkit_example_solo(NULL, NULL);
@@ -232,6 +232,20 @@ static uint8_t app_wifi_ib_same(char *ssid, char *key){
 
 }
 
+void app_process_wifi_config(char *ssid, char *key){
+	if((ssid == NULL) && (key == NULL)){
+		uint8_t value_invalid = 0xff;
+		HAL_Kv_Set("wifi_ssid", &value_invalid, 1, 0);
+		HAL_Kv_Set("wifi_key", &value_invalid, 1, 0);
+		wwd_wifi_leave(WWD_STA_INTERFACE);
+
+	}else if(app_wifi_ib_same(ssid,key) == 0){
+		HAL_Kv_Set("wifi_ssid", ssid, strlen(ssid), 0);
+		HAL_Kv_Set("wifi_key", key, strlen(key), 0);
+	}
+
+}
+
 void app_process_recive_cmd(char *buff, uint8_t len){
   uint8_t ptr = 2;
   uint8_t i = 0;
@@ -288,8 +302,9 @@ int main(void)
     BOARD_InitSemcPins();
     BOARD_BootClockRUN();
     BOARD_USDHCClockConfiguration();
-    //BOARD_InitDebugConsole();
-    log_init();
+    BOARD_InitDebugConsole();
+	ShellInit();
+    //log_init();
 	#if 1
     flexspi_hyper_flash_init();
     kv_init();

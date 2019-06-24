@@ -291,48 +291,7 @@ int DeviceDriver_ProcessData( void )
 
   #ifdef _WasherDeviceClass__UpdateProgram_
     
-    if ( isUpdateProgram == 1000 )
-    {
-      WasherDeviceClass__UpdateProgram( DeviceObject, 1 );
-      isUpdateProgram++;
-    }
-    else if ( isUpdateProgram == 2000 )
-    {
-      WasherDeviceClass__UpdateProgram( DeviceObject, 2 );
-      isUpdateProgram++;
-    }
-    else if ( isUpdateProgram == 3000 )
-    {
-      WasherDeviceClass__UpdateProgram( DeviceObject, 3 );
-      isUpdateProgram++;
-    }
-    else if ( isUpdateProgram == 4000 )
-    {
-      WasherDeviceClass__UpdateProgram( DeviceObject, 4 );
-      isUpdateProgram++;
-    }
-    else if ( isUpdateProgram == 5000 )
-    {
-      WasherDeviceClass__UpdateProgram( DeviceObject, 5 );
-      isUpdateProgram++;
-    }
-    else if ( isUpdateProgram == 6000 )
-    {
-      WasherDeviceClass__UpdateProgram( DeviceObject, 6 );
-      isUpdateProgram++;
-    }
-    else if ( isUpdateProgram == 7000 )
-    {
-      WasherDeviceClass__UpdateProgram( DeviceObject, 7 );
-      isUpdateProgram++;
-    }
-    else if ( isUpdateProgram == 8000 )
-    {
-      isUpdateProgram = 0;
-      WasherDeviceClass__UpdateProgram( DeviceObject, 0 );
-    }
-    else
-      isUpdateProgram++;
+
   
   #endif
     
@@ -367,6 +326,25 @@ int DeviceDriver_ProcessData( void )
   return needUpdate;
 }
 
+void DeviceDriver_updateWaterTemp(XInt32 aValue){
+	WasherDeviceClass_OnSetTempNumber( DeviceObject, aValue);
+}
+
+void DeviceDriver_updateSpinSpeed(XInt32 aValue){
+	//WasherDeviceClass__OnSetSpinNumber( DeviceObject, aValue);
+}
+
+void DeviceDriver_updateLeftTime(XInt32 aValue){
+	XInt32 hour = aValue/60;
+	XInt32 minutes = aValue%60;
+	WasherDeviceClass_OnSetHour( DeviceObject, hour);
+	WasherDeviceClass_OnSetMinute( DeviceObject, minutes);
+}
+
+void DeviceDriver_updateWashMode(XInt32 aValue){
+	WasherDeviceClass__UpdateProgram( DeviceObject, aValue);
+
+}
 
 /*******************************************************************************
 * FUNCTION:
@@ -416,6 +394,9 @@ void YourDevice_StopBrewing( XInt32 aValue )
   */
 
   EwPrint( "Change the Washer program value to %u \n", aValue );
+  wm_washing_mode_set_handle(aValue);
+  wm_report_all_enable();
+  wm_report_all_pro_to_cloud();
 }
 
 /*******************************************************************************

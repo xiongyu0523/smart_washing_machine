@@ -58,14 +58,14 @@ static wm_data_info_t wm_ib={
 	
 		.water_level = WL_MIDDLE,
 
-		.soak_time = 10,
-		.wash_time = 35,
+		.soak_time = WM_CONVERT_MINUTES2COUNT(10),
+		.wash_time = WM_CONVERT_MINUTES2COUNT(35),
 
-		.rinsh_time = 5,
+		.rinsh_time = WM_CONVERT_MINUTES2COUNT(5),
 		.rinsh_times = 2,
 
-		.spin_time = 5,
-		.target_wtem = 35,
+		.spin_time = WM_CONVERT_MINUTES2COUNT(5),
+		.target_wtem = 40,
 		.target_ss = 1000,
 
 
@@ -88,11 +88,10 @@ static void wm_property_ib_set(wm_propertity_e epro, cJSON *cvalue);
 void wm_report_all_pro_to_cloud(void );
 
 static void wm_left_time_calculate(void ){
-	wm_ib.left_time = wm_ib.soak_time*60 + wm_ib.wash_time*60;
+	wm_ib.left_time = wm_ib.soak_time + wm_ib.wash_time;
 			
-	wm_ib.left_time += wm_ib.rinsh_time*wm_ib.rinsh_times*60;
-	wm_ib.left_time += wm_ib.spin_time*60;
-
+	wm_ib.left_time += wm_ib.rinsh_time*wm_ib.rinsh_times;
+	wm_ib.left_time += wm_ib.spin_time;
 
 }
 static void wm_ib_default_set(void ){
@@ -166,7 +165,7 @@ static wm_timer_event_t *wm_s_timer_event_find(char *event_name){
 static void wm_s_timer_start(int time_s, wm_timer_cb_fun cb_function, void *cb_args, wm_periodic_cb_fun pcb, char *event_name){
 	
 	if(list_empty(&wm_timer_event_head)){
-		xTimerStart(wm_second_timer,pdMS_TO_TICKS(1000));
+		xTimerStart(wm_second_timer,pdMS_TO_TICKS(WM_CBTIMER_PERIOD_MS));
 	}
 	
 	xSemaphoreTake(wm_timer_event_mutex, portMAX_DELAY);
@@ -183,7 +182,7 @@ static void wm_s_timer_start(int time_s, wm_timer_cb_fun cb_function, void *cb_a
 		return;
 	}
 	memset(wme,0,sizeof(*wme));
-	wme->time_left = time_s;
+	wme->time_left = time_s*1000/WM_CBTIMER_PERIOD_MS;
 	wme->time_set = time_s;
 	wme->cb_args = cb_args;
 	wme->cb_function = cb_function;
@@ -422,10 +421,10 @@ void wm_dry_switch_set_handle(bool sws){
 	}
 	wm_ib.dry_switch = sws;
 	if(wm_ib.dry_switch){
-		wm_ib.left_time += 30*60;
+		wm_ib.left_time += WM_CONVERT_MINUTES2COUNT(30);
 
 	}else{
-		wm_ib.left_time -= 30*60;
+		wm_ib.left_time -= WM_CONVERT_MINUTES2COUNT(30);
 	}
 
 
@@ -443,13 +442,13 @@ void wm_washing_mode_set_handle(wm_washing_mode_e  		      	 wm ){
 	case WM_WM_STANDARD:{
 		wm_ib.water_level = WL_MIDDLE;
 		
-		wm_ib.soak_time = 10;
-		wm_ib.wash_time = 35;
+		wm_ib.soak_time =  WM_CONVERT_MINUTES2COUNT(10);
+		wm_ib.wash_time =  WM_CONVERT_MINUTES2COUNT(35);
 		
-		wm_ib.rinsh_time = 5;
+		wm_ib.rinsh_time =  WM_CONVERT_MINUTES2COUNT(5);
 		wm_ib.rinsh_times = 2;
 		
-		wm_ib.spin_time = 5;
+		wm_ib.spin_time =  WM_CONVERT_MINUTES2COUNT(5);
 		wm_ib.target_wtem = 30;
 		wm_ib.target_ss = 1000;
 
@@ -458,13 +457,13 @@ void wm_washing_mode_set_handle(wm_washing_mode_e  		      	 wm ){
 	case WM_WM_SOFT:{
 		wm_ib.water_level = WL_MIDDLE;
 		
-		wm_ib.soak_time = 20;
-		wm_ib.wash_time = 15;
+		wm_ib.soak_time =  WM_CONVERT_MINUTES2COUNT(20);
+		wm_ib.wash_time =  WM_CONVERT_MINUTES2COUNT(15);
 		
-		wm_ib.rinsh_time = 5;
+		wm_ib.rinsh_time =  WM_CONVERT_MINUTES2COUNT(5);
 		wm_ib.rinsh_times = 3;
 		
-		wm_ib.spin_time = 3;
+		wm_ib.spin_time =  WM_CONVERT_MINUTES2COUNT(3);
 		wm_ib.target_wtem = 20;
 		wm_ib.target_ss = 800;
 
@@ -473,13 +472,13 @@ void wm_washing_mode_set_handle(wm_washing_mode_e  		      	 wm ){
 	case WM_WM_STRONG:{
 		wm_ib.water_level = WL_HIGH;
 		
-		wm_ib.soak_time = 20;
-		wm_ib.wash_time = 45;
+		wm_ib.soak_time =  WM_CONVERT_MINUTES2COUNT(20);
+		wm_ib.wash_time =  WM_CONVERT_MINUTES2COUNT(45);
 		
-		wm_ib.rinsh_time = 8;
+		wm_ib.rinsh_time =  WM_CONVERT_MINUTES2COUNT(8);
 		wm_ib.rinsh_times = 3;
 		
-		wm_ib.spin_time = 5;
+		wm_ib.spin_time =  WM_CONVERT_MINUTES2COUNT(5);
 		wm_ib.target_wtem = 70;
 		wm_ib.target_ss = 1400;
 
@@ -488,13 +487,13 @@ void wm_washing_mode_set_handle(wm_washing_mode_e  		      	 wm ){
 	case WM_WM_QUICK:{
 		wm_ib.water_level = WL_LOW;
 		
-		wm_ib.soak_time = 5;
-		wm_ib.wash_time = 10;
+		wm_ib.soak_time =  WM_CONVERT_MINUTES2COUNT(2);
+		wm_ib.wash_time =  WM_CONVERT_MINUTES2COUNT(5);
 		
-		wm_ib.rinsh_time = 2;
-		wm_ib.rinsh_times = 3;
+		wm_ib.rinsh_time =  WM_CONVERT_MINUTES2COUNT(3);
+		wm_ib.rinsh_times = 1;
 		
-		wm_ib.spin_time = 3;
+		wm_ib.spin_time =  WM_CONVERT_MINUTES2COUNT(2);
 		wm_ib.target_wtem = 20;
 		wm_ib.target_ss = 1200;
 
@@ -503,13 +502,13 @@ void wm_washing_mode_set_handle(wm_washing_mode_e  		      	 wm ){
 	case WM_WM_WOOL:{
 		wm_ib.water_level = WL_LOW;
 		
-		wm_ib.soak_time = 25;
-		wm_ib.wash_time = 20;
+		wm_ib.soak_time =  WM_CONVERT_MINUTES2COUNT(25);
+		wm_ib.wash_time =  WM_CONVERT_MINUTES2COUNT(20);
 		
-		wm_ib.rinsh_time = 3;
+		wm_ib.rinsh_time =  WM_CONVERT_MINUTES2COUNT(3);
 		wm_ib.rinsh_times = 3;
 		
-		wm_ib.spin_time = 3;
+		wm_ib.spin_time =  WM_CONVERT_MINUTES2COUNT(3);
 		wm_ib.target_wtem = 40;
 		wm_ib.target_ss = 600;
 
@@ -518,13 +517,13 @@ void wm_washing_mode_set_handle(wm_washing_mode_e  		      	 wm ){
 	case WM_WM_CHEMFIBER:{
 		wm_ib.water_level = WL_LOW;
 		
-		wm_ib.soak_time = 30;
-		wm_ib.wash_time = 20;
+		wm_ib.soak_time =  WM_CONVERT_MINUTES2COUNT(30);
+		wm_ib.wash_time =  WM_CONVERT_MINUTES2COUNT(20);
 		
-		wm_ib.rinsh_time = 5;
+		wm_ib.rinsh_time =  WM_CONVERT_MINUTES2COUNT(5);
 		wm_ib.rinsh_times = 3;
 		
-		wm_ib.spin_time = 5;
+		wm_ib.spin_time =  WM_CONVERT_MINUTES2COUNT(5);
 		wm_ib.target_wtem = 50;
 		wm_ib.target_ss = 1200;
 
@@ -533,13 +532,13 @@ void wm_washing_mode_set_handle(wm_washing_mode_e  		      	 wm ){
 	case WM_WM_COTTON:{
 		wm_ib.water_level = WL_LOW;
 		
-		wm_ib.soak_time = 20;
-		wm_ib.wash_time = 10;
+		wm_ib.soak_time =  WM_CONVERT_MINUTES2COUNT(20);
+		wm_ib.wash_time =  WM_CONVERT_MINUTES2COUNT(10);
 		
-		wm_ib.rinsh_time = 3;
+		wm_ib.rinsh_time =  WM_CONVERT_MINUTES2COUNT(3);
 		wm_ib.rinsh_times = 2;
 		
-		wm_ib.spin_time = 5;
+		wm_ib.spin_time =  WM_CONVERT_MINUTES2COUNT(5);
 		wm_ib.target_wtem = 30;
 		wm_ib.target_ss = 1000;
 
@@ -548,13 +547,13 @@ void wm_washing_mode_set_handle(wm_washing_mode_e  		      	 wm ){
 	case WM_WM_JEANS:{
 		wm_ib.water_level = WL_LOW;
 		
-		wm_ib.soak_time = 20;
-		wm_ib.wash_time = 10;
+		wm_ib.soak_time =  WM_CONVERT_MINUTES2COUNT(20);
+		wm_ib.wash_time =  WM_CONVERT_MINUTES2COUNT(10);
 		
-		wm_ib.rinsh_time = 3;
+		wm_ib.rinsh_time =  WM_CONVERT_MINUTES2COUNT(3);
 		wm_ib.rinsh_times = 2;
 		
-		wm_ib.spin_time = 5;
+		wm_ib.spin_time =  WM_CONVERT_MINUTES2COUNT(5);
 		wm_ib.target_wtem = 40;
 		wm_ib.target_ss = 600;
 
@@ -563,13 +562,13 @@ void wm_washing_mode_set_handle(wm_washing_mode_e  		      	 wm ){
 	case WM_WM_SELF:{
 		wm_ib.water_level = WL_LOW;
 				
-		wm_ib.soak_time = 10;
-		wm_ib.wash_time = 5;
+		wm_ib.soak_time =  WM_CONVERT_MINUTES2COUNT(10);
+		wm_ib.wash_time =  WM_CONVERT_MINUTES2COUNT(5);
 		
-		wm_ib.rinsh_time = 3;
+		wm_ib.rinsh_time =  WM_CONVERT_MINUTES2COUNT(3);
 		wm_ib.rinsh_times = 2;
 		
-		wm_ib.spin_time = 5;
+		wm_ib.spin_time =  WM_CONVERT_MINUTES2COUNT(5);
 		wm_ib.target_wtem = 20;
 		wm_ib.target_ss = 1400;
 
@@ -592,7 +591,8 @@ static void wm_finishtimer_timeout_cb(void *args){
   HAL_Printf("Washing Finished\r\n");
 
   wm_ib.work_state = WS_FINISHED;
-  wm_ib_default_set();
+  //wm_ib_default_set();
+  wm_ib.work_switch = false;
   report_started = true;
   wm_report_all_pro_to_cloud();
 
@@ -603,8 +603,11 @@ static void wm_finish_timer_periodic_cb(int cnt_left){
 	HAL_Printf("Finish Timer:%d\r\n",cnt_left);
 	
 	static int cnt = 0;
+	
+
 	wm_ib.left_time--;
-	if(cnt++%10 == 0){
+		
+	if(cnt++%6 == 0){
 		wm_property_post(LEFT_TIME_PRO);
 		
 	}
@@ -622,9 +625,14 @@ void wm_work_switch_changed(void ){
 		wm_s_timer_stop("finish_timer");
 		wm_ui_handle_work_switch_off();
 	}else{
-		wm_left_time_calculate();
+		if(wm_ib.work_state != WS_PAUSE){
+			wm_left_time_calculate();
+		}
+		if(wm_ib.left_time == 0){
+			wm_washing_mode_set_handle(wm_ib.washing_mode);
+		}
 		wm_ib.work_state = WS_WORKING;
-		wm_s_timer_start(wm_ib.left_time*60,wm_finishtimer_timeout_cb,NULL,wm_finish_timer_periodic_cb,"finish_timer");
+		wm_s_timer_start(WM_CONVERT_COUNT2SECONDS(wm_ib.left_time),wm_finishtimer_timeout_cb,NULL,wm_finish_timer_periodic_cb,"finish_timer");
 		wm_ui_handle_work_switch_on();
 	}
 
@@ -666,31 +674,31 @@ static void wm_property_ib_set(wm_propertity_e epro, cJSON *cvalue){
 		break;
 		case LEFT_TIME_PRO:{
 			if(cJSON_IsNumber(cvalue))
-				wm_ib.left_time = cvalue->valuedouble*60;
+				wm_ib.left_time = WM_CONVERT_MINUTES2COUNT(cvalue->valuedouble);
 		}
 		break;
 		case SOAK_TIME_PRO:{
 			if(cJSON_IsNumber(cvalue))
-				wm_ib.soak_time = cvalue->valuedouble;
+				wm_ib.soak_time =  WM_CONVERT_MINUTES2COUNT(cvalue->valuedouble);
 
 		}
 		break;
 		case WASH_TIME_PRO:{
 			if(cJSON_IsNumber(cvalue))
-				wm_ib.wash_time = cvalue->valuedouble;
+				wm_ib.wash_time =  WM_CONVERT_MINUTES2COUNT(cvalue->valuedouble);
 
 		}
 		break;
 		case RINSH_TIME_PRO:{
 			
 		if(cJSON_IsNumber(cvalue))
-			wm_ib.rinsh_time = cvalue->valuedouble;
+			wm_ib.rinsh_time =  WM_CONVERT_MINUTES2COUNT(cvalue->valuedouble);
 
 		}
 		break;
 		case SPINE_TIME_PRO:{
 			if(cJSON_IsNumber(cvalue))
-				wm_ib.spin_time = cvalue->valuedouble;
+				wm_ib.spin_time =  WM_CONVERT_MINUTES2COUNT(cvalue->valuedouble);
 
 		}
 		break;
@@ -761,9 +769,9 @@ static void wm_property_ib_set(wm_propertity_e epro, cJSON *cvalue){
 		break;
 		case RESERVATION_TIMER_PRO:{
 			if(cJSON_IsNumber(cvalue))
-				wm_ib.reserv_time = cvalue->valuedouble;
+				wm_ib.reserv_time =  WM_CONVERT_MINUTES2COUNT(cvalue->valuedouble);
 			if(wm_ib.reserv_time){
-				wm_reservation_timer_set_hdl(wm_ib.reserv_time);
+				wm_reservation_timer_set_hdl(cvalue->valuedouble);
 			}
 	
 		}
@@ -778,6 +786,7 @@ static void wm_property_ib_set(wm_propertity_e epro, cJSON *cvalue){
 				wm_washing_mode_set_handle(cvalue->valueint);
 				report_started = true;
 				wm_report_all_pro_to_cloud();
+				wm_report_all_to_gui();
 			}
 		}
 		break;
@@ -965,31 +974,31 @@ static int wm_build_property_name_value(char *out, wm_propertity_e epro){
 		}
 		break;
 		case LEFT_TIME_PRO:{
-			offset += HAL_Snprintf(out + offset,64, "%.2f}", wm_ib.left_time/60);
+			offset += HAL_Snprintf(out + offset,64, "%.2f}", WM_CONVERT_COUNT2MINUTES(wm_ib.left_time));
 
 
 		}
 		break;
 		case SOAK_TIME_PRO:{
-			offset += HAL_Snprintf(out + offset,64, "%.2f}", wm_ib.soak_time);
+			offset += HAL_Snprintf(out + offset,64, "%.2f}", WM_CONVERT_COUNT2MINUTES(wm_ib.soak_time));
 
 
 		}
 		break;
 		case WASH_TIME_PRO:{
-			offset += HAL_Snprintf(out + offset,64, "%.2f}", wm_ib.wash_time);
+			offset += HAL_Snprintf(out + offset,64, "%.2f}", WM_CONVERT_COUNT2MINUTES(wm_ib.wash_time));
 
 
 		}
 		break;
 		case RINSH_TIME_PRO:{
-			offset += HAL_Snprintf(out + offset,64, "%.2f}", wm_ib.rinsh_time);
+			offset += HAL_Snprintf(out + offset,64, "%.2f}", WM_CONVERT_COUNT2MINUTES(wm_ib.rinsh_time));
 
 
 		}
 		break;
 		case SPINE_TIME_PRO:{
-			offset += HAL_Snprintf(out + offset,64, "%.2f}", wm_ib.spin_time);
+			offset += HAL_Snprintf(out + offset,64, "%.2f}", WM_CONVERT_COUNT2MINUTES(wm_ib.spin_time));
 
 
 		}
@@ -1012,7 +1021,7 @@ static int wm_build_property_name_value(char *out, wm_propertity_e epro){
 		}
 		break;
 		case DRY_TIME_PRO:{
-			offset += HAL_Snprintf(out + offset,64, "%.2f}", wm_ib.dry_time);
+			offset += HAL_Snprintf(out + offset,64, "%.2f}", WM_CONVERT_COUNT2MINUTES(wm_ib.dry_time));
 
 		}
 		break;
@@ -1052,7 +1061,7 @@ static int wm_build_property_name_value(char *out, wm_propertity_e epro){
 		}
 		break;
 		case RESERVATION_TIMER_PRO:{
-			offset += HAL_Snprintf(out + offset,64, "%.2f}", wm_ib.reserv_time);
+			offset += HAL_Snprintf(out + offset,64, "%.2f}", WM_CONVERT_COUNT2MINUTES(wm_ib.reserv_time));
 
 		}
 		break;
@@ -1076,6 +1085,13 @@ static int wm_build_property_name_value(char *out, wm_propertity_e epro){
 }
 
 void wm_property_post(wm_propertity_e epro){
+	if(!g_wm_ctx.cloud_connected){
+
+		HAL_Printf("cloud not connected\r\n");
+		return;
+
+	}
+
 	char *property_payload = HAL_Malloc(128);
 	if(property_payload == NULL){
 
@@ -1188,10 +1204,27 @@ void wm_report_all_pro_to_cloud(void ){
 	}
 }
 
+void wm_report_all_to_gui(void ){
+	DeviceDriver_updateWashMode(wm_ib.washing_mode);
+	DeviceDriver_updateWaterTemp((wm_ib.target_wtem - 20)/10);
+	DeviceDriver_updateSpinSpeed((wm_ib.target_ss - 400)/200);
+	DeviceDriver_updateLeftTime(WM_CONVERT_COUNT2MINUTES(wm_ib.left_time));
+
+
+
+}
+
+
+void wm_report_all_enable(void ){
+	if(g_wm_ctx.cloud_connected){
+		report_started = true;
+	}
+
+}
 
 static void wm_init(void ){
 	if(wm_second_timer == NULL){
-		wm_second_timer = xTimerCreate("wm_second_timer", pdMS_TO_TICKS(1000), pdTRUE, NULL, (TimerCallbackFunction_t)wm_s_timer_cb);
+		wm_second_timer = xTimerCreate("wm_second_timer", pdMS_TO_TICKS(WM_CBTIMER_PERIOD_MS), pdTRUE, NULL, (TimerCallbackFunction_t)wm_s_timer_cb);
 		if(wm_timer_event_mutex == NULL){
 			wm_timer_event_mutex = (QueueHandle_t )xSemaphoreCreateMutex();
 			if(wm_timer_event_mutex == NULL){
