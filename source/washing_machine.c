@@ -397,27 +397,21 @@ static void wm_reservation_timer_set_hdl(int minutes){
 void wm_ui_handle_work_switch_off(void ){
 	HAL_Printf("Washing Machine work switch off..\r\n");
 	HAL_Printf("Do UI update...\r\n");
-	
-
-
-
+	DeviceDriver_updateRunning(0);
 }
 
 void wm_ui_handle_work_switch_on(void ){
 	HAL_Printf("Washing Machine start..\r\n");
 	HAL_Printf("Do UI update..., washing mode %d, temp %.2f, spin %d, finsih time %.2f seconds\r\n",
 				wm_ib.washing_mode,wm_ib.target_wtem,wm_ib.target_ss,wm_ib.left_time);
-
-
-
-
+	DeviceDriver_updateRunning(1);
 }
 
-void wm_dry_switch_set_handle(bool sws){
+uint8_t wm_dry_switch_set_handle(bool sws){
 	if(wm_ib.work_state == WS_WORKING){
 
 		HAL_Printf("Failed to set dry switch properties, stop it first\r\n");
-		return;
+		return 1;
 	}
 	wm_ib.dry_switch = sws;
 	if(wm_ib.dry_switch){
@@ -426,16 +420,16 @@ void wm_dry_switch_set_handle(bool sws){
 	}else{
 		wm_ib.left_time -= WM_CONVERT_MINUTES2COUNT(30);
 	}
-
+	return 0;
 
 
 }
 
-void wm_washing_mode_set_handle(wm_washing_mode_e  		      	 wm ){
+uint8_t wm_washing_mode_set_handle(wm_washing_mode_e  		      	 wm ){
 	if(wm_ib.work_state == WS_WORKING){
 
 		HAL_Printf("Failed to set washing mode properties, stop it first\r\n");
-		return;
+		return 1;
 	}
 	wm_ib.washing_mode = wm;
 	switch (wm_ib.washing_mode){
@@ -577,11 +571,12 @@ void wm_washing_mode_set_handle(wm_washing_mode_e  		      	 wm ){
 	break;
 	default:
 	break;
+	
 
 }
-
+	
 	wm_left_time_calculate();
-
+	return 0;
 
 }
 
@@ -606,7 +601,7 @@ static void wm_finish_timer_periodic_cb(int cnt_left){
 	
 
 	wm_ib.left_time--;
-		
+	DeviceDriver_updateLeftTime((int )WM_CONVERT_COUNT2MINUTES(wm_ib.left_time));	
 	if(cnt++%6 == 0){
 		wm_property_post(LEFT_TIME_PRO);
 		
@@ -730,6 +725,7 @@ static void wm_property_ib_set(wm_propertity_e epro, cJSON *cvalue){
 				wm_dry_switch_set_handle(cvalue->valueint);
 				report_started = true;
 				wm_report_all_pro_to_cloud();
+				wm_report_dryswitch_to_gui();
 			}
 		}
 		break;
@@ -1206,11 +1202,49 @@ void wm_report_all_pro_to_cloud(void ){
 
 void wm_report_all_to_gui(void ){
 	DeviceDriver_updateWashMode(wm_ib.washing_mode);
-	DeviceDriver_updateWaterTemp((wm_ib.target_wtem - 20)/10);
+	DeviceDriver_updateWaterTemp(((int )wm_ib.target_wtem - 20)/10);
 	DeviceDriver_updateSpinSpeed((wm_ib.target_ss - 400)/200);
-	DeviceDriver_updateLeftTime(WM_CONVERT_COUNT2MINUTES(wm_ib.left_time));
+	DeviceDriver_updateLeftTime((int )WM_CONVERT_COUNT2MINUTES(wm_ib.left_time));
+}
 
+void wm_report_dryswitch_to_gui(void ){
+	//update dry switch option
+	DeviceDriver_updateDrySwitch(wm_ib.dry_switch);
 
+	//update left time attribute
+	DeviceDriver_updateLeftTime((int )WM_CONVERT_COUNT2MINUTES(wm_ib.left_time));
+
+}
+
+void wm_dryswitch_changed_by_gui(int dry_switch){
+	if(wm_dry_switch_set_handle(dry_switch) != 0){
+		HAL_SleepMs(100);
+		DeviceDriver_updateWashMode(wm_ib.dry_switch);
+
+	}else{
+		wm_property_post(LEFT_TIME_PRO);
+		wm_property_post(DRY_SW_PRO);
+	}
+}
+
+void wm_workmode_changed_by_ui(int work_mode){
+	if(wm_washing_mode_set_handle(work_mode) != 0){
+		HAL_SleepMs(100);
+		DeviceDriver_updateWashMode(wm_ib.washing_mode);
+	}else{
+		report_started = true;
+		wm_report_all_pro_to_cloud();
+		wm_report_all_to_gui();
+	}
+
+}
+
+void wm_workswitch_changed_by_ui(int work_switch){
+	wm_ib.work_switch = work_switch;
+
+	wm_work_switch_changed();
+	report_started = true;
+	wm_report_all_pro_to_cloud();
 
 }
 
@@ -1236,6 +1270,7 @@ static void wm_init(void ){
 	}	
 	
 	wm_ib_default_set();
+	wm_report_all_to_gui();
 }
 
 

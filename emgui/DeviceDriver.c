@@ -289,7 +289,7 @@ int DeviceDriver_ProcessData( void )
     
   #endif
 
-  #ifdef _WasherDeviceClass__UpdateProgram_
+  #ifdef 0//_WasherDeviceClass__UpdateProgram_
     
     if ( isUpdateProgram == 1000 )
     {
@@ -427,23 +427,32 @@ int DeviceDriver_ProcessData( void )
 }
 
 void DeviceDriver_updateWaterTemp(XInt32 aValue){
-	WasherDeviceClass_OnSetTempNumber( DeviceObject, aValue);
+	WasherDeviceClass__UpdateTemp( DeviceObject, aValue);
 }
 
 void DeviceDriver_updateSpinSpeed(XInt32 aValue){
-	//WasherDeviceClass__OnSetSpinNumber( DeviceObject, aValue);
+	WasherDeviceClass__UpdateSpin( DeviceObject, aValue);
 }
 
 void DeviceDriver_updateLeftTime(XInt32 aValue){
 	XInt32 hour = aValue/60;
 	XInt32 minutes = aValue%60;
-	WasherDeviceClass_OnSetHour( DeviceObject, hour);
-	WasherDeviceClass_OnSetMinute( DeviceObject, minutes);
+	WasherDeviceClass__UpdateHour( DeviceObject, hour);
+	WasherDeviceClass__UpdateMinute( DeviceObject, minutes);
 }
 
 void DeviceDriver_updateWashMode(XInt32 aValue){
 	WasherDeviceClass__UpdateProgram( DeviceObject, aValue);
 
+}
+
+void DeviceDriver_updateRunning(XInt32 aValue){
+	WasherDeviceClass__UpdateRunning( DeviceObject, aValue );
+
+}
+void DeviceDriver_updateDrySwitch( XInt32 aValue )
+{
+  WasherDeviceClass__UpdateOption( DeviceObject, aValue );
 }
 
 /*******************************************************************************
@@ -480,9 +489,23 @@ void DeviceDriver_SetLedStatus( XInt32 aValue )
 
 void Device_SetProgram( XInt32 aValue )
 {
-  EwPrint( "Change the Washer program value to %u \n", aValue );
-}
+  /*
+     In case you are using an operating system to communicate with your
+     device driver that is running within its own thread/task/process,
+     send a message to the device driver and transmit the new value.
+     Please note, that this function is called within the context of the main
+     GUI thread.
+  */ 
 
+  /*
+     Here we are accessing directly the device driver by calling a certain
+     BSP / driver function.
+  */
+
+  EwPrint( "Change the Washer program value to %u \n", aValue );
+  wm_workmode_changed_by_ui(aValue);
+
+}
 void Device_SetTemp( XInt32 aValue )
 {
   EwPrint( "Change the Washer temp value to %u \n", aValue );
@@ -496,6 +519,7 @@ void Device_SetSpin( XInt32 aValue )
 void Device_SetOption( XInt32 aValue )
 {
   EwPrint( "Change the Washer option value to %u \n", aValue );
+  wm_dryswitch_changed_by_gui(aValue);
 }
 
 void Device_SetHour( XInt32 aValue )
@@ -511,8 +535,8 @@ void Device_SetMinute( XInt32 aValue )
 void Device_SetRunning( XInt32 aValue )
 {
   EwPrint( "Change the Washer running value to %u \n", aValue );
+  wm_workswitch_changed_by_ui(aValue);
 }
-
 /*******************************************************************************
 * FUNCTION:
 *   DeviceDriver_PrintMessage
