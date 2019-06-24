@@ -55,16 +55,23 @@
    washing machine. */
 EW_DEFINE_FIELDS( WasherDeviceClass, XObject )
   EW_OBJECT  ( ProgramUpdateEvent, CoreSystemEvent )
+  EW_OBJECT  ( TempUpdateEvent, CoreSystemEvent )
+  EW_OBJECT  ( SpinUpdateEvent, CoreSystemEvent )
+  EW_OBJECT  ( OptionUpdateEvent, CoreSystemEvent )
+  EW_OBJECT  ( HourUpdateEvent, CoreSystemEvent )
+  EW_OBJECT  ( MinuteUpdateEvent, CoreSystemEvent )
+  EW_OBJECT  ( RunningUpdateEvent, CoreSystemEvent )
   EW_PROPERTY( ProgramNumber,   XInt32 )
   EW_PROPERTY( TempNumber,      XInt32 )
   EW_PROPERTY( OptionNumber,    XInt32 )
   EW_PROPERTY( Hour,            XInt32 )
   EW_PROPERTY( Minute,          XInt32 )
   EW_PROPERTY( SpinNumber,      XInt32 )
-  EW_ARRAY   ( WashingProgram,  XString, [8])
+  EW_ARRAY   ( WashingProgram,  XString, [9])
   EW_ARRAY   ( WashingTemp,     XString, [6])
-  EW_ARRAY   ( SpinTurn,        XString, [7])
-  EW_ARRAY   ( Options,         XString, [6])
+  EW_ARRAY   ( Options,         XString, [2])
+  EW_ARRAY   ( SpinTurn,        XString, [6])
+  EW_PROPERTY( Running,         XBool )
 EW_END_OF_FIELDS( WasherDeviceClass )
 
 /* Virtual Method Table (VMT) for the class : 'Washer::DeviceClass' */
@@ -98,6 +105,69 @@ void WasherDeviceClass__UpdateProgram( void* _this, XInt32 aArg1 );
 /* The following define announces the presence of the method Washer::DeviceClass.UpdateProgram(). */
 #define _WasherDeviceClass__UpdateProgram_
 
+/* 'C' function for method : 'Washer::DeviceClass.OnSetRunning()' */
+void WasherDeviceClass_OnSetRunning( WasherDeviceClass _this, XBool value );
+
+/* This method is intended to be called by the device to notify the GUI application 
+   about a particular system event. */
+void WasherDeviceClass_UpdateTemp( WasherDeviceClass _this, XInt32 aArg1 );
+
+/* Wrapper function for the non virtual method : 'Washer::DeviceClass.UpdateTemp()' */
+void WasherDeviceClass__UpdateTemp( void* _this, XInt32 aArg1 );
+
+/* The following define announces the presence of the method Washer::DeviceClass.UpdateTemp(). */
+#define _WasherDeviceClass__UpdateTemp_
+
+/* This method is intended to be called by the device to notify the GUI application 
+   about a particular system event. */
+void WasherDeviceClass_UpdateSpin( WasherDeviceClass _this, XInt32 aArg1 );
+
+/* Wrapper function for the non virtual method : 'Washer::DeviceClass.UpdateSpin()' */
+void WasherDeviceClass__UpdateSpin( void* _this, XInt32 aArg1 );
+
+/* The following define announces the presence of the method Washer::DeviceClass.UpdateSpin(). */
+#define _WasherDeviceClass__UpdateSpin_
+
+/* This method is intended to be called by the device to notify the GUI application 
+   about a particular system event. */
+void WasherDeviceClass_UpdateOption( WasherDeviceClass _this, XInt32 aArg1 );
+
+/* Wrapper function for the non virtual method : 'Washer::DeviceClass.UpdateOption()' */
+void WasherDeviceClass__UpdateOption( void* _this, XInt32 aArg1 );
+
+/* The following define announces the presence of the method Washer::DeviceClass.UpdateOption(). */
+#define _WasherDeviceClass__UpdateOption_
+
+/* This method is intended to be called by the device to notify the GUI application 
+   about a particular system event. */
+void WasherDeviceClass_UpdateHour( WasherDeviceClass _this, XInt32 aArg1 );
+
+/* Wrapper function for the non virtual method : 'Washer::DeviceClass.UpdateHour()' */
+void WasherDeviceClass__UpdateHour( void* _this, XInt32 aArg1 );
+
+/* The following define announces the presence of the method Washer::DeviceClass.UpdateHour(). */
+#define _WasherDeviceClass__UpdateHour_
+
+/* This method is intended to be called by the device to notify the GUI application 
+   about a particular system event. */
+void WasherDeviceClass_UpdateMinute( WasherDeviceClass _this, XInt32 aArg1 );
+
+/* Wrapper function for the non virtual method : 'Washer::DeviceClass.UpdateMinute()' */
+void WasherDeviceClass__UpdateMinute( void* _this, XInt32 aArg1 );
+
+/* The following define announces the presence of the method Washer::DeviceClass.UpdateMinute(). */
+#define _WasherDeviceClass__UpdateMinute_
+
+/* This method is intended to be called by the device to notify the GUI application 
+   about a particular system event. */
+void WasherDeviceClass_UpdateRunning( WasherDeviceClass _this, XBool aArg1 );
+
+/* Wrapper function for the non virtual method : 'Washer::DeviceClass.UpdateRunning()' */
+void WasherDeviceClass__UpdateRunning( void* _this, XBool aArg1 );
+
+/* The following define announces the presence of the method Washer::DeviceClass.UpdateRunning(). */
+#define _WasherDeviceClass__UpdateRunning_
+
 /* Default onget method for the property 'ProgramNumber' */
 XInt32 WasherDeviceClass_OnGetProgramNumber( WasherDeviceClass _this );
 
@@ -115,6 +185,9 @@ XInt32 WasherDeviceClass_OnGetMinute( WasherDeviceClass _this );
 
 /* Default onget method for the property 'SpinNumber' */
 XInt32 WasherDeviceClass_OnGetSpinNumber( WasherDeviceClass _this );
+
+/* Default onget method for the property 'Running' */
+XBool WasherDeviceClass_OnGetRunning( WasherDeviceClass _this );
 
 #ifdef __cplusplus
   }

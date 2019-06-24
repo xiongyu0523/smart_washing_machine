@@ -44,6 +44,7 @@
 
 #include "_CoreGroup.h"
 #include "_CoreSimpleTouchHandler.h"
+#include "_CoreSystemEventHandler.h"
 #include "_ViewsFrame.h"
 #include "_ViewsRectangle.h"
 #include "_ViewsText.h"
@@ -94,10 +95,12 @@
 /* This is a GUI component. */
 EW_DEFINE_FIELDS( WasherStartButton, CoreGroup )
   EW_PROPERTY( OnChange,        XSlot )
+  EW_PROPERTY( IsRunning,       XRef )
   EW_OBJECT  ( Frame,           ViewsFrame )
   EW_OBJECT  ( TouchHandler,    CoreSimpleTouchHandler )
   EW_OBJECT  ( Background,      ViewsRectangle )
   EW_OBJECT  ( Text,            ViewsText )
+  EW_OBJECT  ( SystemEventHandler, CoreSystemEventHandler )
 EW_END_OF_FIELDS( WasherStartButton )
 
 /* Virtual Method Table (VMT) for the class : 'Washer::StartButton' */
@@ -155,6 +158,13 @@ void WasherStartButton_enterLeaveSlot( WasherStartButton _this, XObject sender )
 /* This internal slot method is used to receive the corresponding signals form the 
    touch handler. */
 void WasherStartButton_pressReleaseSlot( WasherStartButton _this, XObject sender );
+
+/* 'C' function for method : 'Washer::StartButton.OnSetIsRunning()' */
+void WasherStartButton_OnSetIsRunning( WasherStartButton _this, XRef value );
+
+/* This slot method is executed when the associated system event handler 'SystemEventHandler' 
+   receives an event. */
+void WasherStartButton_onEvent( WasherStartButton _this, XObject sender );
 
 #ifdef __cplusplus
   }

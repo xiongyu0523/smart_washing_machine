@@ -240,6 +240,9 @@ void ViewsText_OnSetColor( ViewsText _this, XColor value );
 /* 'C' function for method : 'Views::Text.OnSetOpacity()' */
 void ViewsText_OnSetOpacity( ViewsText _this, XInt32 value );
 
+/* 'C' function for method : 'Views::Text.OnSetVisible()' */
+void ViewsText_OnSetVisible( ViewsText _this, XBool value );
+
 /* The method IsBaseDirectionRTL() returns 'true' if the text specified in @String 
    starts with an RTL (right-to-left) character. This implies the base direction 
    of the entire text paragraph. If the text starts with an LTR (left-to-right) 

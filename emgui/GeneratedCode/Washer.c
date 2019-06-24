@@ -72,154 +72,152 @@
 /* Compressed strings for the language 'Default'. */
 static const unsigned int _StringsDefault0[] =
 {
-  0x00000362, /* ratio 51.73 % */
-  0xB8002900, 0x00000452, 0x00DE0024, 0x05E003A0, 0x01092180, 0x072889B0, 0x64001940,
-  0x08188000, 0x39800C20, 0x0418D000, 0x416060D0, 0x823D0500, 0x61F1A3CC, 0x2F150047,
-  0xD0492C1A, 0x128B1120, 0x3001A401, 0x8BC325E6, 0x303A0D20, 0x000A7069, 0x7E171438,
-  0xA7077004, 0x23068AC7, 0x50A8E510, 0x088DC4E1, 0xC8C1BA3D, 0x914825F4, 0x2D4C0F06,
-  0xC1A153D8, 0x566F5304, 0xAB73B8F4, 0x8D530441, 0x123B6D22, 0x119E4D6E, 0x3B0C6627,
-  0x18000675, 0x148D6000, 0xDFC6977B, 0xD6A783C0, 0xEF982C38, 0x138C1B5D, 0x6001CDDF,
-  0x76006371, 0xB8556E4F, 0xB4002655, 0x6526BF77, 0x61A4F8E8, 0x1B4B80C0, 0x353871C4,
-  0x5A31A9E6, 0x1B0B7E1F, 0xB4D90C80, 0x3D3EC6EF, 0xA984801B, 0x5D28F117, 0x5CE412DB,
-  0xD2B75B00, 0xC212333D, 0x0131A454, 0xA5E000B4, 0x3A90CAAB, 0x1E600391, 0xE1003815,
-  0xAC6F890C, 0xF2E41748, 0x36A61591, 0x4D7DAF25, 0x71E38BCE, 0x15AA579A, 0x5305E7AF,
-  0xC88CC0A1, 0xBA9B789C, 0x13815153, 0x76812378, 0xFD178092, 0x050B9487, 0x4345554E,
-  0x9747FC00, 0xF5DDF841, 0xED4A51C4, 0x0652D9C4, 0x525710F1, 0x42C4B115, 0xB4890C4B,
-  0x651B4813, 0x1B446094, 0x52148479, 0x93D4ED13, 0xA8690C47, 0x6A3346DD, 0x1B5299B7,
-  0x489D7535, 0x50A4B11B, 0x98E1FB1D, 0xCA254293, 0x4C830007, 0x54C0A48E, 0xDCA76446,
-  0x50016052, 0x8C3A54C0, 0x005A4164, 0x8D5C4910, 0xE5956D11, 0x0901B746, 0x498B6180,
-  0x06419DA8, 0x835A854C, 0x60251977, 0x01480010, 0x8D238080, 0x00001014, 0x00000000
+  0x000002D0, /* ratio 51.11 % */
+  0xB8001900, 0x80000452, 0x00E80029, 0x0DC00308, 0x010B3200, 0x106879C8, 0x05818200,
+  0x0378020F, 0x8AC24CC0, 0x441A300A, 0x472270A8, 0x5E2A6787, 0x48D06824, 0x0D1F39C4,
+  0x6578CCAE, 0x15364DA3, 0xE0048813, 0x31000D32, 0x0448CA00, 0x4D8873B9, 0xAA4F0A85,
+  0x6824A9DC, 0x43068744, 0xB46004B2, 0x4998000E, 0x78A9B401, 0x000CA760, 0xE2C00030,
+  0x580673BA, 0xD2A764B1, 0x60D63B38, 0xD835A9D7, 0x4368CDA6, 0x379DDBAE, 0xB03002EC,
+  0xBBCD89D3, 0x8538B353, 0xDAE33809, 0x1B0B61B0, 0xAE788BAC, 0x13671C41, 0x2319DC5B,
+  0x949959F2, 0x8C6D7C01, 0xC3E56A79, 0xD82C0197, 0xC7286509, 0x6E191394, 0x8A919CED,
+  0x01313C53, 0x5AEA9CE8, 0x003856E8, 0x59DCE45C, 0xAD0BC005, 0x05427C00, 0x912336F0,
+  0xF22A79A1, 0xE39089D8, 0x59C989C4, 0x11F10000, 0xD3ABF04D, 0x49B6DA29, 0xDC6E219D,
+  0x898E7D38, 0x52A7D0A8, 0x3A19E3EA, 0x2151C874, 0x012F3BF5, 0x9C9EA758, 0xE889D5A3,
+  0x2F6CE001, 0xFFEE707F, 0xD02419BA, 0xE5384C54, 0xF9AE4291, 0x065095B4, 0x0E93B015,
+  0xD3B05915, 0x7791F771, 0x5210529D, 0x007CD5F7, 0x56D715AC, 0xD7C455C2, 0xC6C99C54,
+  0x05AE001C, 0x28148001, 0x4915352E, 0xD066E136, 0xC8C1196C, 0x550A44D0, 0x00405154,
+  0x00000000
 };
 
 /* Constant values used in this 'C' module only. */
 static const XStringRes _Const0000 = { _StringsDefault0, 0x0003 };
-static const XStringRes _Const0001 = { _StringsDefault0, 0x0017 };
-static const XStringRes _Const0002 = { _StringsDefault0, 0x0024 };
-static const XStringRes _Const0003 = { _StringsDefault0, 0x0031 };
-static const XStringRes _Const0004 = { _StringsDefault0, 0x003F };
-static const XStringRes _Const0005 = { _StringsDefault0, 0x0050 };
-static const XStringRes _Const0006 = { _StringsDefault0, 0x0057 };
-static const XStringRes _Const0007 = { _StringsDefault0, 0x0060 };
-static const XStringRes _Const0008 = { _StringsDefault0, 0x0068 };
-static const XStringRes _Const0009 = { _StringsDefault0, 0x0070 };
-static const XStringRes _Const000A = { _StringsDefault0, 0x0077 };
-static const XStringRes _Const000B = { _StringsDefault0, 0x007E };
-static const XStringRes _Const000C = { _StringsDefault0, 0x0085 };
-static const XStringRes _Const000D = { _StringsDefault0, 0x008C };
-static const XStringRes _Const000E = { _StringsDefault0, 0x0093 };
-static const XStringRes _Const000F = { _StringsDefault0, 0x009B };
-static const XStringRes _Const0010 = { _StringsDefault0, 0x00A4 };
-static const XStringRes _Const0011 = { _StringsDefault0, 0x00AB };
-static const XStringRes _Const0012 = { _StringsDefault0, 0x00B2 };
-static const XStringRes _Const0013 = { _StringsDefault0, 0x00BA };
-static const XStringRes _Const0014 = { _StringsDefault0, 0x00C2 };
-static const XStringRes _Const0015 = { _StringsDefault0, 0x00CA };
-static const XStringRes _Const0016 = { _StringsDefault0, 0x00DC };
-static const XStringRes _Const0017 = { _StringsDefault0, 0x00EC };
-static const XStringRes _Const0018 = { _StringsDefault0, 0x00FD };
-static const XRect _Const0019 = {{ 0, 0 }, { 126, 240 }};
-static const XPoint _Const001A = { 0, 96 };
-static const XPoint _Const001B = { 0, 240 };
-static const XPoint _Const001C = { 126, 240 };
-static const XPoint _Const001D = { 126, 0 };
-static const XPoint _Const001E = { 0, 0 };
-static const XRect _Const001F = {{ 0, 72 }, { 126, 168 }};
-static const XRect _Const0020 = {{ 0, 168 }, { 126, 240 }};
-static const XRect _Const0021 = {{ 0, 0 }, { 126, 72 }};
-static const XRect _Const0022 = {{ 10, 70 }, { 110, 100 }};
-static const XStringRes _Const0023 = { _StringsDefault0, 0x0112 };
-static const XRect _Const0024 = {{ 0, 0 }, { 220, 160 }};
-static const XRect _Const0025 = {{ 20, 0 }, { 220, 160 }};
-static const XStringRes _Const0026 = { _StringsDefault0, 0x011D };
-static const XRect _Const0027 = {{ 0, 0 }, { 220, 40 }};
-static const XRect _Const0028 = {{ 0, 0 }, { 2, 40 }};
-static const XRect _Const0029 = {{ 218, 0 }, { 220, 40 }};
-static const XRect _Const002A = {{ 10, 0 }, { 210, 40 }};
-static const XRect _Const002B = {{ 0, 0 }, { 46, 240 }};
-static const XRect _Const002C = {{ 0, 0 }, { 80, 400 }};
-static const XColor _Const002D = { 0x00, 0x00, 0x00, 0x00 };
-static const XPoint _Const002E = { 46, 240 };
-static const XPoint _Const002F = { 46, 0 };
-static const XRect _Const0030 = {{ 0, 72 }, { 46, 168 }};
-static const XRect _Const0031 = {{ 0, 168 }, { 46, 240 }};
-static const XRect _Const0032 = {{ 0, 0 }, { 46, 72 }};
-static const XRect _Const0033 = {{ 5, 70 }, { 45, 100 }};
-static const XStringRes _Const0034 = { _StringsDefault0, 0x0125 };
-static const XRect _Const0035 = {{ 0, 0 }, { 80, 160 }};
-static const XColor _Const0036 = { 0xFF, 0xFF, 0xFF, 0xFF };
-static const XRect _Const0037 = {{ 0, 0 }, { 80, 40 }};
-static const XRect _Const0038 = {{ 78, 0 }, { 80, 40 }};
-static const XRect _Const0039 = {{ 10, 0 }, { 80, 40 }};
-static const XStringRes _Const003A = { _StringsDefault0, 0x012E };
-static const XRect _Const003B = {{ 10, 0 }, { 80, 160 }};
-static const XRect _Const003C = {{ 0, 0 }, { 92, 240 }};
-static const XPoint _Const003D = { 92, 240 };
-static const XPoint _Const003E = { 92, 0 };
-static const XRect _Const003F = {{ 0, 72 }, { 92, 168 }};
-static const XRect _Const0040 = {{ 0, 168 }, { 92, 240 }};
-static const XRect _Const0041 = {{ 0, 0 }, { 92, 72 }};
-static const XRect _Const0042 = {{ 5, 70 }, { 85, 100 }};
-static const XStringRes _Const0043 = { _StringsDefault0, 0x0137 };
-static const XRect _Const0044 = {{ 0, 0 }, { 160, 160 }};
-static const XRect _Const0045 = {{ 10, 0 }, { 160, 160 }};
-static const XRect _Const0046 = {{ 0, 0 }, { 160, 60 }};
-static const XRect _Const0047 = {{ 158, 0 }, { 160, 60 }};
-static const XRect _Const0048 = {{ 10, 0 }, { 150, 60 }};
-static const XRect _Const0049 = {{ 0, 0 }, { 480, 272 }};
-static const XColor _Const004A = { 0x22, 0x61, 0x73, 0xFF };
-static const XColor _Const004B = { 0x00, 0x00, 0x00, 0xFF };
-static const XRect _Const004C = {{ 12, 90 }, { 460, 200 }};
-static const XColor _Const004D = { 0x00, 0x00, 0x00, 0x80 };
-static const XRect _Const004E = {{ 12, 18 }, { 138, 258 }};
-static const XRect _Const004F = {{ 138, 18 }, { 184, 258 }};
-static const XRect _Const0050 = {{ 184, 18 }, { 230, 258 }};
-static const XRect _Const0051 = {{ 230, 18 }, { 322, 258 }};
-static const XRect _Const0052 = {{ 322, 18 }, { 448, 234 }};
-static const XRect _Const0053 = {{ 12, 90 }, { 448, 188 }};
-static const XColor _Const0054 = { 0xFF, 0xC2, 0x00, 0xFF };
-static const XRect _Const0055 = {{ 137, 103 }, { 139, 178 }};
-static const XColor _Const0056 = { 0x40, 0x40, 0x40, 0x40 };
-static const XRect _Const0057 = {{ 183, 103 }, { 185, 178 }};
-static const XRect _Const0058 = {{ 229, 103 }, { 231, 178 }};
-static const XRect _Const0059 = {{ 321, 103 }, { 323, 178 }};
-static const XRect _Const005A = {{ 322, 190 }, { 458, 234 }};
-static const XRect _Const005B = {{ 322, 234 }, { 458, 278 }};
-static const XRect _Const005C = {{ 10, 240 }, { 320, 270 }};
-static const XStringRes _Const005D = { _StringsDefault0, 0x0142 };
-static const XRect _Const005E = {{ 0, 0 }, { 110, 40 }};
-static const XRect _Const005F = {{ 109, 0 }, { 110, 40 }};
-static const XRect _Const0060 = {{ 0, 0 }, { 126, 216 }};
-static const XRect _Const0061 = {{ 0, 0 }, { 63, 216 }};
-static const XPoint _Const0062 = { 0, 216 };
-static const XPoint _Const0063 = { 63, 216 };
-static const XPoint _Const0064 = { 63, 0 };
-static const XRect _Const0065 = {{ 0, 168 }, { 63, 216 }};
-static const XRect _Const0066 = {{ 0, 72 }, { 63, 168 }};
-static const XRect _Const0067 = {{ 0, 0 }, { 63, 72 }};
-static const XRect _Const0068 = {{ 5, 70 }, { 55, 100 }};
-static const XStringRes _Const0069 = { _StringsDefault0, 0x017E };
-static const XRect _Const006A = {{ 63, 0 }, { 126, 216 }};
-static const XPoint _Const006B = { 126, 216 };
-static const XRect _Const006C = {{ 63, 168 }, { 126, 216 }};
-static const XRect _Const006D = {{ 63, 72 }, { 126, 168 }};
-static const XRect _Const006E = {{ 63, 0 }, { 126, 72 }};
-static const XRect _Const006F = {{ 53, 72 }, { 73, 168 }};
-static const XStringRes _Const0070 = { _StringsDefault0, 0x0188 };
-static const XRect _Const0071 = {{ 20, 140 }, { 130, 170 }};
-static const XStringRes _Const0072 = { _StringsDefault0, 0x018D };
-static const XRect _Const0073 = {{ 0, 0 }, { 110, 160 }};
-static const XRect _Const0074 = {{ 0, 0 }, { 100, 160 }};
-static const XStringRes _Const0075 = { _StringsDefault0, 0x01A3 };
-static const XRect _Const0076 = {{ 10, 0 }, { 110, 160 }};
-static const XRect _Const0077 = {{ 0, 0 }, { 1, 40 }};
-static const XRect _Const0078 = {{ 108, 0 }, { 110, 40 }};
-static const XRect _Const0079 = {{ 0, 0 }, { 136, 44 }};
-static const XRect _Const007A = {{ 0, 0 }, { 138, 48 }};
-static const XPoint _Const007B = { 0, 36 };
-static const XPoint _Const007C = { 126, 36 };
-static const XRect _Const007D = {{ 0, 0 }, { 126, 36 }};
-static const XColor _Const007E = { 0xFF, 0xB6, 0x5F, 0xFF };
-static const XStringRes _Const007F = { _StringsDefault0, 0x01A9 };
+static const XStringRes _Const0001 = { _StringsDefault0, 0x000F };
+static const XStringRes _Const0002 = { _StringsDefault0, 0x0017 };
+static const XStringRes _Const0003 = { _StringsDefault0, 0x0021 };
+static const XStringRes _Const0004 = { _StringsDefault0, 0x0029 };
+static const XStringRes _Const0005 = { _StringsDefault0, 0x0031 };
+static const XStringRes _Const0006 = { _StringsDefault0, 0x003A };
+static const XStringRes _Const0007 = { _StringsDefault0, 0x0044 };
+static const XStringRes _Const0008 = { _StringsDefault0, 0x004C };
+static const XStringRes _Const0009 = { _StringsDefault0, 0x0056 };
+static const XStringRes _Const000A = { _StringsDefault0, 0x005D };
+static const XStringRes _Const000B = { _StringsDefault0, 0x0064 };
+static const XStringRes _Const000C = { _StringsDefault0, 0x006B };
+static const XStringRes _Const000D = { _StringsDefault0, 0x0072 };
+static const XStringRes _Const000E = { _StringsDefault0, 0x0079 };
+static const XStringRes _Const000F = { _StringsDefault0, 0x0080 };
+static const XStringRes _Const0010 = { _StringsDefault0, 0x0086 };
+static const XStringRes _Const0011 = { _StringsDefault0, 0x008D };
+static const XStringRes _Const0012 = { _StringsDefault0, 0x0094 };
+static const XStringRes _Const0013 = { _StringsDefault0, 0x009B };
+static const XStringRes _Const0014 = { _StringsDefault0, 0x00A2 };
+static const XStringRes _Const0015 = { _StringsDefault0, 0x00AA };
+static const XStringRes _Const0016 = { _StringsDefault0, 0x00B2 };
+static const XRect _Const0017 = {{ 0, 0 }, { 126, 240 }};
+static const XPoint _Const0018 = { 0, 96 };
+static const XPoint _Const0019 = { 0, 240 };
+static const XPoint _Const001A = { 126, 240 };
+static const XPoint _Const001B = { 126, 0 };
+static const XPoint _Const001C = { 0, 0 };
+static const XRect _Const001D = {{ 0, 72 }, { 126, 168 }};
+static const XRect _Const001E = {{ 0, 168 }, { 126, 240 }};
+static const XRect _Const001F = {{ 0, 0 }, { 126, 72 }};
+static const XRect _Const0020 = {{ 10, 70 }, { 110, 100 }};
+static const XStringRes _Const0021 = { _StringsDefault0, 0x00BA };
+static const XRect _Const0022 = {{ 0, 0 }, { 220, 160 }};
+static const XRect _Const0023 = {{ 20, 0 }, { 220, 160 }};
+static const XStringRes _Const0024 = { _StringsDefault0, 0x00C5 };
+static const XRect _Const0025 = {{ 0, 0 }, { 220, 40 }};
+static const XRect _Const0026 = {{ 0, 0 }, { 2, 40 }};
+static const XRect _Const0027 = {{ 218, 0 }, { 220, 40 }};
+static const XRect _Const0028 = {{ 10, 0 }, { 210, 40 }};
+static const XRect _Const0029 = {{ 0, 0 }, { 46, 240 }};
+static const XRect _Const002A = {{ 0, 0 }, { 80, 400 }};
+static const XColor _Const002B = { 0x00, 0x00, 0x00, 0x00 };
+static const XPoint _Const002C = { 46, 240 };
+static const XPoint _Const002D = { 46, 0 };
+static const XRect _Const002E = {{ 0, 72 }, { 46, 168 }};
+static const XRect _Const002F = {{ 0, 168 }, { 46, 240 }};
+static const XRect _Const0030 = {{ 0, 0 }, { 46, 72 }};
+static const XRect _Const0031 = {{ 5, 70 }, { 45, 100 }};
+static const XStringRes _Const0032 = { _StringsDefault0, 0x00CD };
+static const XRect _Const0033 = {{ 0, 0 }, { 80, 160 }};
+static const XColor _Const0034 = { 0xFF, 0xFF, 0xFF, 0xFF };
+static const XRect _Const0035 = {{ 0, 0 }, { 80, 40 }};
+static const XRect _Const0036 = {{ 78, 0 }, { 80, 40 }};
+static const XRect _Const0037 = {{ 10, 0 }, { 80, 40 }};
+static const XStringRes _Const0038 = { _StringsDefault0, 0x00D6 };
+static const XRect _Const0039 = {{ 10, 0 }, { 80, 160 }};
+static const XRect _Const003A = {{ 0, 0 }, { 92, 240 }};
+static const XPoint _Const003B = { 92, 240 };
+static const XPoint _Const003C = { 92, 0 };
+static const XRect _Const003D = {{ 0, 72 }, { 92, 168 }};
+static const XRect _Const003E = {{ 0, 168 }, { 92, 240 }};
+static const XRect _Const003F = {{ 0, 0 }, { 92, 72 }};
+static const XRect _Const0040 = {{ 5, 70 }, { 85, 100 }};
+static const XStringRes _Const0041 = { _StringsDefault0, 0x00DF };
+static const XRect _Const0042 = {{ 0, 0 }, { 160, 160 }};
+static const XRect _Const0043 = {{ 10, 0 }, { 160, 160 }};
+static const XRect _Const0044 = {{ 0, 0 }, { 160, 60 }};
+static const XRect _Const0045 = {{ 158, 0 }, { 160, 60 }};
+static const XRect _Const0046 = {{ 10, 0 }, { 150, 60 }};
+static const XRect _Const0047 = {{ 0, 0 }, { 480, 272 }};
+static const XColor _Const0048 = { 0x22, 0x61, 0x73, 0xFF };
+static const XColor _Const0049 = { 0x00, 0x00, 0x00, 0xFF };
+static const XRect _Const004A = {{ 12, 90 }, { 460, 200 }};
+static const XColor _Const004B = { 0x00, 0x00, 0x00, 0x80 };
+static const XRect _Const004C = {{ 12, 18 }, { 138, 258 }};
+static const XRect _Const004D = {{ 138, 18 }, { 184, 258 }};
+static const XRect _Const004E = {{ 184, 18 }, { 230, 258 }};
+static const XRect _Const004F = {{ 230, 18 }, { 322, 258 }};
+static const XRect _Const0050 = {{ 322, 18 }, { 448, 234 }};
+static const XRect _Const0051 = {{ 12, 90 }, { 448, 188 }};
+static const XColor _Const0052 = { 0xFF, 0xC2, 0x00, 0xFF };
+static const XRect _Const0053 = {{ 137, 103 }, { 139, 178 }};
+static const XColor _Const0054 = { 0x40, 0x40, 0x40, 0x40 };
+static const XRect _Const0055 = {{ 183, 103 }, { 185, 178 }};
+static const XRect _Const0056 = {{ 229, 103 }, { 231, 178 }};
+static const XRect _Const0057 = {{ 321, 103 }, { 323, 178 }};
+static const XRect _Const0058 = {{ 322, 190 }, { 458, 234 }};
+static const XRect _Const0059 = {{ 322, 234 }, { 458, 278 }};
+static const XRect _Const005A = {{ 10, 240 }, { 320, 270 }};
+static const XStringRes _Const005B = { _StringsDefault0, 0x00E6 };
+static const XRect _Const005C = {{ 0, 0 }, { 110, 40 }};
+static const XRect _Const005D = {{ 109, 0 }, { 110, 40 }};
+static const XRect _Const005E = {{ 0, 0 }, { 126, 216 }};
+static const XRect _Const005F = {{ 0, 0 }, { 63, 216 }};
+static const XPoint _Const0060 = { 0, 216 };
+static const XPoint _Const0061 = { 63, 216 };
+static const XPoint _Const0062 = { 63, 0 };
+static const XRect _Const0063 = {{ 0, 168 }, { 63, 216 }};
+static const XRect _Const0064 = {{ 0, 72 }, { 63, 168 }};
+static const XRect _Const0065 = {{ 0, 0 }, { 63, 72 }};
+static const XRect _Const0066 = {{ 5, 70 }, { 55, 100 }};
+static const XStringRes _Const0067 = { _StringsDefault0, 0x0122 };
+static const XRect _Const0068 = {{ 63, 0 }, { 126, 216 }};
+static const XPoint _Const0069 = { 126, 216 };
+static const XRect _Const006A = {{ 63, 168 }, { 126, 216 }};
+static const XRect _Const006B = {{ 63, 72 }, { 126, 168 }};
+static const XRect _Const006C = {{ 63, 0 }, { 126, 72 }};
+static const XRect _Const006D = {{ 53, 72 }, { 73, 168 }};
+static const XStringRes _Const006E = { _StringsDefault0, 0x012E };
+static const XRect _Const006F = {{ 20, 140 }, { 130, 170 }};
+static const XStringRes _Const0070 = { _StringsDefault0, 0x0133 };
+static const XRect _Const0071 = {{ 0, 0 }, { 110, 160 }};
+static const XRect _Const0072 = {{ 0, 0 }, { 100, 160 }};
+static const XStringRes _Const0073 = { _StringsDefault0, 0x0149 };
+static const XRect _Const0074 = {{ 10, 0 }, { 110, 160 }};
+static const XRect _Const0075 = {{ 0, 0 }, { 1, 40 }};
+static const XRect _Const0076 = {{ 108, 0 }, { 110, 40 }};
+static const XRect _Const0077 = {{ 0, 0 }, { 136, 44 }};
+static const XRect _Const0078 = {{ 0, 0 }, { 138, 48 }};
+static const XPoint _Const0079 = { 0, 36 };
+static const XPoint _Const007A = { 126, 36 };
+static const XRect _Const007B = {{ 0, 0 }, { 126, 36 }};
+static const XColor _Const007C = { 0xFF, 0xB6, 0x5F, 0xFF };
+static const XStringRes _Const007D = { _StringsDefault0, 0x014F };
+static const XStringRes _Const007E = { _StringsDefault0, 0x0158 };
+static const XStringRes _Const007F = { _StringsDefault0, 0x0160 };
 
 #ifndef EW_DONT_CHECK_INDEX
   /* This function is used to check the indices when accessing an array.
@@ -250,6 +248,12 @@ void WasherDeviceClass__Init( WasherDeviceClass _this, XObject aLink, XHandle aA
 
   /* ... then construct all embedded objects */
   CoreSystemEvent__Init( &_this->ProgramUpdateEvent, &_this->_XObject, 0 );
+  CoreSystemEvent__Init( &_this->TempUpdateEvent, &_this->_XObject, 0 );
+  CoreSystemEvent__Init( &_this->SpinUpdateEvent, &_this->_XObject, 0 );
+  CoreSystemEvent__Init( &_this->OptionUpdateEvent, &_this->_XObject, 0 );
+  CoreSystemEvent__Init( &_this->HourUpdateEvent, &_this->_XObject, 0 );
+  CoreSystemEvent__Init( &_this->MinuteUpdateEvent, &_this->_XObject, 0 );
+  CoreSystemEvent__Init( &_this->RunningUpdateEvent, &_this->_XObject, 0 );
 
   /* Setup the VMT pointer */
   _this->_VMT = EW_CLASS( WasherDeviceClass );
@@ -263,25 +267,21 @@ void WasherDeviceClass__Init( WasherDeviceClass _this, XObject aLink, XHandle aA
   EwRetainString( &_this->WashingProgram[ 5 ], EwLoadString( &_Const0005 ));
   EwRetainString( &_this->WashingProgram[ 6 ], EwLoadString( &_Const0006 ));
   EwRetainString( &_this->WashingProgram[ 7 ], EwLoadString( &_Const0007 ));
-  EwRetainString( &_this->WashingTemp[ 0 ], EwLoadString( &_Const0008 ));
-  EwRetainString( &_this->WashingTemp[ 1 ], EwLoadString( &_Const0009 ));
-  EwRetainString( &_this->WashingTemp[ 2 ], EwLoadString( &_Const000A ));
-  EwRetainString( &_this->WashingTemp[ 3 ], EwLoadString( &_Const000B ));
-  EwRetainString( &_this->WashingTemp[ 4 ], EwLoadString( &_Const000C ));
-  EwRetainString( &_this->WashingTemp[ 5 ], EwLoadString( &_Const000D ));
-  EwRetainString( &_this->SpinTurn[ 0 ], EwLoadString( &_Const000E ));
-  EwRetainString( &_this->SpinTurn[ 1 ], EwLoadString( &_Const000F ));
-  EwRetainString( &_this->SpinTurn[ 2 ], EwLoadString( &_Const0010 ));
-  EwRetainString( &_this->SpinTurn[ 3 ], EwLoadString( &_Const0011 ));
-  EwRetainString( &_this->SpinTurn[ 4 ], EwLoadString( &_Const0012 ));
-  EwRetainString( &_this->SpinTurn[ 5 ], EwLoadString( &_Const0013 ));
-  EwRetainString( &_this->SpinTurn[ 6 ], EwLoadString( &_Const0014 ));
-  EwRetainString( &_this->Options[ 0 ], EwLoadString( &_Const000E ));
-  EwRetainString( &_this->Options[ 1 ], EwLoadString( &_Const000F ));
-  EwRetainString( &_this->Options[ 2 ], EwLoadString( &_Const0015 ));
-  EwRetainString( &_this->Options[ 3 ], EwLoadString( &_Const0016 ));
-  EwRetainString( &_this->Options[ 4 ], EwLoadString( &_Const0017 ));
-  EwRetainString( &_this->Options[ 5 ], EwLoadString( &_Const0018 ));
+  EwRetainString( &_this->WashingProgram[ 8 ], EwLoadString( &_Const0008 ));
+  EwRetainString( &_this->WashingTemp[ 0 ], EwLoadString( &_Const0009 ));
+  EwRetainString( &_this->WashingTemp[ 1 ], EwLoadString( &_Const000A ));
+  EwRetainString( &_this->WashingTemp[ 2 ], EwLoadString( &_Const000B ));
+  EwRetainString( &_this->WashingTemp[ 3 ], EwLoadString( &_Const000C ));
+  EwRetainString( &_this->WashingTemp[ 4 ], EwLoadString( &_Const000D ));
+  EwRetainString( &_this->WashingTemp[ 5 ], EwLoadString( &_Const000E ));
+  EwRetainString( &_this->Options[ 0 ], EwLoadString( &_Const000F ));
+  EwRetainString( &_this->Options[ 1 ], EwLoadString( &_Const0010 ));
+  EwRetainString( &_this->SpinTurn[ 0 ], EwLoadString( &_Const0011 ));
+  EwRetainString( &_this->SpinTurn[ 1 ], EwLoadString( &_Const0012 ));
+  EwRetainString( &_this->SpinTurn[ 2 ], EwLoadString( &_Const0013 ));
+  EwRetainString( &_this->SpinTurn[ 3 ], EwLoadString( &_Const0014 ));
+  EwRetainString( &_this->SpinTurn[ 4 ], EwLoadString( &_Const0015 ));
+  EwRetainString( &_this->SpinTurn[ 5 ], EwLoadString( &_Const0016 ));
 }
 
 /* Re-Initializer for the class 'Washer::DeviceClass' */
@@ -292,6 +292,12 @@ void WasherDeviceClass__ReInit( WasherDeviceClass _this )
 
   /* ... then re-construct all embedded objects */
   CoreSystemEvent__ReInit( &_this->ProgramUpdateEvent );
+  CoreSystemEvent__ReInit( &_this->TempUpdateEvent );
+  CoreSystemEvent__ReInit( &_this->SpinUpdateEvent );
+  CoreSystemEvent__ReInit( &_this->OptionUpdateEvent );
+  CoreSystemEvent__ReInit( &_this->HourUpdateEvent );
+  CoreSystemEvent__ReInit( &_this->MinuteUpdateEvent );
+  CoreSystemEvent__ReInit( &_this->RunningUpdateEvent );
 }
 
 /* Finalizer method for the class 'Washer::DeviceClass' */
@@ -302,12 +308,18 @@ void WasherDeviceClass__Done( WasherDeviceClass _this )
 
   /* Finalize all embedded objects */
   CoreSystemEvent__Done( &_this->ProgramUpdateEvent );
+  CoreSystemEvent__Done( &_this->TempUpdateEvent );
+  CoreSystemEvent__Done( &_this->SpinUpdateEvent );
+  CoreSystemEvent__Done( &_this->OptionUpdateEvent );
+  CoreSystemEvent__Done( &_this->HourUpdateEvent );
+  CoreSystemEvent__Done( &_this->MinuteUpdateEvent );
+  CoreSystemEvent__Done( &_this->RunningUpdateEvent );
 
   /* Release all used strings */
   EwReleaseStrings( _this->WashingProgram );
   EwReleaseStrings( _this->WashingTemp );
-  EwReleaseStrings( _this->SpinTurn );
   EwReleaseStrings( _this->Options );
+  EwReleaseStrings( _this->SpinTurn );
 
   /* Don't forget to deinitialize the super class ... */
   XObject__Done( &_this->_Super );
@@ -319,8 +331,8 @@ void WasherDeviceClass_OnSetProgramNumber( WasherDeviceClass _this, XInt32 value
   if ( value < 0 )
     value = 0;
 
-  if ( value >= 8 )
-    value = 7;
+  if ( value >= 9 )
+    value = 8;
 
   if ( value == _this->ProgramNumber )
     return;
@@ -330,7 +342,7 @@ void WasherDeviceClass_OnSetProgramNumber( WasherDeviceClass _this, XInt32 value
     /* Implement here your C code to stop the brewing process in
       the device. If necessary, predeclare the C functions intended
       to be used here. For example: */
-    YourDevice_StopBrewing( value );
+    Device_SetProgram( value );
   }
   EwNotifyRefObservers( EwNewRef( _this, WasherDeviceClass_OnGetProgramNumber, WasherDeviceClass_OnSetProgramNumber ), 
     0 );
@@ -349,6 +361,12 @@ void WasherDeviceClass_OnSetTempNumber( WasherDeviceClass _this, XInt32 value )
     return;
 
   _this->TempNumber = value;
+  {
+    /* Implement here your C code to stop the brewing process in
+      the device. If necessary, predeclare the C functions intended
+      to be used here. For example: */
+    Device_SetTemp( value );
+  }
   EwNotifyRefObservers( EwNewRef( _this, WasherDeviceClass_OnGetTempNumber, WasherDeviceClass_OnSetTempNumber ), 
     0 );
 }
@@ -359,13 +377,19 @@ void WasherDeviceClass_OnSetOptionNumber( WasherDeviceClass _this, XInt32 value 
   if ( value < 0 )
     value = 0;
 
-  if ( value >= 6 )
-    value = 5;
+  if ( value >= 2 )
+    value = 1;
 
   if ( value == _this->OptionNumber )
     return;
 
   _this->OptionNumber = value;
+  {
+    /* Implement here your C code to stop the brewing process in
+      the device. If necessary, predeclare the C functions intended
+      to be used here. For example: */
+    Device_SetOption( value );
+  }
   EwNotifyRefObservers( EwNewRef( _this, WasherDeviceClass_OnGetOptionNumber, WasherDeviceClass_OnSetOptionNumber ), 
     0 );
 }
@@ -383,6 +407,12 @@ void WasherDeviceClass_OnSetHour( WasherDeviceClass _this, XInt32 value )
     return;
 
   _this->Hour = value;
+  {
+    /* Implement here your C code to stop the brewing process in
+      the device. If necessary, predeclare the C functions intended
+      to be used here. For example: */
+    Device_SetHour( value );
+  }
   EwNotifyRefObservers( EwNewRef( _this, WasherDeviceClass_OnGetHour, WasherDeviceClass_OnSetHour ), 
     0 );
 }
@@ -400,6 +430,12 @@ void WasherDeviceClass_OnSetMinute( WasherDeviceClass _this, XInt32 value )
     return;
 
   _this->Minute = value;
+  {
+    /* Implement here your C code to stop the brewing process in
+      the device. If necessary, predeclare the C functions intended
+      to be used here. For example: */
+    Device_SetMinute( value );
+  }
   EwNotifyRefObservers( EwNewRef( _this, WasherDeviceClass_OnGetMinute, WasherDeviceClass_OnSetMinute ), 
     0 );
 }
@@ -410,13 +446,19 @@ void WasherDeviceClass_OnSetSpinNumber( WasherDeviceClass _this, XInt32 value )
   if ( value < 0 )
     value = 0;
 
-  if ( value >= 7 )
-    value = 6;
+  if ( value >= 6 )
+    value = 5;
 
   if ( value == _this->SpinNumber )
     return;
 
   _this->SpinNumber = value;
+  {
+    /* Implement here your C code to stop the brewing process in
+      the device. If necessary, predeclare the C functions intended
+      to be used here. For example: */
+    Device_SetSpin( value );
+  }
   EwNotifyRefObservers( EwNewRef( _this, WasherDeviceClass_OnGetSpinNumber, WasherDeviceClass_OnSetSpinNumber ), 
     0 );
 }
@@ -427,8 +469,8 @@ void WasherDeviceClass_UpdateProgram( WasherDeviceClass _this, XInt32 aArg1 )
   if ( aArg1 < 0 )
     aArg1 = 0;
 
-  if ( aArg1 >= 8 )
-    aArg1 = 7;
+  if ( aArg1 >= 9 )
+    aArg1 = 8;
 
   if ( aArg1 == _this->ProgramNumber )
     return;
@@ -443,6 +485,167 @@ void WasherDeviceClass_UpdateProgram( WasherDeviceClass _this, XInt32 aArg1 )
 void WasherDeviceClass__UpdateProgram( void* _this, XInt32 aArg1 )
 {
   WasherDeviceClass_UpdateProgram((WasherDeviceClass)_this, aArg1 );
+}
+
+/* 'C' function for method : 'Washer::DeviceClass.OnSetRunning()' */
+void WasherDeviceClass_OnSetRunning( WasherDeviceClass _this, XBool value )
+{
+  if ( _this->Running == value )
+    return;
+
+  _this->Running = value;
+  {
+    /* Implement here your C code to stop the brewing process in
+      the device. If necessary, predeclare the C functions intended
+      to be used here. For example: */
+    Device_SetRunning( value );
+  }
+  EwNotifyRefObservers( EwNewRef( _this, WasherDeviceClass_OnGetRunning, WasherDeviceClass_OnSetRunning ), 
+    0 );
+}
+
+/* This method is intended to be called by the device to notify the GUI application 
+   about a particular system event. */
+void WasherDeviceClass_UpdateTemp( WasherDeviceClass _this, XInt32 aArg1 )
+{
+  if ( aArg1 < 0 )
+    aArg1 = 0;
+
+  if ( aArg1 >= 6 )
+    aArg1 = 5;
+
+  if ( aArg1 == _this->TempNumber )
+    return;
+
+  _this->TempNumber = aArg1;
+  CoreSystemEvent_Trigger( &_this->TempUpdateEvent, 0, 0 );
+  EwNotifyRefObservers( EwNewRef( _this, WasherDeviceClass_OnGetTempNumber, WasherDeviceClass_OnSetTempNumber ), 
+    0 );
+}
+
+/* Wrapper function for the non virtual method : 'Washer::DeviceClass.UpdateTemp()' */
+void WasherDeviceClass__UpdateTemp( void* _this, XInt32 aArg1 )
+{
+  WasherDeviceClass_UpdateTemp((WasherDeviceClass)_this, aArg1 );
+}
+
+/* This method is intended to be called by the device to notify the GUI application 
+   about a particular system event. */
+void WasherDeviceClass_UpdateSpin( WasherDeviceClass _this, XInt32 aArg1 )
+{
+  if ( aArg1 < 0 )
+    aArg1 = 0;
+
+  if ( aArg1 >= 6 )
+    aArg1 = 5;
+
+  if ( aArg1 == _this->SpinNumber )
+    return;
+
+  _this->SpinNumber = aArg1;
+  CoreSystemEvent_Trigger( &_this->SpinUpdateEvent, 0, 0 );
+  EwNotifyRefObservers( EwNewRef( _this, WasherDeviceClass_OnGetSpinNumber, WasherDeviceClass_OnSetSpinNumber ), 
+    0 );
+}
+
+/* Wrapper function for the non virtual method : 'Washer::DeviceClass.UpdateSpin()' */
+void WasherDeviceClass__UpdateSpin( void* _this, XInt32 aArg1 )
+{
+  WasherDeviceClass_UpdateSpin((WasherDeviceClass)_this, aArg1 );
+}
+
+/* This method is intended to be called by the device to notify the GUI application 
+   about a particular system event. */
+void WasherDeviceClass_UpdateOption( WasherDeviceClass _this, XInt32 aArg1 )
+{
+  if ( aArg1 < 0 )
+    aArg1 = 0;
+
+  if ( aArg1 >= 2 )
+    aArg1 = 1;
+
+  if ( aArg1 == _this->OptionNumber )
+    return;
+
+  _this->OptionNumber = aArg1;
+  CoreSystemEvent_Trigger( &_this->OptionUpdateEvent, 0, 0 );
+  EwNotifyRefObservers( EwNewRef( _this, WasherDeviceClass_OnGetOptionNumber, WasherDeviceClass_OnSetOptionNumber ), 
+    0 );
+}
+
+/* Wrapper function for the non virtual method : 'Washer::DeviceClass.UpdateOption()' */
+void WasherDeviceClass__UpdateOption( void* _this, XInt32 aArg1 )
+{
+  WasherDeviceClass_UpdateOption((WasherDeviceClass)_this, aArg1 );
+}
+
+/* This method is intended to be called by the device to notify the GUI application 
+   about a particular system event. */
+void WasherDeviceClass_UpdateHour( WasherDeviceClass _this, XInt32 aArg1 )
+{
+  if ( aArg1 < 0 )
+    aArg1 = 0;
+
+  if ( aArg1 > 23 )
+    aArg1 = 23;
+
+  if ( aArg1 == _this->Hour )
+    return;
+
+  _this->Hour = aArg1;
+  CoreSystemEvent_Trigger( &_this->HourUpdateEvent, 0, 0 );
+  EwNotifyRefObservers( EwNewRef( _this, WasherDeviceClass_OnGetHour, WasherDeviceClass_OnSetHour ), 
+    0 );
+}
+
+/* Wrapper function for the non virtual method : 'Washer::DeviceClass.UpdateHour()' */
+void WasherDeviceClass__UpdateHour( void* _this, XInt32 aArg1 )
+{
+  WasherDeviceClass_UpdateHour((WasherDeviceClass)_this, aArg1 );
+}
+
+/* This method is intended to be called by the device to notify the GUI application 
+   about a particular system event. */
+void WasherDeviceClass_UpdateMinute( WasherDeviceClass _this, XInt32 aArg1 )
+{
+  if ( aArg1 < 0 )
+    aArg1 = 0;
+
+  if ( aArg1 > 59 )
+    aArg1 = 59;
+
+  if ( aArg1 == _this->Minute )
+    return;
+
+  _this->Minute = aArg1;
+  CoreSystemEvent_Trigger( &_this->MinuteUpdateEvent, 0, 0 );
+  EwNotifyRefObservers( EwNewRef( _this, WasherDeviceClass_OnGetMinute, WasherDeviceClass_OnSetMinute ), 
+    0 );
+}
+
+/* Wrapper function for the non virtual method : 'Washer::DeviceClass.UpdateMinute()' */
+void WasherDeviceClass__UpdateMinute( void* _this, XInt32 aArg1 )
+{
+  WasherDeviceClass_UpdateMinute((WasherDeviceClass)_this, aArg1 );
+}
+
+/* This method is intended to be called by the device to notify the GUI application 
+   about a particular system event. */
+void WasherDeviceClass_UpdateRunning( WasherDeviceClass _this, XBool aArg1 )
+{
+  if ( aArg1 == _this->Running )
+    return;
+
+  _this->Running = aArg1;
+  CoreSystemEvent_Trigger( &_this->RunningUpdateEvent, 0, 0 );
+  EwNotifyRefObservers( EwNewRef( _this, WasherDeviceClass_OnGetRunning, WasherDeviceClass_OnSetRunning ), 
+    0 );
+}
+
+/* Wrapper function for the non virtual method : 'Washer::DeviceClass.UpdateRunning()' */
+void WasherDeviceClass__UpdateRunning( void* _this, XBool aArg1 )
+{
+  WasherDeviceClass_UpdateRunning((WasherDeviceClass)_this, aArg1 );
 }
 
 /* Default onget method for the property 'ProgramNumber' */
@@ -481,6 +684,12 @@ XInt32 WasherDeviceClass_OnGetSpinNumber( WasherDeviceClass _this )
   return _this->SpinNumber;
 }
 
+/* Default onget method for the property 'Running' */
+XBool WasherDeviceClass_OnGetRunning( WasherDeviceClass _this )
+{
+  return _this->Running;
+}
+
 /* Variants derived from the class : 'Washer::DeviceClass' */
 EW_DEFINE_CLASS_VARIANTS( WasherDeviceClass )
 EW_END_OF_CLASS_VARIANTS( WasherDeviceClass )
@@ -515,38 +724,38 @@ void WasherProgList__Init( WasherProgList _this, XObject aLink, XHandle aArg )
   _this->_VMT = EW_CLASS( WasherProgList );
 
   /* ... and initialize objects, variables, properties, etc. */
-  CoreRectView__OnSetBounds( _this, _Const0019 );
-  CoreRectView__OnSetBounds( &_this->SlideTouchHandler, _Const0019 );
-  CoreSlideTouchHandler_OnSetSnapNext( &_this->SlideTouchHandler, _Const001A );
+  CoreRectView__OnSetBounds( _this, _Const0017 );
+  CoreRectView__OnSetBounds( &_this->SlideTouchHandler, _Const0017 );
+  CoreSlideTouchHandler_OnSetSnapNext( &_this->SlideTouchHandler, _Const0018 );
   CoreSlideTouchHandler_OnSetFriction( &_this->SlideTouchHandler, 0.100000f );
-  CoreQuadView_OnSetPoint4((CoreQuadView)&_this->SimpleTouchHandler, _Const001B );
-  CoreQuadView_OnSetPoint3((CoreQuadView)&_this->SimpleTouchHandler, _Const001C );
-  CoreQuadView_OnSetPoint2((CoreQuadView)&_this->SimpleTouchHandler, _Const001D );
-  CoreQuadView_OnSetPoint1((CoreQuadView)&_this->SimpleTouchHandler, _Const001E );
+  CoreQuadView_OnSetPoint4((CoreQuadView)&_this->SimpleTouchHandler, _Const0019 );
+  CoreQuadView_OnSetPoint3((CoreQuadView)&_this->SimpleTouchHandler, _Const001A );
+  CoreQuadView_OnSetPoint2((CoreQuadView)&_this->SimpleTouchHandler, _Const001B );
+  CoreQuadView_OnSetPoint1((CoreQuadView)&_this->SimpleTouchHandler, _Const001C );
   CoreView_OnSetLayout((CoreView)&_this->Rectangle, CoreLayoutAlignToBottom | CoreLayoutAlignToLeft 
   | CoreLayoutAlignToRight | CoreLayoutAlignToTop | CoreLayoutResizeHorz | CoreLayoutResizeVert );
-  CoreRectView__OnSetBounds( &_this->Rectangle, _Const001F );
+  CoreRectView__OnSetBounds( &_this->Rectangle, _Const001D );
   ViewsRectangle_OnSetColor( &_this->Rectangle, WasherButtonBgColor );
-  CoreRectView__OnSetBounds( &_this->BottomList, _Const0020 );
+  CoreRectView__OnSetBounds( &_this->BottomList, _Const001E );
   CoreGroup__OnSetOpacity( &_this->BottomList, 0 );
   CoreVerticalList_OnSetItemHeight( &_this->BottomList, 24 );
-  CoreVerticalList_OnSetNoOfItems( &_this->BottomList, 8 );
+  CoreVerticalList_OnSetNoOfItems( &_this->BottomList, 9 );
   CoreVerticalList_OnSetItemClass( &_this->BottomList, EW_CLASS( WasherProgItemS ));
-  CoreRectView__OnSetBounds( &_this->MainList, _Const001F );
+  CoreRectView__OnSetBounds( &_this->MainList, _Const001D );
   CoreVerticalList_OnSetItemHeight( &_this->MainList, 96 );
-  CoreVerticalList_OnSetNoOfItems( &_this->MainList, 8 );
+  CoreVerticalList_OnSetNoOfItems( &_this->MainList, 9 );
   CoreVerticalList_OnSetItemClass( &_this->MainList, EW_CLASS( WasherProgItemL ));
-  CoreRectView__OnSetBounds( &_this->TopList, _Const0021 );
+  CoreRectView__OnSetBounds( &_this->TopList, _Const001F );
   CoreGroup__OnSetOpacity( &_this->TopList, 0 );
   CoreVerticalList_OnSetItemHeight( &_this->TopList, 24 );
-  CoreVerticalList_OnSetNoOfItems( &_this->TopList, 8 );
+  CoreVerticalList_OnSetNoOfItems( &_this->TopList, 9 );
   CoreVerticalList_OnSetItemClass( &_this->TopList, EW_CLASS( WasherProgItemS ));
   EffectsEffect_OnSetTiming((EffectsEffect)&_this->FadeListIn, EffectsTimingFastIn_EaseOut );
   EffectsEffect_OnSetNoOfCycles((EffectsEffect)&_this->FadeListIn, 1 );
   EffectsEffect_OnSetCycleDuration((EffectsEffect)&_this->FadeListIn, 300 );
-  CoreRectView__OnSetBounds( &_this->Caption, _Const0022 );
+  CoreRectView__OnSetBounds( &_this->Caption, _Const0020 );
   ViewsText_OnSetAlignment( &_this->Caption, ViewsTextAlignmentAlignHorzLeft | ViewsTextAlignmentAlignVertCenter );
-  ViewsText_OnSetString( &_this->Caption, EwLoadString( &_Const0023 ));
+  ViewsText_OnSetString( &_this->Caption, EwLoadString( &_Const0021 ));
   ViewsText_OnSetColor( &_this->Caption, WasherCaptionColor );
   EffectsEffect_OnSetTiming((EffectsEffect)&_this->FadeCaption, EffectsTimingFastIn_FastOut );
   EffectsEffect_OnSetNoOfCycles((EffectsEffect)&_this->FadeCaption, 1 );
@@ -654,9 +863,9 @@ void WasherProgList_OnLoadMain( WasherProgList _this, XObject sender )
   itemNo = _this->MainList.Item;
   caption = 0;
 
-  if (( itemNo >= 0 ) && ( itemNo < 8 ))
+  if (( itemNo >= 0 ) && ( itemNo < 9 ))
     caption = EwGetAutoObject( &WasherDevice, WasherDeviceClass )->WashingProgram[ 
-    EwCheckIndex( itemNo, 8 )];
+    EwCheckIndex( itemNo, 9 )];
 
   WasherProgItemL_OnSetCaption( itemView, caption );
   CoreRectView__OnSetBounds( itemView, EwSetRectSize( itemView->Super2.Bounds, EwNewPoint( 
@@ -677,9 +886,9 @@ void WasherProgList_OnLoadTop( WasherProgList _this, XObject sender )
   itemNo = _this->TopList.Item;
   caption = 0;
 
-  if (( itemNo >= 0 ) && ( itemNo < 8 ))
+  if (( itemNo >= 0 ) && ( itemNo < 9 ))
     caption = EwGetAutoObject( &WasherDevice, WasherDeviceClass )->WashingProgram[ 
-    EwCheckIndex( itemNo, 8 )];
+    EwCheckIndex( itemNo, 9 )];
 
   WasherProgItemS_OnSetCaption( itemView, caption );
   CoreRectView__OnSetBounds( itemView, EwSetRectSize( itemView->Super2.Bounds, EwNewPoint( 
@@ -713,9 +922,9 @@ void WasherProgList_OnLoadBottom( WasherProgList _this, XObject sender )
   itemNo = _this->BottomList.Item;
   caption = 0;
 
-  if (( itemNo >= 0 ) && ( itemNo < 8 ))
+  if (( itemNo >= 0 ) && ( itemNo < 9 ))
     caption = EwGetAutoObject( &WasherDevice, WasherDeviceClass )->WashingProgram[ 
-    EwCheckIndex( itemNo, 8 )];
+    EwCheckIndex( itemNo, 9 )];
 
   WasherProgItemS_OnSetCaption( itemView, caption );
   CoreRectView__OnSetBounds( itemView, EwSetRectSize( itemView->Super2.Bounds, EwNewPoint( 
@@ -780,7 +989,7 @@ void WasherProgList_OnDrag( WasherProgList _this, XObject sender )
   if (( delta.Y > 8 ) || ( delta.Y < -8 ))
   {
     CoreRoot_DeflectCursor( CoreView__GetRoot( _this ), ((CoreView)&_this->SlideTouchHandler ), 
-    _Const001E );
+    _Const001C );
     CoreSimpleTouchHandler_OnSetEnabled( &_this->SimpleTouchHandler, 0 );
   }
 }
@@ -834,7 +1043,7 @@ void WasherProgList_AutoDemo( WasherProgList _this, XObject sender )
   EwPostSignal( EwNewSlot( _this, WasherProgList_OnStart ), ((XObject)_this ));
   val = EwGetAutoObject( &WasherDevice, WasherDeviceClass )->ProgramNumber + 1;
 
-  if ( val >= 8 )
+  if ( val >= 9 )
     val = 0;
 
   CoreVerticalList_EnsureVisible( &_this->MainList, val, 1, &_this->AutoDemoEffect, 
@@ -918,13 +1127,13 @@ void WasherProgItemL__Init( WasherProgItemL _this, XObject aLink, XHandle aArg )
   _this->_VMT = EW_CLASS( WasherProgItemL );
 
   /* ... and initialize objects, variables, properties, etc. */
-  CoreRectView__OnSetBounds( _this, _Const0024 );
+  CoreRectView__OnSetBounds( _this, _Const0022 );
   CoreView_OnSetLayout((CoreView)&_this->Text, CoreLayoutAlignToBottom | CoreLayoutAlignToRight 
   | CoreLayoutAlignToTop | CoreLayoutResizeHorz | CoreLayoutResizeVert );
-  CoreRectView__OnSetBounds( &_this->Text, _Const0025 );
+  CoreRectView__OnSetBounds( &_this->Text, _Const0023 );
   ViewsText_OnSetWrapText( &_this->Text, 1 );
   ViewsText_OnSetAlignment( &_this->Text, ViewsTextAlignmentAlignHorzLeft | ViewsTextAlignmentAlignVertCenter );
-  ViewsText_OnSetString( &_this->Text, EwLoadString( &_Const0026 ));
+  ViewsText_OnSetString( &_this->Text, EwLoadString( &_Const0024 ));
   ViewsText_OnSetColor( &_this->Text, WasherButtonTextColor );
   CoreGroup__Add( _this, ((CoreView)&_this->Text ), 0 );
   ViewsText_OnSetFont( &_this->Text, EwLoadResource( &WasherListFontL, ResourcesFont ));
@@ -2630,25 +2839,25 @@ void WasherProgItemS__Init( WasherProgItemS _this, XObject aLink, XHandle aArg )
   _this->_VMT = EW_CLASS( WasherProgItemS );
 
   /* ... and initialize objects, variables, properties, etc. */
-  CoreRectView__OnSetBounds( _this, _Const0027 );
+  CoreRectView__OnSetBounds( _this, _Const0025 );
   CoreView_OnSetLayout((CoreView)&_this->Back, CoreLayoutAlignToBottom | CoreLayoutAlignToLeft 
   | CoreLayoutAlignToRight | CoreLayoutAlignToTop | CoreLayoutResizeHorz | CoreLayoutResizeVert );
-  CoreRectView__OnSetBounds( &_this->Back, _Const0027 );
+  CoreRectView__OnSetBounds( &_this->Back, _Const0025 );
   ViewsRectangle_OnSetColor( &_this->Back, WasherListBgColor );
   CoreView_OnSetLayout((CoreView)&_this->Left, CoreLayoutAlignToBottom | CoreLayoutAlignToLeft 
   | CoreLayoutAlignToTop | CoreLayoutResizeVert );
-  CoreRectView__OnSetBounds( &_this->Left, _Const0028 );
+  CoreRectView__OnSetBounds( &_this->Left, _Const0026 );
   ViewsRectangle_OnSetColor( &_this->Left, WasherListBgColor );
   CoreView_OnSetLayout((CoreView)&_this->Right, CoreLayoutAlignToBottom | CoreLayoutAlignToRight 
   | CoreLayoutAlignToTop | CoreLayoutResizeVert );
-  CoreRectView__OnSetBounds( &_this->Right, _Const0029 );
+  CoreRectView__OnSetBounds( &_this->Right, _Const0027 );
   ViewsRectangle_OnSetColor( &_this->Right, WasherListBgColor );
   CoreView_OnSetLayout((CoreView)&_this->Text, CoreLayoutAlignToBottom | CoreLayoutAlignToRight 
   | CoreLayoutAlignToTop | CoreLayoutResizeHorz | CoreLayoutResizeVert );
-  CoreRectView__OnSetBounds( &_this->Text, _Const002A );
+  CoreRectView__OnSetBounds( &_this->Text, _Const0028 );
   ViewsText_OnSetWrapText( &_this->Text, 1 );
   ViewsText_OnSetAlignment( &_this->Text, ViewsTextAlignmentAlignHorzLeft | ViewsTextAlignmentAlignVertCenter );
-  ViewsText_OnSetString( &_this->Text, EwLoadString( &_Const0026 ));
+  ViewsText_OnSetString( &_this->Text, EwLoadString( &_Const0024 ));
   ViewsText_OnSetColor( &_this->Text, WasherListTextColor );
   CoreGroup__Add( _this, ((CoreView)&_this->Back ), 0 );
   CoreGroup__Add( _this, ((CoreView)&_this->Left ), 0 );
@@ -2750,38 +2959,39 @@ void WasherTempList__Init( WasherTempList _this, XObject aLink, XHandle aArg )
   EffectsInt32Effect__Init( &_this->FadeListOut, &_this->_XObject, 0 );
   EffectsInt32Effect__Init( &_this->Int32Effect, &_this->_XObject, 0 );
   EffectsInt32Effect__Init( &_this->AutoDemoEffect, &_this->_XObject, 0 );
+  CoreSystemEventHandler__Init( &_this->SystemEventHandler, &_this->_XObject, 0 );
 
   /* Setup the VMT pointer */
   _this->_VMT = EW_CLASS( WasherTempList );
 
   /* ... and initialize objects, variables, properties, etc. */
-  CoreRectView__OnSetBounds( _this, _Const002B );
+  CoreRectView__OnSetBounds( _this, _Const0029 );
   CoreView_OnSetLayout((CoreView)&_this->Back, CoreLayoutAlignToBottom | CoreLayoutAlignToLeft 
   | CoreLayoutAlignToRight | CoreLayoutAlignToTop | CoreLayoutResizeHorz | CoreLayoutResizeVert );
-  CoreRectView__OnSetBounds( &_this->Back, _Const002C );
-  ViewsRectangle_OnSetColor( &_this->Back, _Const002D );
-  CoreRectView__OnSetBounds( &_this->SlideTouchHandler, _Const002B );
-  CoreSlideTouchHandler_OnSetSnapNext( &_this->SlideTouchHandler, _Const001A );
+  CoreRectView__OnSetBounds( &_this->Back, _Const002A );
+  ViewsRectangle_OnSetColor( &_this->Back, _Const002B );
+  CoreRectView__OnSetBounds( &_this->SlideTouchHandler, _Const0029 );
+  CoreSlideTouchHandler_OnSetSnapNext( &_this->SlideTouchHandler, _Const0018 );
   CoreSlideTouchHandler_OnSetFriction( &_this->SlideTouchHandler, 0.100000f );
-  CoreQuadView_OnSetPoint4((CoreQuadView)&_this->SimpleTouchHandler, _Const001B );
-  CoreQuadView_OnSetPoint3((CoreQuadView)&_this->SimpleTouchHandler, _Const002E );
-  CoreQuadView_OnSetPoint2((CoreQuadView)&_this->SimpleTouchHandler, _Const002F );
-  CoreQuadView_OnSetPoint1((CoreQuadView)&_this->SimpleTouchHandler, _Const001E );
+  CoreQuadView_OnSetPoint4((CoreQuadView)&_this->SimpleTouchHandler, _Const0019 );
+  CoreQuadView_OnSetPoint3((CoreQuadView)&_this->SimpleTouchHandler, _Const002C );
+  CoreQuadView_OnSetPoint2((CoreQuadView)&_this->SimpleTouchHandler, _Const002D );
+  CoreQuadView_OnSetPoint1((CoreQuadView)&_this->SimpleTouchHandler, _Const001C );
   CoreView_OnSetLayout((CoreView)&_this->Rectangle, CoreLayoutAlignToBottom | CoreLayoutAlignToLeft 
   | CoreLayoutAlignToRight | CoreLayoutAlignToTop | CoreLayoutResizeHorz | CoreLayoutResizeVert );
-  CoreRectView__OnSetBounds( &_this->Rectangle, _Const0030 );
+  CoreRectView__OnSetBounds( &_this->Rectangle, _Const002E );
   ViewsRectangle_OnSetColor( &_this->Rectangle, WasherButtonBgColor );
-  CoreRectView__OnSetBounds( &_this->BottomList, _Const0031 );
+  CoreRectView__OnSetBounds( &_this->BottomList, _Const002F );
   CoreGroup__OnSetOpacity( &_this->BottomList, 0 );
   CoreVerticalList_OnSetItemHeight( &_this->BottomList, 24 );
   CoreVerticalList_OnSetNoOfItems( &_this->BottomList, 6 );
   CoreVerticalList_OnSetItemClass( &_this->BottomList, EW_CLASS( WasherTempItemS ));
-  CoreRectView__OnSetBounds( &_this->MainList, _Const0030 );
+  CoreRectView__OnSetBounds( &_this->MainList, _Const002E );
   CoreGroup__OnSetOpacity( &_this->MainList, 0 );
   CoreVerticalList_OnSetItemHeight( &_this->MainList, 96 );
   CoreVerticalList_OnSetNoOfItems( &_this->MainList, 6 );
   CoreVerticalList_OnSetItemClass( &_this->MainList, EW_CLASS( WasherTempItemL ));
-  CoreRectView__OnSetBounds( &_this->TopList, _Const0032 );
+  CoreRectView__OnSetBounds( &_this->TopList, _Const0030 );
   CoreGroup__OnSetOpacity( &_this->TopList, 0 );
   CoreVerticalList_OnSetItemHeight( &_this->TopList, 24 );
   CoreVerticalList_OnSetNoOfItems( &_this->TopList, 6 );
@@ -2789,16 +2999,16 @@ void WasherTempList__Init( WasherTempList _this, XObject aLink, XHandle aArg )
   EffectsEffect_OnSetTiming((EffectsEffect)&_this->FadeListIn, EffectsTimingFastIn_EaseOut );
   EffectsEffect_OnSetNoOfCycles((EffectsEffect)&_this->FadeListIn, 1 );
   EffectsEffect_OnSetCycleDuration((EffectsEffect)&_this->FadeListIn, 300 );
-  CoreRectView__OnSetBounds( &_this->Caption, _Const0033 );
+  CoreRectView__OnSetBounds( &_this->Caption, _Const0031 );
   ViewsText_OnSetAlignment( &_this->Caption, ViewsTextAlignmentAlignHorzLeft | ViewsTextAlignmentAlignVertCenter );
-  ViewsText_OnSetString( &_this->Caption, EwLoadString( &_Const0034 ));
+  ViewsText_OnSetString( &_this->Caption, EwLoadString( &_Const0032 ));
   ViewsText_OnSetColor( &_this->Caption, WasherCaptionColor );
   EffectsEffect_OnSetTiming((EffectsEffect)&_this->FadeCaption, EffectsTimingFastIn_FastOut );
   EffectsEffect_OnSetNoOfCycles((EffectsEffect)&_this->FadeCaption, 1 );
   EffectsEffect_OnSetCycleDuration((EffectsEffect)&_this->FadeCaption, 200 );
   CoreView_OnSetLayout((CoreView)&_this->Text, CoreLayoutAlignToBottom | CoreLayoutAlignToRight 
   | CoreLayoutAlignToTop | CoreLayoutResizeHorz | CoreLayoutResizeVert );
-  CoreRectView__OnSetBounds( &_this->Text, _Const0030 );
+  CoreRectView__OnSetBounds( &_this->Text, _Const002E );
   ViewsText_OnSetAlignment( &_this->Text, ViewsTextAlignmentAlignHorzCenter | ViewsTextAlignmentAlignVertCenter );
   ViewsText_OnSetString( &_this->Text, EwGetAutoObject( &WasherDevice, WasherDeviceClass )->WashingTemp[ 
   0 ]);
@@ -2843,6 +3053,9 @@ void WasherTempList__Init( WasherTempList _this, XObject aLink, XHandle aArg )
   _this->FadeListOut.Super1.OnAnimate = EwNewSlot( _this, WasherTempList_onAnimate );
   _this->FadeListOut.Outlet = EwNewRef( &_this->TopList, CoreGroup_OnGetOpacity, 
   CoreGroup__OnSetOpacity );
+  _this->SystemEventHandler.OnEvent = EwNewSlot( _this, WasherTempList_onEvent );
+  CoreSystemEventHandler_OnSetEvent( &_this->SystemEventHandler, &EwGetAutoObject( 
+  &WasherDevice, WasherDeviceClass )->TempUpdateEvent );
 }
 
 /* Re-Initializer for the class 'Washer::TempList' */
@@ -2866,6 +3079,7 @@ void WasherTempList__ReInit( WasherTempList _this )
   EffectsInt32Effect__ReInit( &_this->FadeListOut );
   EffectsInt32Effect__ReInit( &_this->Int32Effect );
   EffectsInt32Effect__ReInit( &_this->AutoDemoEffect );
+  CoreSystemEventHandler__ReInit( &_this->SystemEventHandler );
 }
 
 /* Finalizer method for the class 'Washer::TempList' */
@@ -2889,6 +3103,7 @@ void WasherTempList__Done( WasherTempList _this )
   EffectsInt32Effect__Done( &_this->FadeListOut );
   EffectsInt32Effect__Done( &_this->Int32Effect );
   EffectsInt32Effect__Done( &_this->AutoDemoEffect );
+  CoreSystemEventHandler__Done( &_this->SystemEventHandler );
 
   /* Don't forget to deinitialize the super class ... */
   CoreGroup__Done( &_this->_Super );
@@ -3162,7 +3377,7 @@ void WasherTempList_OnDrag( WasherTempList _this, XObject sender )
   if (( delta.Y > 8 ) || ( delta.Y < -8 ))
   {
     CoreRoot_DeflectCursor( CoreView__GetRoot( _this ), ((CoreView)&_this->SlideTouchHandler ), 
-    _Const001E );
+    _Const001C );
     CoreSimpleTouchHandler_OnSetEnabled( &_this->SimpleTouchHandler, 0 );
   }
 }
@@ -3216,6 +3431,45 @@ void WasherTempList_AutoDemo( WasherTempList _this, XObject sender )
   EwNewSlot( _this, WasherTempList_OnEnd ));
 }
 
+/* This slot method is executed when the associated system event handler 'SystemEventHandler' 
+   receives an event. */
+void WasherTempList_onEvent( WasherTempList _this, XObject sender )
+{
+  XInt32 val;
+
+  /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
+  EW_UNUSED_ARG( sender );
+
+  EwPostSignal( EwNewSlot( _this, WasherTempList_DeviceStart ), ((XObject)_this ));
+  val = EwGetAutoObject( &WasherDevice, WasherDeviceClass )->TempNumber;
+  CoreVerticalList_EnsureVisible( &_this->MainList, val, 1, 0, EwNewSlot( _this, 
+  WasherTempList_DeviceEnd ));
+}
+
+/* 'C' function for method : 'Washer::TempList.DeviceStart()' */
+void WasherTempList_DeviceStart( WasherTempList _this, XObject sender )
+{
+  /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
+  EW_UNUSED_ARG( _this );
+  EW_UNUSED_ARG( sender );
+}
+
+/* 'C' function for method : 'Washer::TempList.DeviceEnd()' */
+void WasherTempList_DeviceEnd( WasherTempList _this, XObject sender )
+{
+  /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
+  EW_UNUSED_ARG( sender );
+
+  ViewsText_OnSetString( &_this->Text, EwGetAutoObject( &WasherDevice, WasherDeviceClass )->WashingTemp[ 
+  EwCheckIndex( EwGetAutoObject( &WasherDevice, WasherDeviceClass )->TempNumber, 
+  6 )]);
+  EffectsEffect_OnSetEnabled((EffectsEffect)&_this->FadeCaption, 0 );
+  _this->FadeCaption.Value1 = _this->Caption.Opacity;
+  _this->FadeCaption.Value2 = 255;
+  EffectsEffect_OnSetEnabled((EffectsEffect)&_this->FadeCaption, 1 );
+  CoreSimpleTouchHandler_OnSetEnabled( &_this->SimpleTouchHandler, 1 );
+}
+
 /* Variants derived from the class : 'Washer::TempList' */
 EW_DEFINE_CLASS_VARIANTS( WasherTempList )
 EW_END_OF_CLASS_VARIANTS( WasherTempList )
@@ -3258,19 +3512,19 @@ void WasherTempItemL__Init( WasherTempItemL _this, XObject aLink, XHandle aArg )
   _this->_VMT = EW_CLASS( WasherTempItemL );
 
   /* ... and initialize objects, variables, properties, etc. */
-  CoreRectView__OnSetBounds( _this, _Const0035 );
+  CoreRectView__OnSetBounds( _this, _Const0033 );
   CoreView_OnSetLayout((CoreView)&_this->Rectangle, CoreLayoutAlignToBottom | CoreLayoutAlignToLeft 
   | CoreLayoutAlignToRight | CoreLayoutAlignToTop | CoreLayoutResizeHorz | CoreLayoutResizeVert );
-  CoreRectView__OnSetBounds( &_this->Rectangle, _Const0035 );
+  CoreRectView__OnSetBounds( &_this->Rectangle, _Const0033 );
   ViewsRectangle_OnSetColor( &_this->Rectangle, WasherButtonBgColor );
   CoreView_OnSetLayout((CoreView)&_this->Text, CoreLayoutAlignToBottom | CoreLayoutAlignToRight 
   | CoreLayoutAlignToTop | CoreLayoutResizeHorz | CoreLayoutResizeVert );
-  CoreRectView__OnSetBounds( &_this->Text, _Const0035 );
+  CoreRectView__OnSetBounds( &_this->Text, _Const0033 );
   ViewsText_OnSetAlignment( &_this->Text, ViewsTextAlignmentAlignHorzCenter | ViewsTextAlignmentAlignVertCenter );
-  ViewsText_OnSetString( &_this->Text, EwLoadString( &_Const0026 ));
+  ViewsText_OnSetString( &_this->Text, EwLoadString( &_Const0024 ));
   ViewsText_OnSetColor( &_this->Text, WasherListTextColor );
-  _this->ColorTop = _Const0036;
-  _this->ColorBottom = _Const0036;
+  _this->ColorTop = _Const0034;
+  _this->ColorBottom = _Const0034;
   CoreGroup__Add( _this, ((CoreView)&_this->Rectangle ), 0 );
   CoreGroup__Add( _this, ((CoreView)&_this->Text ), 0 );
   ViewsText_OnSetFont( &_this->Text, EwLoadResource( &WasherListFontL, ResourcesFont ));
@@ -3370,21 +3624,21 @@ void WasherTempItemS__Init( WasherTempItemS _this, XObject aLink, XHandle aArg )
   _this->_VMT = EW_CLASS( WasherTempItemS );
 
   /* ... and initialize objects, variables, properties, etc. */
-  CoreRectView__OnSetBounds( _this, _Const0037 );
+  CoreRectView__OnSetBounds( _this, _Const0035 );
   CoreView_OnSetLayout((CoreView)&_this->Back, CoreLayoutAlignToBottom | CoreLayoutAlignToLeft 
   | CoreLayoutAlignToRight | CoreLayoutAlignToTop | CoreLayoutResizeHorz | CoreLayoutResizeVert );
-  CoreRectView__OnSetBounds( &_this->Back, _Const0037 );
+  CoreRectView__OnSetBounds( &_this->Back, _Const0035 );
   ViewsRectangle_OnSetColor( &_this->Back, WasherListBgColor );
   CoreView_OnSetLayout((CoreView)&_this->Right, CoreLayoutAlignToBottom | CoreLayoutAlignToRight 
   | CoreLayoutAlignToTop | CoreLayoutResizeVert );
-  CoreRectView__OnSetBounds( &_this->Right, _Const0038 );
+  CoreRectView__OnSetBounds( &_this->Right, _Const0036 );
   ViewsRectangle_OnSetColor( &_this->Right, WasherListBgColor );
   CoreView_OnSetLayout((CoreView)&_this->Text, CoreLayoutAlignToBottom | CoreLayoutAlignToRight 
   | CoreLayoutAlignToTop | CoreLayoutResizeHorz | CoreLayoutResizeVert );
-  CoreRectView__OnSetBounds( &_this->Text, _Const0039 );
+  CoreRectView__OnSetBounds( &_this->Text, _Const0037 );
   ViewsText_OnSetWrapText( &_this->Text, 1 );
   ViewsText_OnSetAlignment( &_this->Text, ViewsTextAlignmentAlignHorzLeft | ViewsTextAlignmentAlignVertCenter );
-  ViewsText_OnSetString( &_this->Text, EwLoadString( &_Const0026 ));
+  ViewsText_OnSetString( &_this->Text, EwLoadString( &_Const0024 ));
   ViewsText_OnSetColor( &_this->Text, WasherListTextColor );
   CoreGroup__Add( _this, ((CoreView)&_this->Back ), 0 );
   CoreGroup__Add( _this, ((CoreView)&_this->Right ), 0 );
@@ -3475,43 +3729,44 @@ void WasherSpinList__Init( WasherSpinList _this, XObject aLink, XHandle aArg )
   EffectsInt32Effect__Init( &_this->FadeListOut, &_this->_XObject, 0 );
   EffectsInt32Effect__Init( &_this->Int32Effect, &_this->_XObject, 0 );
   EffectsInt32Effect__Init( &_this->AutoDemoEffect, &_this->_XObject, 0 );
+  CoreSystemEventHandler__Init( &_this->SystemEventHandler, &_this->_XObject, 0 );
 
   /* Setup the VMT pointer */
   _this->_VMT = EW_CLASS( WasherSpinList );
 
   /* ... and initialize objects, variables, properties, etc. */
-  CoreRectView__OnSetBounds( _this, _Const002B );
-  CoreRectView__OnSetBounds( &_this->SlideTouchHandler, _Const002B );
-  CoreSlideTouchHandler_OnSetSnapNext( &_this->SlideTouchHandler, _Const001A );
+  CoreRectView__OnSetBounds( _this, _Const0029 );
+  CoreRectView__OnSetBounds( &_this->SlideTouchHandler, _Const0029 );
+  CoreSlideTouchHandler_OnSetSnapNext( &_this->SlideTouchHandler, _Const0018 );
   CoreSlideTouchHandler_OnSetFriction( &_this->SlideTouchHandler, 0.100000f );
-  CoreQuadView_OnSetPoint4((CoreQuadView)&_this->SimpleTouchHandler, _Const001B );
-  CoreQuadView_OnSetPoint3((CoreQuadView)&_this->SimpleTouchHandler, _Const002E );
-  CoreQuadView_OnSetPoint2((CoreQuadView)&_this->SimpleTouchHandler, _Const002F );
-  CoreQuadView_OnSetPoint1((CoreQuadView)&_this->SimpleTouchHandler, _Const001E );
+  CoreQuadView_OnSetPoint4((CoreQuadView)&_this->SimpleTouchHandler, _Const0019 );
+  CoreQuadView_OnSetPoint3((CoreQuadView)&_this->SimpleTouchHandler, _Const002C );
+  CoreQuadView_OnSetPoint2((CoreQuadView)&_this->SimpleTouchHandler, _Const002D );
+  CoreQuadView_OnSetPoint1((CoreQuadView)&_this->SimpleTouchHandler, _Const001C );
   CoreView_OnSetLayout((CoreView)&_this->Rectangle, CoreLayoutAlignToBottom | CoreLayoutAlignToLeft 
   | CoreLayoutAlignToRight | CoreLayoutAlignToTop | CoreLayoutResizeHorz | CoreLayoutResizeVert );
-  CoreRectView__OnSetBounds( &_this->Rectangle, _Const0030 );
+  CoreRectView__OnSetBounds( &_this->Rectangle, _Const002E );
   ViewsRectangle_OnSetColor( &_this->Rectangle, WasherButtonBgColor );
-  CoreRectView__OnSetBounds( &_this->BottomList, _Const0031 );
+  CoreRectView__OnSetBounds( &_this->BottomList, _Const002F );
   CoreGroup__OnSetOpacity( &_this->BottomList, 0 );
   CoreVerticalList_OnSetItemHeight( &_this->BottomList, 24 );
-  CoreVerticalList_OnSetNoOfItems( &_this->BottomList, 7 );
+  CoreVerticalList_OnSetNoOfItems( &_this->BottomList, 6 );
   CoreVerticalList_OnSetItemClass( &_this->BottomList, EW_CLASS( WasherSpinItemS ));
-  CoreRectView__OnSetBounds( &_this->MainList, _Const0030 );
+  CoreRectView__OnSetBounds( &_this->MainList, _Const002E );
   CoreVerticalList_OnSetItemHeight( &_this->MainList, 96 );
-  CoreVerticalList_OnSetNoOfItems( &_this->MainList, 7 );
+  CoreVerticalList_OnSetNoOfItems( &_this->MainList, 6 );
   CoreVerticalList_OnSetItemClass( &_this->MainList, EW_CLASS( WasherSpinItemL ));
-  CoreRectView__OnSetBounds( &_this->TopList, _Const0032 );
+  CoreRectView__OnSetBounds( &_this->TopList, _Const0030 );
   CoreGroup__OnSetOpacity( &_this->TopList, 0 );
   CoreVerticalList_OnSetItemHeight( &_this->TopList, 24 );
-  CoreVerticalList_OnSetNoOfItems( &_this->TopList, 7 );
+  CoreVerticalList_OnSetNoOfItems( &_this->TopList, 6 );
   CoreVerticalList_OnSetItemClass( &_this->TopList, EW_CLASS( WasherSpinItemS ));
   EffectsEffect_OnSetTiming((EffectsEffect)&_this->FadeListIn, EffectsTimingFastIn_EaseOut );
   EffectsEffect_OnSetNoOfCycles((EffectsEffect)&_this->FadeListIn, 1 );
   EffectsEffect_OnSetCycleDuration((EffectsEffect)&_this->FadeListIn, 300 );
-  CoreRectView__OnSetBounds( &_this->Caption, _Const0033 );
+  CoreRectView__OnSetBounds( &_this->Caption, _Const0031 );
   ViewsText_OnSetAlignment( &_this->Caption, ViewsTextAlignmentAlignHorzLeft | ViewsTextAlignmentAlignVertCenter );
-  ViewsText_OnSetString( &_this->Caption, EwLoadString( &_Const003A ));
+  ViewsText_OnSetString( &_this->Caption, EwLoadString( &_Const0038 ));
   ViewsText_OnSetColor( &_this->Caption, WasherCaptionColor );
   EffectsEffect_OnSetTiming((EffectsEffect)&_this->FadeCaption, EffectsTimingFastIn_FastOut );
   EffectsEffect_OnSetNoOfCycles((EffectsEffect)&_this->FadeCaption, 1 );
@@ -3553,6 +3808,9 @@ void WasherSpinList__Init( WasherSpinList _this, XObject aLink, XHandle aArg )
   _this->FadeListOut.Super1.OnAnimate = EwNewSlot( _this, WasherSpinList_onAnimate );
   _this->FadeListOut.Outlet = EwNewRef( &_this->TopList, CoreGroup_OnGetOpacity, 
   CoreGroup__OnSetOpacity );
+  _this->SystemEventHandler.OnEvent = EwNewSlot( _this, WasherSpinList_onEvent );
+  CoreSystemEventHandler_OnSetEvent( &_this->SystemEventHandler, &EwGetAutoObject( 
+  &WasherDevice, WasherDeviceClass )->SpinUpdateEvent );
 }
 
 /* Re-Initializer for the class 'Washer::SpinList' */
@@ -3574,6 +3832,7 @@ void WasherSpinList__ReInit( WasherSpinList _this )
   EffectsInt32Effect__ReInit( &_this->FadeListOut );
   EffectsInt32Effect__ReInit( &_this->Int32Effect );
   EffectsInt32Effect__ReInit( &_this->AutoDemoEffect );
+  CoreSystemEventHandler__ReInit( &_this->SystemEventHandler );
 }
 
 /* Finalizer method for the class 'Washer::SpinList' */
@@ -3595,6 +3854,7 @@ void WasherSpinList__Done( WasherSpinList _this )
   EffectsInt32Effect__Done( &_this->FadeListOut );
   EffectsInt32Effect__Done( &_this->Int32Effect );
   EffectsInt32Effect__Done( &_this->AutoDemoEffect );
+  CoreSystemEventHandler__Done( &_this->SystemEventHandler );
 
   /* Don't forget to deinitialize the super class ... */
   CoreGroup__Done( &_this->_Super );
@@ -3614,9 +3874,9 @@ void WasherSpinList_OnLoadMain( WasherSpinList _this, XObject sender )
   itemNo = _this->MainList.Item;
   caption = 0;
 
-  if (( itemNo >= 0 ) && ( itemNo < 7 ))
+  if (( itemNo >= 0 ) && ( itemNo < 6 ))
     caption = EwGetAutoObject( &WasherDevice, WasherDeviceClass )->SpinTurn[ EwCheckIndex( 
-    itemNo, 7 )];
+    itemNo, 6 )];
 
   WasherSpinItemL_OnSetCaption( itemView, caption );
   CoreRectView__OnSetBounds( itemView, EwSetRectSize( itemView->Super2.Bounds, EwNewPoint( 
@@ -3637,9 +3897,9 @@ void WasherSpinList_OnLoadTop( WasherSpinList _this, XObject sender )
   itemNo = _this->TopList.Item;
   caption = 0;
 
-  if (( itemNo >= 0 ) && ( itemNo < 7 ))
+  if (( itemNo >= 0 ) && ( itemNo < 6 ))
     caption = EwGetAutoObject( &WasherDevice, WasherDeviceClass )->SpinTurn[ EwCheckIndex( 
-    itemNo, 7 )];
+    itemNo, 6 )];
 
   WasherSpinItemS_OnSetCaption( itemView, caption );
   CoreRectView__OnSetBounds( itemView, EwSetRectSize( itemView->Super2.Bounds, EwNewPoint( 
@@ -3673,9 +3933,9 @@ void WasherSpinList_OnLoadBottom( WasherSpinList _this, XObject sender )
   itemNo = _this->BottomList.Item;
   caption = 0;
 
-  if (( itemNo >= 0 ) && ( itemNo < 7 ))
+  if (( itemNo >= 0 ) && ( itemNo < 6 ))
     caption = EwGetAutoObject( &WasherDevice, WasherDeviceClass )->SpinTurn[ EwCheckIndex( 
-    itemNo, 7 )];
+    itemNo, 6 )];
 
   WasherSpinItemS_OnSetCaption( itemView, caption );
   CoreRectView__OnSetBounds( itemView, EwSetRectSize( itemView->Super2.Bounds, EwNewPoint( 
@@ -3740,7 +4000,7 @@ void WasherSpinList_OnDrag( WasherSpinList _this, XObject sender )
   if (( delta.Y > 8 ) || ( delta.Y < -8 ))
   {
     CoreRoot_DeflectCursor( CoreView__GetRoot( _this ), ((CoreView)&_this->SlideTouchHandler ), 
-    _Const001E );
+    _Const001C );
     CoreSimpleTouchHandler_OnSetEnabled( &_this->SimpleTouchHandler, 0 );
   }
 }
@@ -3787,11 +4047,47 @@ void WasherSpinList_AutoDemo( WasherSpinList _this, XObject sender )
   EwPostSignal( EwNewSlot( _this, WasherSpinList_OnStart ), ((XObject)_this ));
   val = EwGetAutoObject( &WasherDevice, WasherDeviceClass )->SpinNumber + 1;
 
-  if ( val >= 7 )
+  if ( val >= 6 )
     val = 0;
 
   CoreVerticalList_EnsureVisible( &_this->MainList, val, 1, &_this->AutoDemoEffect, 
   EwNewSlot( _this, WasherSpinList_OnEnd ));
+}
+
+/* This slot method is executed when the associated system event handler 'SystemEventHandler' 
+   receives an event. */
+void WasherSpinList_onEvent( WasherSpinList _this, XObject sender )
+{
+  XInt32 val;
+
+  /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
+  EW_UNUSED_ARG( sender );
+
+  EwPostSignal( EwNewSlot( _this, WasherSpinList_DeviceStart ), ((XObject)_this ));
+  val = EwGetAutoObject( &WasherDevice, WasherDeviceClass )->SpinNumber;
+  CoreVerticalList_EnsureVisible( &_this->MainList, val, 1, 0, EwNewSlot( _this, 
+  WasherSpinList_DeviceEnd ));
+}
+
+/* 'C' function for method : 'Washer::SpinList.DeviceStart()' */
+void WasherSpinList_DeviceStart( WasherSpinList _this, XObject sender )
+{
+  /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
+  EW_UNUSED_ARG( _this );
+  EW_UNUSED_ARG( sender );
+}
+
+/* 'C' function for method : 'Washer::SpinList.DeviceEnd()' */
+void WasherSpinList_DeviceEnd( WasherSpinList _this, XObject sender )
+{
+  /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
+  EW_UNUSED_ARG( sender );
+
+  EffectsEffect_OnSetEnabled((EffectsEffect)&_this->FadeCaption, 0 );
+  _this->FadeCaption.Value1 = _this->Caption.Opacity;
+  _this->FadeCaption.Value2 = 255;
+  EffectsEffect_OnSetEnabled((EffectsEffect)&_this->FadeCaption, 1 );
+  CoreSimpleTouchHandler_OnSetEnabled( &_this->SimpleTouchHandler, 1 );
 }
 
 /* Variants derived from the class : 'Washer::SpinList' */
@@ -3835,12 +4131,12 @@ void WasherSpinItemL__Init( WasherSpinItemL _this, XObject aLink, XHandle aArg )
   _this->_VMT = EW_CLASS( WasherSpinItemL );
 
   /* ... and initialize objects, variables, properties, etc. */
-  CoreRectView__OnSetBounds( _this, _Const0035 );
+  CoreRectView__OnSetBounds( _this, _Const0033 );
   CoreView_OnSetLayout((CoreView)&_this->Text, CoreLayoutAlignToBottom | CoreLayoutAlignToRight 
   | CoreLayoutAlignToTop | CoreLayoutResizeHorz | CoreLayoutResizeVert );
-  CoreRectView__OnSetBounds( &_this->Text, _Const003B );
+  CoreRectView__OnSetBounds( &_this->Text, _Const0039 );
   ViewsText_OnSetAlignment( &_this->Text, ViewsTextAlignmentAlignHorzLeft | ViewsTextAlignmentAlignVertCenter );
-  ViewsText_OnSetString( &_this->Text, EwLoadString( &_Const0026 ));
+  ViewsText_OnSetString( &_this->Text, EwLoadString( &_Const0024 ));
   ViewsText_OnSetColor( &_this->Text, WasherButtonTextColor );
   CoreGroup__Add( _this, ((CoreView)&_this->Text ), 0 );
   ViewsText_OnSetFont( &_this->Text, EwLoadResource( &WasherListFontM, ResourcesFont ));
@@ -3921,21 +4217,21 @@ void WasherSpinItemS__Init( WasherSpinItemS _this, XObject aLink, XHandle aArg )
   _this->_VMT = EW_CLASS( WasherSpinItemS );
 
   /* ... and initialize objects, variables, properties, etc. */
-  CoreRectView__OnSetBounds( _this, _Const0037 );
+  CoreRectView__OnSetBounds( _this, _Const0035 );
   CoreView_OnSetLayout((CoreView)&_this->Back, CoreLayoutAlignToBottom | CoreLayoutAlignToLeft 
   | CoreLayoutAlignToRight | CoreLayoutAlignToTop | CoreLayoutResizeHorz | CoreLayoutResizeVert );
-  CoreRectView__OnSetBounds( &_this->Back, _Const0037 );
+  CoreRectView__OnSetBounds( &_this->Back, _Const0035 );
   ViewsRectangle_OnSetColor( &_this->Back, WasherListBgColor );
   CoreView_OnSetLayout((CoreView)&_this->Right, CoreLayoutAlignToBottom | CoreLayoutAlignToRight 
   | CoreLayoutAlignToTop | CoreLayoutResizeVert );
-  CoreRectView__OnSetBounds( &_this->Right, _Const0038 );
+  CoreRectView__OnSetBounds( &_this->Right, _Const0036 );
   ViewsRectangle_OnSetColor( &_this->Right, WasherListBgColor );
   CoreView_OnSetLayout((CoreView)&_this->Text, CoreLayoutAlignToBottom | CoreLayoutAlignToRight 
   | CoreLayoutAlignToTop | CoreLayoutResizeHorz | CoreLayoutResizeVert );
-  CoreRectView__OnSetBounds( &_this->Text, _Const0039 );
+  CoreRectView__OnSetBounds( &_this->Text, _Const0037 );
   ViewsText_OnSetWrapText( &_this->Text, 1 );
   ViewsText_OnSetAlignment( &_this->Text, ViewsTextAlignmentAlignHorzLeft | ViewsTextAlignmentAlignVertCenter );
-  ViewsText_OnSetString( &_this->Text, EwLoadString( &_Const0026 ));
+  ViewsText_OnSetString( &_this->Text, EwLoadString( &_Const0024 ));
   ViewsText_OnSetColor( &_this->Text, WasherListTextColor );
   CoreGroup__Add( _this, ((CoreView)&_this->Back ), 0 );
   CoreGroup__Add( _this, ((CoreView)&_this->Right ), 0 );
@@ -4111,43 +4407,44 @@ void WasherOptList__Init( WasherOptList _this, XObject aLink, XHandle aArg )
   EffectsInt32Effect__Init( &_this->FadeListOut, &_this->_XObject, 0 );
   EffectsInt32Effect__Init( &_this->Int32Effect, &_this->_XObject, 0 );
   EffectsInt32Effect__Init( &_this->AutoDemoEffect, &_this->_XObject, 0 );
+  CoreSystemEventHandler__Init( &_this->SystemEventHandler, &_this->_XObject, 0 );
 
   /* Setup the VMT pointer */
   _this->_VMT = EW_CLASS( WasherOptList );
 
   /* ... and initialize objects, variables, properties, etc. */
-  CoreRectView__OnSetBounds( _this, _Const003C );
-  CoreRectView__OnSetBounds( &_this->SlideTouchHandler, _Const003C );
-  CoreSlideTouchHandler_OnSetSnapNext( &_this->SlideTouchHandler, _Const001A );
+  CoreRectView__OnSetBounds( _this, _Const003A );
+  CoreRectView__OnSetBounds( &_this->SlideTouchHandler, _Const003A );
+  CoreSlideTouchHandler_OnSetSnapNext( &_this->SlideTouchHandler, _Const0018 );
   CoreSlideTouchHandler_OnSetFriction( &_this->SlideTouchHandler, 0.100000f );
-  CoreQuadView_OnSetPoint4((CoreQuadView)&_this->SimpleTouchHandler, _Const001B );
-  CoreQuadView_OnSetPoint3((CoreQuadView)&_this->SimpleTouchHandler, _Const003D );
-  CoreQuadView_OnSetPoint2((CoreQuadView)&_this->SimpleTouchHandler, _Const003E );
-  CoreQuadView_OnSetPoint1((CoreQuadView)&_this->SimpleTouchHandler, _Const001E );
+  CoreQuadView_OnSetPoint4((CoreQuadView)&_this->SimpleTouchHandler, _Const0019 );
+  CoreQuadView_OnSetPoint3((CoreQuadView)&_this->SimpleTouchHandler, _Const003B );
+  CoreQuadView_OnSetPoint2((CoreQuadView)&_this->SimpleTouchHandler, _Const003C );
+  CoreQuadView_OnSetPoint1((CoreQuadView)&_this->SimpleTouchHandler, _Const001C );
   CoreView_OnSetLayout((CoreView)&_this->Rectangle, CoreLayoutAlignToBottom | CoreLayoutAlignToLeft 
   | CoreLayoutAlignToRight | CoreLayoutAlignToTop | CoreLayoutResizeHorz | CoreLayoutResizeVert );
-  CoreRectView__OnSetBounds( &_this->Rectangle, _Const003F );
+  CoreRectView__OnSetBounds( &_this->Rectangle, _Const003D );
   ViewsRectangle_OnSetColor( &_this->Rectangle, WasherButtonBgColor );
-  CoreRectView__OnSetBounds( &_this->BottomList, _Const0040 );
+  CoreRectView__OnSetBounds( &_this->BottomList, _Const003E );
   CoreGroup__OnSetOpacity( &_this->BottomList, 0 );
   CoreVerticalList_OnSetItemHeight( &_this->BottomList, 36 );
-  CoreVerticalList_OnSetNoOfItems( &_this->BottomList, 6 );
+  CoreVerticalList_OnSetNoOfItems( &_this->BottomList, 2 );
   CoreVerticalList_OnSetItemClass( &_this->BottomList, EW_CLASS( WasherOptItemS ));
-  CoreRectView__OnSetBounds( &_this->MainList, _Const003F );
+  CoreRectView__OnSetBounds( &_this->MainList, _Const003D );
   CoreVerticalList_OnSetItemHeight( &_this->MainList, 96 );
-  CoreVerticalList_OnSetNoOfItems( &_this->MainList, 6 );
+  CoreVerticalList_OnSetNoOfItems( &_this->MainList, 2 );
   CoreVerticalList_OnSetItemClass( &_this->MainList, EW_CLASS( WasherOptItemL ));
-  CoreRectView__OnSetBounds( &_this->TopList, _Const0041 );
+  CoreRectView__OnSetBounds( &_this->TopList, _Const003F );
   CoreGroup__OnSetOpacity( &_this->TopList, 0 );
   CoreVerticalList_OnSetItemHeight( &_this->TopList, 36 );
-  CoreVerticalList_OnSetNoOfItems( &_this->TopList, 6 );
+  CoreVerticalList_OnSetNoOfItems( &_this->TopList, 2 );
   CoreVerticalList_OnSetItemClass( &_this->TopList, EW_CLASS( WasherOptItemS ));
   EffectsEffect_OnSetTiming((EffectsEffect)&_this->FadeListIn, EffectsTimingFastIn_EaseOut );
   EffectsEffect_OnSetNoOfCycles((EffectsEffect)&_this->FadeListIn, 1 );
   EffectsEffect_OnSetCycleDuration((EffectsEffect)&_this->FadeListIn, 300 );
-  CoreRectView__OnSetBounds( &_this->Caption, _Const0042 );
+  CoreRectView__OnSetBounds( &_this->Caption, _Const0040 );
   ViewsText_OnSetAlignment( &_this->Caption, ViewsTextAlignmentAlignHorzLeft | ViewsTextAlignmentAlignVertCenter );
-  ViewsText_OnSetString( &_this->Caption, EwLoadString( &_Const0043 ));
+  ViewsText_OnSetString( &_this->Caption, EwLoadString( &_Const0041 ));
   ViewsText_OnSetColor( &_this->Caption, WasherCaptionColor );
   EffectsEffect_OnSetTiming((EffectsEffect)&_this->FadeCaption, EffectsTimingFastIn_FastOut );
   EffectsEffect_OnSetNoOfCycles((EffectsEffect)&_this->FadeCaption, 1 );
@@ -4189,6 +4486,9 @@ void WasherOptList__Init( WasherOptList _this, XObject aLink, XHandle aArg )
   _this->FadeListOut.Super1.OnAnimate = EwNewSlot( _this, WasherOptList_onAnimate );
   _this->FadeListOut.Outlet = EwNewRef( &_this->TopList, CoreGroup_OnGetOpacity, 
   CoreGroup__OnSetOpacity );
+  _this->SystemEventHandler.OnEvent = EwNewSlot( _this, WasherOptList_onEvent );
+  CoreSystemEventHandler_OnSetEvent( &_this->SystemEventHandler, &EwGetAutoObject( 
+  &WasherDevice, WasherDeviceClass )->OptionUpdateEvent );
 }
 
 /* Re-Initializer for the class 'Washer::OptList' */
@@ -4210,6 +4510,7 @@ void WasherOptList__ReInit( WasherOptList _this )
   EffectsInt32Effect__ReInit( &_this->FadeListOut );
   EffectsInt32Effect__ReInit( &_this->Int32Effect );
   EffectsInt32Effect__ReInit( &_this->AutoDemoEffect );
+  CoreSystemEventHandler__ReInit( &_this->SystemEventHandler );
 }
 
 /* Finalizer method for the class 'Washer::OptList' */
@@ -4231,6 +4532,7 @@ void WasherOptList__Done( WasherOptList _this )
   EffectsInt32Effect__Done( &_this->FadeListOut );
   EffectsInt32Effect__Done( &_this->Int32Effect );
   EffectsInt32Effect__Done( &_this->AutoDemoEffect );
+  CoreSystemEventHandler__Done( &_this->SystemEventHandler );
 
   /* Don't forget to deinitialize the super class ... */
   CoreGroup__Done( &_this->_Super );
@@ -4250,9 +4552,9 @@ void WasherOptList_OnLoadMain( WasherOptList _this, XObject sender )
   itemNo = _this->MainList.Item;
   caption = 0;
 
-  if (( itemNo >= 0 ) && ( itemNo < 6 ))
+  if (( itemNo >= 0 ) && ( itemNo < 2 ))
     caption = EwGetAutoObject( &WasherDevice, WasherDeviceClass )->Options[ EwCheckIndex( 
-    itemNo, 6 )];
+    itemNo, 2 )];
 
   WasherOptItemL_OnSetCaption( itemView, caption );
   CoreRectView__OnSetBounds( itemView, EwSetRectSize( itemView->Super2.Bounds, EwNewPoint( 
@@ -4273,9 +4575,9 @@ void WasherOptList_OnLoadTop( WasherOptList _this, XObject sender )
   itemNo = _this->TopList.Item;
   caption = 0;
 
-  if (( itemNo >= 0 ) && ( itemNo < 6 ))
+  if (( itemNo >= 0 ) && ( itemNo < 2 ))
     caption = EwGetAutoObject( &WasherDevice, WasherDeviceClass )->Options[ EwCheckIndex( 
-    itemNo, 6 )];
+    itemNo, 2 )];
 
   WasherOptItemS_OnSetCaption( itemView, caption );
   CoreRectView__OnSetBounds( itemView, EwSetRectSize( itemView->Super2.Bounds, EwNewPoint( 
@@ -4309,9 +4611,9 @@ void WasherOptList_OnLoadBottom( WasherOptList _this, XObject sender )
   itemNo = _this->BottomList.Item;
   caption = 0;
 
-  if (( itemNo >= 0 ) && ( itemNo < 6 ))
+  if (( itemNo >= 0 ) && ( itemNo < 2 ))
     caption = EwGetAutoObject( &WasherDevice, WasherDeviceClass )->Options[ EwCheckIndex( 
-    itemNo, 6 )];
+    itemNo, 2 )];
 
   WasherOptItemS_OnSetCaption( itemView, caption );
   CoreRectView__OnSetBounds( itemView, EwSetRectSize( itemView->Super2.Bounds, EwNewPoint( 
@@ -4376,7 +4678,7 @@ void WasherOptList_OnDrag( WasherOptList _this, XObject sender )
   if (( delta.Y > 8 ) || ( delta.Y < -8 ))
   {
     CoreRoot_DeflectCursor( CoreView__GetRoot( _this ), ((CoreView)&_this->SlideTouchHandler ), 
-    _Const001E );
+    _Const001C );
     CoreSimpleTouchHandler_OnSetEnabled( &_this->SimpleTouchHandler, 0 );
   }
 }
@@ -4423,11 +4725,47 @@ void WasherOptList_AutoDemo( WasherOptList _this, XObject sender )
   EwPostSignal( EwNewSlot( _this, WasherOptList_OnStart ), ((XObject)_this ));
   val = EwGetAutoObject( &WasherDevice, WasherDeviceClass )->OptionNumber + 1;
 
-  if ( val >= 6 )
+  if ( val >= 2 )
     val = 0;
 
   CoreVerticalList_EnsureVisible( &_this->MainList, val, 1, &_this->AutoDemoEffect, 
   EwNewSlot( _this, WasherOptList_OnEnd ));
+}
+
+/* 'C' function for method : 'Washer::OptList.DeviceStart()' */
+void WasherOptList_DeviceStart( WasherOptList _this, XObject sender )
+{
+  /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
+  EW_UNUSED_ARG( _this );
+  EW_UNUSED_ARG( sender );
+}
+
+/* 'C' function for method : 'Washer::OptList.DeviceEnd()' */
+void WasherOptList_DeviceEnd( WasherOptList _this, XObject sender )
+{
+  /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
+  EW_UNUSED_ARG( sender );
+
+  EffectsEffect_OnSetEnabled((EffectsEffect)&_this->FadeCaption, 0 );
+  _this->FadeCaption.Value1 = _this->Caption.Opacity;
+  _this->FadeCaption.Value2 = 255;
+  EffectsEffect_OnSetEnabled((EffectsEffect)&_this->FadeCaption, 1 );
+  CoreSimpleTouchHandler_OnSetEnabled( &_this->SimpleTouchHandler, 1 );
+}
+
+/* This slot method is executed when the associated system event handler 'SystemEventHandler' 
+   receives an event. */
+void WasherOptList_onEvent( WasherOptList _this, XObject sender )
+{
+  XInt32 val;
+
+  /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
+  EW_UNUSED_ARG( sender );
+
+  EwPostSignal( EwNewSlot( _this, WasherOptList_DeviceStart ), ((XObject)_this ));
+  val = EwGetAutoObject( &WasherDevice, WasherDeviceClass )->OptionNumber;
+  CoreVerticalList_EnsureVisible( &_this->MainList, val, 1, 0, EwNewSlot( _this, 
+  WasherOptList_DeviceEnd ));
 }
 
 /* Variants derived from the class : 'Washer::OptList' */
@@ -4471,13 +4809,13 @@ void WasherOptItemL__Init( WasherOptItemL _this, XObject aLink, XHandle aArg )
   _this->_VMT = EW_CLASS( WasherOptItemL );
 
   /* ... and initialize objects, variables, properties, etc. */
-  CoreRectView__OnSetBounds( _this, _Const0044 );
+  CoreRectView__OnSetBounds( _this, _Const0042 );
   CoreView_OnSetLayout((CoreView)&_this->Text, CoreLayoutAlignToBottom | CoreLayoutAlignToRight 
   | CoreLayoutAlignToTop | CoreLayoutResizeHorz | CoreLayoutResizeVert );
-  CoreRectView__OnSetBounds( &_this->Text, _Const0045 );
+  CoreRectView__OnSetBounds( &_this->Text, _Const0043 );
   ViewsText_OnSetWrapText( &_this->Text, 1 );
   ViewsText_OnSetAlignment( &_this->Text, ViewsTextAlignmentAlignHorzLeft | ViewsTextAlignmentAlignVertCenter );
-  ViewsText_OnSetString( &_this->Text, EwLoadString( &_Const0026 ));
+  ViewsText_OnSetString( &_this->Text, EwLoadString( &_Const0024 ));
   ViewsText_OnSetColor( &_this->Text, WasherButtonTextColor );
   CoreGroup__Add( _this, ((CoreView)&_this->Text ), 0 );
   ViewsText_OnSetFont( &_this->Text, EwLoadResource( &WasherListFontM, ResourcesFont ));
@@ -4558,21 +4896,21 @@ void WasherOptItemS__Init( WasherOptItemS _this, XObject aLink, XHandle aArg )
   _this->_VMT = EW_CLASS( WasherOptItemS );
 
   /* ... and initialize objects, variables, properties, etc. */
-  CoreRectView__OnSetBounds( _this, _Const0046 );
+  CoreRectView__OnSetBounds( _this, _Const0044 );
   CoreView_OnSetLayout((CoreView)&_this->Back, CoreLayoutAlignToBottom | CoreLayoutAlignToLeft 
   | CoreLayoutAlignToRight | CoreLayoutAlignToTop | CoreLayoutResizeHorz | CoreLayoutResizeVert );
-  CoreRectView__OnSetBounds( &_this->Back, _Const0046 );
+  CoreRectView__OnSetBounds( &_this->Back, _Const0044 );
   ViewsRectangle_OnSetColor( &_this->Back, WasherListBgColor );
   CoreView_OnSetLayout((CoreView)&_this->Right, CoreLayoutAlignToBottom | CoreLayoutAlignToRight 
   | CoreLayoutAlignToTop | CoreLayoutResizeVert );
-  CoreRectView__OnSetBounds( &_this->Right, _Const0047 );
+  CoreRectView__OnSetBounds( &_this->Right, _Const0045 );
   ViewsRectangle_OnSetColor( &_this->Right, WasherListBgColor );
   CoreView_OnSetLayout((CoreView)&_this->Text, CoreLayoutAlignToBottom | CoreLayoutAlignToRight 
   | CoreLayoutAlignToTop | CoreLayoutResizeHorz | CoreLayoutResizeVert );
-  CoreRectView__OnSetBounds( &_this->Text, _Const0048 );
+  CoreRectView__OnSetBounds( &_this->Text, _Const0046 );
   ViewsText_OnSetWrapText( &_this->Text, 1 );
   ViewsText_OnSetAlignment( &_this->Text, ViewsTextAlignmentAlignHorzLeft | ViewsTextAlignmentAlignVertCenter );
-  ViewsText_OnSetString( &_this->Text, EwLoadString( &_Const0026 ));
+  ViewsText_OnSetString( &_this->Text, EwLoadString( &_Const0024 ));
   ViewsText_OnSetColor( &_this->Text, WasherListTextColor );
   CoreGroup__Add( _this, ((CoreView)&_this->Back ), 0 );
   CoreGroup__Add( _this, ((CoreView)&_this->Right ), 0 );
@@ -4676,49 +5014,49 @@ void WasherWasher__Init( WasherWasher _this, XObject aLink, XHandle aArg )
   _this->_VMT = EW_CLASS( WasherWasher );
 
   /* ... and initialize objects, variables, properties, etc. */
-  CoreRectView__OnSetBounds( _this, _Const0049 );
+  CoreRectView__OnSetBounds( _this, _Const0047 );
   CoreView_OnSetLayout((CoreView)&_this->Rectangle, CoreLayoutAlignToBottom | CoreLayoutAlignToLeft 
   | CoreLayoutAlignToRight | CoreLayoutAlignToTop | CoreLayoutResizeHorz | CoreLayoutResizeVert );
-  CoreRectView__OnSetBounds( &_this->Rectangle, _Const0049 );
-  ViewsRectangle_OnSetColor( &_this->Rectangle, _Const004A );
-  CoreRectView__OnSetBounds( &_this->Image, _Const0049 );
-  ViewsImage_OnSetColor( &_this->Image, _Const004B );
-  CoreRectView__OnSetBounds( &_this->Frame, _Const004C );
-  ViewsFrame_OnSetColor( &_this->Frame, _Const004D );
+  CoreRectView__OnSetBounds( &_this->Rectangle, _Const0047 );
+  ViewsRectangle_OnSetColor( &_this->Rectangle, _Const0048 );
+  CoreRectView__OnSetBounds( &_this->Image, _Const0047 );
+  ViewsImage_OnSetColor( &_this->Image, _Const0049 );
+  CoreRectView__OnSetBounds( &_this->Frame, _Const004A );
+  ViewsFrame_OnSetColor( &_this->Frame, _Const004B );
   ViewsFrame_OnSetEdges( &_this->Frame, GraphicsEdgesBottom | GraphicsEdgesLeft 
   | GraphicsEdgesRight | GraphicsEdgesTop );
-  CoreRectView__OnSetBounds( &_this->ProgList, _Const004E );
-  CoreRectView__OnSetBounds( &_this->TempList, _Const004F );
-  CoreRectView__OnSetBounds( &_this->SpinList, _Const0050 );
-  CoreRectView__OnSetBounds( &_this->OptList, _Const0051 );
-  CoreRectView__OnSetBounds( &_this->TimeList, _Const0052 );
-  CoreRectView__OnSetBounds( &_this->Border, _Const0053 );
+  CoreRectView__OnSetBounds( &_this->ProgList, _Const004C );
+  CoreRectView__OnSetBounds( &_this->TempList, _Const004D );
+  CoreRectView__OnSetBounds( &_this->SpinList, _Const004E );
+  CoreRectView__OnSetBounds( &_this->OptList, _Const004F );
+  CoreRectView__OnSetBounds( &_this->TimeList, _Const0050 );
+  CoreRectView__OnSetBounds( &_this->Border, _Const0051 );
   ViewsBorder_OnSetWidth( &_this->Border, 2 );
-  ViewsBorder_OnSetColor( &_this->Border, _Const0054 );
-  CoreRectView__OnSetBounds( &_this->Sep1, _Const0055 );
-  ViewsRectangle_OnSetColor( &_this->Sep1, _Const0056 );
-  CoreRectView__OnSetBounds( &_this->Sep2, _Const0057 );
-  ViewsRectangle_OnSetColor( &_this->Sep2, _Const0056 );
-  CoreRectView__OnSetBounds( &_this->Sep3, _Const0058 );
-  ViewsRectangle_OnSetColor( &_this->Sep3, _Const0056 );
-  CoreRectView__OnSetBounds( &_this->Sep4, _Const0059 );
-  ViewsRectangle_OnSetColor( &_this->Sep4, _Const0056 );
+  ViewsBorder_OnSetColor( &_this->Border, _Const0052 );
+  CoreRectView__OnSetBounds( &_this->Sep1, _Const0053 );
+  ViewsRectangle_OnSetColor( &_this->Sep1, _Const0054 );
+  CoreRectView__OnSetBounds( &_this->Sep2, _Const0055 );
+  ViewsRectangle_OnSetColor( &_this->Sep2, _Const0054 );
+  CoreRectView__OnSetBounds( &_this->Sep3, _Const0056 );
+  ViewsRectangle_OnSetColor( &_this->Sep3, _Const0054 );
+  CoreRectView__OnSetBounds( &_this->Sep4, _Const0057 );
+  ViewsRectangle_OnSetColor( &_this->Sep4, _Const0054 );
   EffectsEffect_OnSetTiming((EffectsEffect)&_this->FadeBgEffect, EffectsTimingFastIn_EaseOut );
   EffectsEffect_OnSetNoOfCycles((EffectsEffect)&_this->FadeBgEffect, 1 );
   EffectsEffect_OnSetCycleDuration((EffectsEffect)&_this->FadeBgEffect, 200 );
-  CoreRectView__OnSetBounds( &_this->StartButton, _Const005A );
+  CoreRectView__OnSetBounds( &_this->StartButton, _Const0058 );
   EffectsEffect_OnSetTiming((EffectsEffect)&_this->MoveStartEffect, EffectsTimingFastIn_FastOut );
   EffectsEffect_OnSetNoOfCycles((EffectsEffect)&_this->MoveStartEffect, 1 );
   EffectsEffect_OnSetCycleDuration((EffectsEffect)&_this->MoveStartEffect, 200 );
-  _this->MoveStartEffect.Value2 = _Const005B;
-  _this->MoveStartEffect.Value1 = _Const005A;
+  _this->MoveStartEffect.Value2 = _Const0059;
+  _this->MoveStartEffect.Value1 = _Const0058;
   EffectsEffect_OnSetNoOfCycles((EffectsEffect)&_this->MessageEffect, 1 );
   EffectsEffect_OnSetInitialDelay((EffectsEffect)&_this->MessageEffect, 2000 );
   _this->MessageEffect.Value2 = 0;
   _this->MessageEffect.Value1 = 255;
-  CoreRectView__OnSetBounds( &_this->Message, _Const005C );
+  CoreRectView__OnSetBounds( &_this->Message, _Const005A );
   ViewsText_OnSetAlignment( &_this->Message, ViewsTextAlignmentAlignHorzLeft | ViewsTextAlignmentAlignVertCenter );
-  ViewsText_OnSetString( &_this->Message, EwLoadString( &_Const005D ));
+  ViewsText_OnSetString( &_this->Message, EwLoadString( &_Const005B ));
   ViewsText_OnSetOpacity( &_this->Message, 0 );
   CoreTimer_OnSetPeriod( &_this->AutoDemoTimer, 1500 );
   CoreTimer_OnSetBegin( &_this->AutoDemoTimer, 0 );
@@ -4747,6 +5085,8 @@ void WasherWasher__Init( WasherWasher _this, XObject aLink, XHandle aArg )
   _this->FadeBgEffect.Outlet = EwNewRef( &_this->Image, ViewsImage_OnGetOpacity, 
   ViewsImage_OnSetOpacity );
   _this->StartButton.OnChange = EwNewSlot( _this, WasherWasher_onStart );
+  WasherStartButton_OnSetIsRunning( &_this->StartButton, EwNewRef( EwGetAutoObject( 
+  &WasherDevice, WasherDeviceClass ), WasherDeviceClass_OnGetRunning, WasherDeviceClass_OnSetRunning ));
   _this->MoveStartEffect.Outlet = EwNewRef( &_this->StartButton, CoreRectView_OnGetBounds, 
   CoreRectView__OnSetBounds );
   _this->MessageEffect.Outlet = EwNewRef( &_this->Message, ViewsText_OnGetOpacity, 
@@ -4926,11 +5266,8 @@ void WasherWasher_OnListDisappear( WasherWasher _this, XObject sender )
 void WasherWasher_onStart( WasherWasher _this, XObject sender )
 {
   /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
+  EW_UNUSED_ARG( _this );
   EW_UNUSED_ARG( sender );
-
-  EffectsEffect_OnSetEnabled((EffectsEffect)&_this->MessageEffect, 0 );
-  ViewsText_OnSetOpacity( &_this->Message, 255 );
-  EffectsEffect_OnSetEnabled((EffectsEffect)&_this->MessageEffect, 1 );
 }
 
 /* Slot method to trigger the next phase of the auto demo. */
@@ -5032,21 +5369,21 @@ void WasherHourItemS__Init( WasherHourItemS _this, XObject aLink, XHandle aArg )
   _this->_VMT = EW_CLASS( WasherHourItemS );
 
   /* ... and initialize objects, variables, properties, etc. */
-  CoreRectView__OnSetBounds( _this, _Const005E );
+  CoreRectView__OnSetBounds( _this, _Const005C );
   CoreView_OnSetLayout((CoreView)&_this->Back, CoreLayoutAlignToBottom | CoreLayoutAlignToLeft 
   | CoreLayoutAlignToRight | CoreLayoutAlignToTop | CoreLayoutResizeHorz | CoreLayoutResizeVert );
-  CoreRectView__OnSetBounds( &_this->Back, _Const005E );
+  CoreRectView__OnSetBounds( &_this->Back, _Const005C );
   ViewsRectangle_OnSetColor( &_this->Back, WasherListBgColor );
   CoreView_OnSetLayout((CoreView)&_this->Center, CoreLayoutAlignToBottom | CoreLayoutAlignToLeft 
   | CoreLayoutAlignToTop | CoreLayoutResizeVert );
-  CoreRectView__OnSetBounds( &_this->Center, _Const005F );
+  CoreRectView__OnSetBounds( &_this->Center, _Const005D );
   ViewsRectangle_OnSetColor( &_this->Center, WasherButtonTextColor );
   CoreView_OnSetLayout((CoreView)&_this->Text, CoreLayoutAlignToBottom | CoreLayoutAlignToRight 
   | CoreLayoutAlignToTop | CoreLayoutResizeHorz | CoreLayoutResizeVert );
-  CoreRectView__OnSetBounds( &_this->Text, _Const005E );
+  CoreRectView__OnSetBounds( &_this->Text, _Const005C );
   ViewsText_OnSetWrapText( &_this->Text, 1 );
   ViewsText_OnSetAlignment( &_this->Text, ViewsTextAlignmentAlignHorzCenter | ViewsTextAlignmentAlignVertCenter );
-  ViewsText_OnSetString( &_this->Text, EwLoadString( &_Const0026 ));
+  ViewsText_OnSetString( &_this->Text, EwLoadString( &_Const0024 ));
   ViewsText_OnSetColor( &_this->Text, WasherListTextColor );
   CoreGroup__Add( _this, ((CoreView)&_this->Back ), 0 );
   CoreGroup__Add( _this, ((CoreView)&_this->Center ), 0 );
@@ -5145,33 +5482,35 @@ void WasherTimeList__Init( WasherTimeList _this, XObject aLink, XHandle aArg )
   EffectsInt32Effect__Init( &_this->FadeListOut, &_this->_XObject, 0 );
   EffectsInt32Effect__Init( &_this->Int32EffectH, &_this->_XObject, 0 );
   EffectsInt32Effect__Init( &_this->Int32EffectM, &_this->_XObject, 0 );
+  CoreSystemEventHandler__Init( &_this->HourEventHandler, &_this->_XObject, 0 );
+  CoreSystemEventHandler__Init( &_this->MinuteEventHandler, &_this->_XObject, 0 );
 
   /* Setup the VMT pointer */
   _this->_VMT = EW_CLASS( WasherTimeList );
 
   /* ... and initialize objects, variables, properties, etc. */
-  CoreRectView__OnSetBounds( _this, _Const0060 );
-  CoreRectView__OnSetBounds( &_this->SlideTouchHandlerH, _Const0061 );
-  CoreSlideTouchHandler_OnSetSnapNext( &_this->SlideTouchHandlerH, _Const001A );
+  CoreRectView__OnSetBounds( _this, _Const005E );
+  CoreRectView__OnSetBounds( &_this->SlideTouchHandlerH, _Const005F );
+  CoreSlideTouchHandler_OnSetSnapNext( &_this->SlideTouchHandlerH, _Const0018 );
   CoreSlideTouchHandler_OnSetFriction( &_this->SlideTouchHandlerH, 0.100000f );
-  CoreQuadView_OnSetPoint4((CoreQuadView)&_this->SimpleTouchHandlerH, _Const0062 );
-  CoreQuadView_OnSetPoint3((CoreQuadView)&_this->SimpleTouchHandlerH, _Const0063 );
-  CoreQuadView_OnSetPoint2((CoreQuadView)&_this->SimpleTouchHandlerH, _Const0064 );
-  CoreQuadView_OnSetPoint1((CoreQuadView)&_this->SimpleTouchHandlerH, _Const001E );
+  CoreQuadView_OnSetPoint4((CoreQuadView)&_this->SimpleTouchHandlerH, _Const0060 );
+  CoreQuadView_OnSetPoint3((CoreQuadView)&_this->SimpleTouchHandlerH, _Const0061 );
+  CoreQuadView_OnSetPoint2((CoreQuadView)&_this->SimpleTouchHandlerH, _Const0062 );
+  CoreQuadView_OnSetPoint1((CoreQuadView)&_this->SimpleTouchHandlerH, _Const001C );
   CoreView_OnSetLayout((CoreView)&_this->Rectangle, CoreLayoutAlignToBottom | CoreLayoutAlignToLeft 
   | CoreLayoutAlignToRight | CoreLayoutAlignToTop | CoreLayoutResizeHorz | CoreLayoutResizeVert );
-  CoreRectView__OnSetBounds( &_this->Rectangle, _Const001F );
+  CoreRectView__OnSetBounds( &_this->Rectangle, _Const001D );
   ViewsRectangle_OnSetColor( &_this->Rectangle, WasherButtonBgColor );
-  CoreRectView__OnSetBounds( &_this->BottomListH, _Const0065 );
+  CoreRectView__OnSetBounds( &_this->BottomListH, _Const0063 );
   CoreGroup__OnSetOpacity( &_this->BottomListH, 0 );
   CoreVerticalList_OnSetItemHeight( &_this->BottomListH, 24 );
   CoreVerticalList_OnSetNoOfItems( &_this->BottomListH, 24 );
   CoreVerticalList_OnSetItemClass( &_this->BottomListH, EW_CLASS( WasherHourItemS ));
-  CoreRectView__OnSetBounds( &_this->MainListH, _Const0066 );
+  CoreRectView__OnSetBounds( &_this->MainListH, _Const0064 );
   CoreVerticalList_OnSetItemHeight( &_this->MainListH, 96 );
   CoreVerticalList_OnSetNoOfItems( &_this->MainListH, 24 );
   CoreVerticalList_OnSetItemClass( &_this->MainListH, EW_CLASS( WasherHourItemL ));
-  CoreRectView__OnSetBounds( &_this->TopListH, _Const0067 );
+  CoreRectView__OnSetBounds( &_this->TopListH, _Const0065 );
   CoreGroup__OnSetOpacity( &_this->TopListH, 0 );
   CoreVerticalList_OnSetItemHeight( &_this->TopListH, 24 );
   CoreVerticalList_OnSetNoOfItems( &_this->TopListH, 24 );
@@ -5179,46 +5518,47 @@ void WasherTimeList__Init( WasherTimeList _this, XObject aLink, XHandle aArg )
   EffectsEffect_OnSetTiming((EffectsEffect)&_this->FadeListIn, EffectsTimingFastIn_EaseOut );
   EffectsEffect_OnSetNoOfCycles((EffectsEffect)&_this->FadeListIn, 1 );
   EffectsEffect_OnSetCycleDuration((EffectsEffect)&_this->FadeListIn, 300 );
-  CoreRectView__OnSetBounds( &_this->Caption, _Const0068 );
+  CoreRectView__OnSetBounds( &_this->Caption, _Const0066 );
   ViewsText_OnSetAlignment( &_this->Caption, ViewsTextAlignmentAlignHorzLeft | ViewsTextAlignmentAlignVertCenter );
-  ViewsText_OnSetString( &_this->Caption, EwLoadString( &_Const0069 ));
+  ViewsText_OnSetString( &_this->Caption, EwLoadString( &_Const0067 ));
   ViewsText_OnSetColor( &_this->Caption, WasherCaptionColor );
   EffectsEffect_OnSetTiming((EffectsEffect)&_this->FadeCaption, EffectsTimingFastIn_FastOut );
   EffectsEffect_OnSetNoOfCycles((EffectsEffect)&_this->FadeCaption, 1 );
   EffectsEffect_OnSetCycleDuration((EffectsEffect)&_this->FadeCaption, 200 );
-  CoreRectView__OnSetBounds( &_this->SlideTouchHandlerM, _Const006A );
-  CoreSlideTouchHandler_OnSetSnapNext( &_this->SlideTouchHandlerM, _Const001A );
+  CoreRectView__OnSetBounds( &_this->SlideTouchHandlerM, _Const0068 );
+  CoreSlideTouchHandler_OnSetSnapNext( &_this->SlideTouchHandlerM, _Const0018 );
   CoreSlideTouchHandler_OnSetFriction( &_this->SlideTouchHandlerM, 0.100000f );
-  CoreQuadView_OnSetPoint4((CoreQuadView)&_this->SimpleTouchHandlerM, _Const0063 );
-  CoreQuadView_OnSetPoint3((CoreQuadView)&_this->SimpleTouchHandlerM, _Const006B );
-  CoreQuadView_OnSetPoint2((CoreQuadView)&_this->SimpleTouchHandlerM, _Const001D );
-  CoreQuadView_OnSetPoint1((CoreQuadView)&_this->SimpleTouchHandlerM, _Const0064 );
-  CoreRectView__OnSetBounds( &_this->BottomListM, _Const006C );
+  CoreQuadView_OnSetPoint4((CoreQuadView)&_this->SimpleTouchHandlerM, _Const0061 );
+  CoreQuadView_OnSetPoint3((CoreQuadView)&_this->SimpleTouchHandlerM, _Const0069 );
+  CoreQuadView_OnSetPoint2((CoreQuadView)&_this->SimpleTouchHandlerM, _Const001B );
+  CoreQuadView_OnSetPoint1((CoreQuadView)&_this->SimpleTouchHandlerM, _Const0062 );
+  CoreRectView__OnSetBounds( &_this->BottomListM, _Const006A );
   CoreGroup__OnSetOpacity( &_this->BottomListM, 0 );
   CoreVerticalList_OnSetItemHeight( &_this->BottomListM, 24 );
   CoreVerticalList_OnSetNoOfItems( &_this->BottomListM, 60 );
   CoreVerticalList_OnSetItemClass( &_this->BottomListM, EW_CLASS( WasherMinItemS ));
-  CoreRectView__OnSetBounds( &_this->MainListM, _Const006D );
+  CoreRectView__OnSetBounds( &_this->MainListM, _Const006B );
   CoreVerticalList_OnSetItemHeight( &_this->MainListM, 96 );
   CoreVerticalList_OnSetNoOfItems( &_this->MainListM, 60 );
   CoreVerticalList_OnSetItemClass( &_this->MainListM, EW_CLASS( WasherMinItemL ));
-  CoreRectView__OnSetBounds( &_this->TopListM, _Const006E );
+  CoreRectView__OnSetBounds( &_this->TopListM, _Const006C );
   CoreGroup__OnSetOpacity( &_this->TopListM, 0 );
   CoreVerticalList_OnSetItemHeight( &_this->TopListM, 24 );
   CoreVerticalList_OnSetNoOfItems( &_this->TopListM, 60 );
   CoreVerticalList_OnSetItemClass( &_this->TopListM, EW_CLASS( WasherMinItemS ));
   CoreView_OnSetLayout((CoreView)&_this->Text, CoreLayoutAlignToBottom | CoreLayoutAlignToRight 
   | CoreLayoutAlignToTop | CoreLayoutResizeHorz | CoreLayoutResizeVert );
-  CoreRectView__OnSetBounds( &_this->Text, _Const006F );
+  CoreRectView__OnSetBounds( &_this->Text, _Const006D );
   ViewsText_OnSetWrapText( &_this->Text, 1 );
   ViewsText_OnSetAlignment( &_this->Text, ViewsTextAlignmentAlignHorzCenter | ViewsTextAlignmentAlignVertCenter );
-  ViewsText_OnSetString( &_this->Text, EwLoadString( &_Const0070 ));
+  ViewsText_OnSetString( &_this->Text, EwLoadString( &_Const006E ));
   ViewsText_OnSetColor( &_this->Text, WasherButtonTextColor );
-  CoreRectView__OnSetBounds( &_this->DurationText, _Const0071 );
+  CoreRectView__OnSetBounds( &_this->DurationText, _Const006F );
   ViewsText_OnSetAlignment( &_this->DurationText, ViewsTextAlignmentAlignHorzLeft 
   | ViewsTextAlignmentAlignVertCenter );
-  ViewsText_OnSetString( &_this->DurationText, EwLoadString( &_Const0072 ));
+  ViewsText_OnSetString( &_this->DurationText, EwLoadString( &_Const0070 ));
   ViewsText_OnSetColor( &_this->DurationText, WasherCaptionColor );
+  ViewsText_OnSetVisible( &_this->DurationText, 0 );
   EffectsEffect_OnSetTiming((EffectsEffect)&_this->FadeDuration, EffectsTimingFastIn_FastOut );
   EffectsEffect_OnSetNoOfCycles((EffectsEffect)&_this->FadeDuration, 1 );
   EffectsEffect_OnSetCycleDuration((EffectsEffect)&_this->FadeDuration, 200 );
@@ -5282,6 +5622,12 @@ void WasherTimeList__Init( WasherTimeList _this, XObject aLink, XHandle aArg )
   _this->FadeListOut.Super1.OnAnimate = EwNewSlot( _this, WasherTimeList_onAnimate );
   _this->FadeListOut.Outlet = EwNewRef( &_this->TopListH, CoreGroup_OnGetOpacity, 
   CoreGroup__OnSetOpacity );
+  _this->HourEventHandler.OnEvent = EwNewSlot( _this, WasherTimeList_onHourEvent );
+  CoreSystemEventHandler_OnSetEvent( &_this->HourEventHandler, &EwGetAutoObject( 
+  &WasherDevice, WasherDeviceClass )->HourUpdateEvent );
+  _this->MinuteEventHandler.OnEvent = EwNewSlot( _this, WasherTimeList_onMinuteEvent );
+  CoreSystemEventHandler_OnSetEvent( &_this->MinuteEventHandler, &EwGetAutoObject( 
+  &WasherDevice, WasherDeviceClass )->MinuteUpdateEvent );
 }
 
 /* Re-Initializer for the class 'Washer::TimeList' */
@@ -5311,6 +5657,8 @@ void WasherTimeList__ReInit( WasherTimeList _this )
   EffectsInt32Effect__ReInit( &_this->FadeListOut );
   EffectsInt32Effect__ReInit( &_this->Int32EffectH );
   EffectsInt32Effect__ReInit( &_this->Int32EffectM );
+  CoreSystemEventHandler__ReInit( &_this->HourEventHandler );
+  CoreSystemEventHandler__ReInit( &_this->MinuteEventHandler );
 }
 
 /* Finalizer method for the class 'Washer::TimeList' */
@@ -5340,6 +5688,8 @@ void WasherTimeList__Done( WasherTimeList _this )
   EffectsInt32Effect__Done( &_this->FadeListOut );
   EffectsInt32Effect__Done( &_this->Int32EffectH );
   EffectsInt32Effect__Done( &_this->Int32EffectM );
+  CoreSystemEventHandler__Done( &_this->HourEventHandler );
+  CoreSystemEventHandler__Done( &_this->MinuteEventHandler );
 
   /* Don't forget to deinitialize the super class ... */
   CoreGroup__Done( &_this->_Super );
@@ -5565,7 +5915,7 @@ void WasherTimeList_OnDragH( WasherTimeList _this, XObject sender )
   if (( delta.Y > 8 ) || ( delta.Y < -8 ))
   {
     CoreRoot_DeflectCursor( CoreView__GetRoot( _this ), ((CoreView)&_this->SlideTouchHandlerH ), 
-    _Const001E );
+    _Const001C );
     CoreSimpleTouchHandler_OnSetEnabled( &_this->SimpleTouchHandlerH, 0 );
   }
 }
@@ -5614,7 +5964,7 @@ void WasherTimeList_OnDragM( WasherTimeList _this, XObject sender )
   if (( delta.Y > 8 ) || ( delta.Y < -8 ))
   {
     CoreRoot_DeflectCursor( CoreView__GetRoot( _this ), ((CoreView)&_this->SlideTouchHandlerM ), 
-    _Const001E );
+    _Const001C );
     CoreSimpleTouchHandler_OnSetEnabled( &_this->SimpleTouchHandlerM, 0 );
   }
 }
@@ -5648,6 +5998,58 @@ void WasherTimeList_OnReleaseM( WasherTimeList _this, XObject sender )
   }
 
   EwSignal( EwNewSlot( _this, WasherTimeList_OnEnd ), ((XObject)_this ));
+}
+
+/* 'C' function for method : 'Washer::TimeList.DeviceStart()' */
+void WasherTimeList_DeviceStart( WasherTimeList _this, XObject sender )
+{
+  /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
+  EW_UNUSED_ARG( _this );
+  EW_UNUSED_ARG( sender );
+}
+
+/* 'C' function for method : 'Washer::TimeList.DeviceEnd()' */
+void WasherTimeList_DeviceEnd( WasherTimeList _this, XObject sender )
+{
+  /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
+  EW_UNUSED_ARG( sender );
+
+  EffectsEffect_OnSetEnabled((EffectsEffect)&_this->FadeCaption, 0 );
+  _this->FadeCaption.Value1 = _this->Caption.Opacity;
+  _this->FadeCaption.Value2 = 255;
+  EffectsEffect_OnSetEnabled((EffectsEffect)&_this->FadeCaption, 1 );
+  CoreSimpleTouchHandler_OnSetEnabled( &_this->SimpleTouchHandlerH, 1 );
+  CoreSimpleTouchHandler_OnSetEnabled( &_this->SimpleTouchHandlerM, 1 );
+}
+
+/* This slot method is executed when the associated system event handler 'SystemEventHandler' 
+   receives an event. */
+void WasherTimeList_onHourEvent( WasherTimeList _this, XObject sender )
+{
+  XInt32 val;
+
+  /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
+  EW_UNUSED_ARG( sender );
+
+  EwPostSignal( EwNewSlot( _this, WasherTimeList_DeviceStart ), ((XObject)_this ));
+  val = EwGetAutoObject( &WasherDevice, WasherDeviceClass )->Hour;
+  CoreVerticalList_EnsureVisible( &_this->MainListH, val, 1, 0, EwNewSlot( _this, 
+  WasherTimeList_DeviceEnd ));
+}
+
+/* This slot method is executed when the associated system event handler 'SystemEventHandler' 
+   receives an event. */
+void WasherTimeList_onMinuteEvent( WasherTimeList _this, XObject sender )
+{
+  XInt32 val;
+
+  /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
+  EW_UNUSED_ARG( sender );
+
+  EwPostSignal( EwNewSlot( _this, WasherTimeList_DeviceStart ), ((XObject)_this ));
+  val = EwGetAutoObject( &WasherDevice, WasherDeviceClass )->Minute;
+  CoreVerticalList_EnsureVisible( &_this->MainListM, val, 1, 0, EwNewSlot( _this, 
+  WasherTimeList_DeviceEnd ));
 }
 
 /* Variants derived from the class : 'Washer::TimeList' */
@@ -5691,13 +6093,13 @@ void WasherHourItemL__Init( WasherHourItemL _this, XObject aLink, XHandle aArg )
   _this->_VMT = EW_CLASS( WasherHourItemL );
 
   /* ... and initialize objects, variables, properties, etc. */
-  CoreRectView__OnSetBounds( _this, _Const0073 );
+  CoreRectView__OnSetBounds( _this, _Const0071 );
   CoreView_OnSetLayout((CoreView)&_this->Text, CoreLayoutAlignToBottom | CoreLayoutAlignToRight 
   | CoreLayoutAlignToTop | CoreLayoutResizeHorz | CoreLayoutResizeVert );
-  CoreRectView__OnSetBounds( &_this->Text, _Const0074 );
+  CoreRectView__OnSetBounds( &_this->Text, _Const0072 );
   ViewsText_OnSetWrapText( &_this->Text, 1 );
   ViewsText_OnSetAlignment( &_this->Text, ViewsTextAlignmentAlignHorzRight | ViewsTextAlignmentAlignVertCenter );
-  ViewsText_OnSetString( &_this->Text, EwLoadString( &_Const0075 ));
+  ViewsText_OnSetString( &_this->Text, EwLoadString( &_Const0073 ));
   ViewsText_OnSetColor( &_this->Text, WasherButtonTextColor );
   CoreGroup__Add( _this, ((CoreView)&_this->Text ), 0 );
   ViewsText_OnSetFont( &_this->Text, EwLoadResource( &WasherListFontXL, ResourcesFont ));
@@ -5776,13 +6178,13 @@ void WasherMinItemL__Init( WasherMinItemL _this, XObject aLink, XHandle aArg )
   _this->_VMT = EW_CLASS( WasherMinItemL );
 
   /* ... and initialize objects, variables, properties, etc. */
-  CoreRectView__OnSetBounds( _this, _Const0073 );
+  CoreRectView__OnSetBounds( _this, _Const0071 );
   CoreView_OnSetLayout((CoreView)&_this->Text, CoreLayoutAlignToBottom | CoreLayoutAlignToRight 
   | CoreLayoutAlignToTop | CoreLayoutResizeHorz | CoreLayoutResizeVert );
-  CoreRectView__OnSetBounds( &_this->Text, _Const0076 );
+  CoreRectView__OnSetBounds( &_this->Text, _Const0074 );
   ViewsText_OnSetWrapText( &_this->Text, 1 );
   ViewsText_OnSetAlignment( &_this->Text, ViewsTextAlignmentAlignHorzLeft | ViewsTextAlignmentAlignVertCenter );
-  ViewsText_OnSetString( &_this->Text, EwLoadString( &_Const0075 ));
+  ViewsText_OnSetString( &_this->Text, EwLoadString( &_Const0073 ));
   ViewsText_OnSetColor( &_this->Text, WasherButtonTextColor );
   CoreGroup__Add( _this, ((CoreView)&_this->Text ), 0 );
   ViewsText_OnSetFont( &_this->Text, EwLoadResource( &WasherListFontXL, ResourcesFont ));
@@ -5864,25 +6266,25 @@ void WasherMinItemS__Init( WasherMinItemS _this, XObject aLink, XHandle aArg )
   _this->_VMT = EW_CLASS( WasherMinItemS );
 
   /* ... and initialize objects, variables, properties, etc. */
-  CoreRectView__OnSetBounds( _this, _Const005E );
+  CoreRectView__OnSetBounds( _this, _Const005C );
   CoreView_OnSetLayout((CoreView)&_this->Back, CoreLayoutAlignToBottom | CoreLayoutAlignToLeft 
   | CoreLayoutAlignToRight | CoreLayoutAlignToTop | CoreLayoutResizeHorz | CoreLayoutResizeVert );
-  CoreRectView__OnSetBounds( &_this->Back, _Const005E );
+  CoreRectView__OnSetBounds( &_this->Back, _Const005C );
   ViewsRectangle_OnSetColor( &_this->Back, WasherListBgColor );
   CoreView_OnSetLayout((CoreView)&_this->Center, CoreLayoutAlignToBottom | CoreLayoutAlignToLeft 
   | CoreLayoutAlignToTop | CoreLayoutResizeVert );
-  CoreRectView__OnSetBounds( &_this->Center, _Const0077 );
+  CoreRectView__OnSetBounds( &_this->Center, _Const0075 );
   ViewsRectangle_OnSetColor( &_this->Center, WasherButtonTextColor );
   CoreView_OnSetLayout((CoreView)&_this->Right, CoreLayoutAlignToBottom | CoreLayoutAlignToRight 
   | CoreLayoutAlignToTop | CoreLayoutResizeVert );
-  CoreRectView__OnSetBounds( &_this->Right, _Const0078 );
+  CoreRectView__OnSetBounds( &_this->Right, _Const0076 );
   ViewsRectangle_OnSetColor( &_this->Right, WasherListBgColor );
   CoreView_OnSetLayout((CoreView)&_this->Text, CoreLayoutAlignToBottom | CoreLayoutAlignToRight 
   | CoreLayoutAlignToTop | CoreLayoutResizeHorz | CoreLayoutResizeVert );
-  CoreRectView__OnSetBounds( &_this->Text, _Const005E );
+  CoreRectView__OnSetBounds( &_this->Text, _Const005C );
   ViewsText_OnSetWrapText( &_this->Text, 1 );
   ViewsText_OnSetAlignment( &_this->Text, ViewsTextAlignmentAlignHorzCenter | ViewsTextAlignmentAlignVertCenter );
-  ViewsText_OnSetString( &_this->Text, EwLoadString( &_Const0026 ));
+  ViewsText_OnSetString( &_this->Text, EwLoadString( &_Const0024 ));
   ViewsText_OnSetColor( &_this->Text, WasherListTextColor );
   CoreGroup__Add( _this, ((CoreView)&_this->Back ), 0 );
   CoreGroup__Add( _this, ((CoreView)&_this->Center ), 0 );
@@ -7755,31 +8157,32 @@ void WasherStartButton__Init( WasherStartButton _this, XObject aLink, XHandle aA
   CoreSimpleTouchHandler__Init( &_this->TouchHandler, &_this->_XObject, 0 );
   ViewsRectangle__Init( &_this->Background, &_this->_XObject, 0 );
   ViewsText__Init( &_this->Text, &_this->_XObject, 0 );
+  CoreSystemEventHandler__Init( &_this->SystemEventHandler, &_this->_XObject, 0 );
 
   /* Setup the VMT pointer */
   _this->_VMT = EW_CLASS( WasherStartButton );
 
   /* ... and initialize objects, variables, properties, etc. */
-  CoreRectView__OnSetBounds( _this, _Const0079 );
-  CoreRectView__OnSetBounds( &_this->Frame, _Const007A );
-  ViewsFrame_OnSetColor( &_this->Frame, _Const004D );
+  CoreRectView__OnSetBounds( _this, _Const0077 );
+  CoreRectView__OnSetBounds( &_this->Frame, _Const0078 );
+  ViewsFrame_OnSetColor( &_this->Frame, _Const004B );
   ViewsFrame_OnSetEdges( &_this->Frame, GraphicsEdgesBottom | GraphicsEdgesLeft 
   | GraphicsEdgesRight | GraphicsEdgesTop );
   CoreView_OnSetLayout((CoreView)&_this->TouchHandler, CoreLayoutAlignToBottom | 
   CoreLayoutAlignToLeft | CoreLayoutAlignToRight | CoreLayoutAlignToTop | CoreLayoutResizeHorz 
   | CoreLayoutResizeVert );
-  CoreQuadView_OnSetPoint4((CoreQuadView)&_this->TouchHandler, _Const007B );
-  CoreQuadView_OnSetPoint3((CoreQuadView)&_this->TouchHandler, _Const007C );
-  CoreQuadView_OnSetPoint2((CoreQuadView)&_this->TouchHandler, _Const001D );
-  CoreQuadView_OnSetPoint1((CoreQuadView)&_this->TouchHandler, _Const001E );
+  CoreQuadView_OnSetPoint4((CoreQuadView)&_this->TouchHandler, _Const0079 );
+  CoreQuadView_OnSetPoint3((CoreQuadView)&_this->TouchHandler, _Const007A );
+  CoreQuadView_OnSetPoint2((CoreQuadView)&_this->TouchHandler, _Const001B );
+  CoreQuadView_OnSetPoint1((CoreQuadView)&_this->TouchHandler, _Const001C );
   CoreView_OnSetLayout((CoreView)&_this->Background, CoreLayoutAlignToBottom | CoreLayoutAlignToLeft 
   | CoreLayoutAlignToRight | CoreLayoutAlignToTop | CoreLayoutResizeHorz | CoreLayoutResizeVert );
-  CoreRectView__OnSetBounds( &_this->Background, _Const007D );
-  ViewsRectangle_OnSetColor( &_this->Background, _Const007E );
+  CoreRectView__OnSetBounds( &_this->Background, _Const007B );
+  ViewsRectangle_OnSetColor( &_this->Background, _Const007C );
   CoreView_OnSetLayout((CoreView)&_this->Text, CoreLayoutAlignToBottom | CoreLayoutAlignToLeft 
   | CoreLayoutAlignToRight | CoreLayoutAlignToTop | CoreLayoutResizeHorz | CoreLayoutResizeVert );
-  CoreRectView__OnSetBounds( &_this->Text, _Const007D );
-  ViewsText_OnSetString( &_this->Text, EwLoadString( &_Const007F ));
+  CoreRectView__OnSetBounds( &_this->Text, _Const007B );
+  ViewsText_OnSetString( &_this->Text, EwLoadString( &_Const007D ));
   CoreGroup__Add( _this, ((CoreView)&_this->Frame ), 0 );
   CoreGroup__Add( _this, ((CoreView)&_this->TouchHandler ), 0 );
   CoreGroup__Add( _this, ((CoreView)&_this->Background ), 0 );
@@ -7790,6 +8193,9 @@ void WasherStartButton__Init( WasherStartButton _this, XObject aLink, XHandle aA
   _this->TouchHandler.OnRelease = EwNewSlot( _this, WasherStartButton_pressReleaseSlot );
   _this->TouchHandler.OnPress = EwNewSlot( _this, WasherStartButton_pressReleaseSlot );
   ViewsText_OnSetFont( &_this->Text, EwLoadResource( &WasherListFontM, ResourcesFont ));
+  _this->SystemEventHandler.OnEvent = EwNewSlot( _this, WasherStartButton_onEvent );
+  CoreSystemEventHandler_OnSetEvent( &_this->SystemEventHandler, &EwGetAutoObject( 
+  &WasherDevice, WasherDeviceClass )->RunningUpdateEvent );
 }
 
 /* Re-Initializer for the class 'Washer::StartButton' */
@@ -7803,6 +8209,7 @@ void WasherStartButton__ReInit( WasherStartButton _this )
   CoreSimpleTouchHandler__ReInit( &_this->TouchHandler );
   ViewsRectangle__ReInit( &_this->Background );
   ViewsText__ReInit( &_this->Text );
+  CoreSystemEventHandler__ReInit( &_this->SystemEventHandler );
 }
 
 /* Finalizer method for the class 'Washer::StartButton' */
@@ -7816,6 +8223,7 @@ void WasherStartButton__Done( WasherStartButton _this )
   CoreSimpleTouchHandler__Done( &_this->TouchHandler );
   ViewsRectangle__Done( &_this->Background );
   ViewsText__Done( &_this->Text );
+  CoreSystemEventHandler__Done( &_this->SystemEventHandler );
 
   /* Don't forget to deinitialize the super class ... */
   CoreGroup__Done( &_this->_Super );
@@ -7840,10 +8248,23 @@ void WasherStartButton_UpdateViewState( WasherStartButton _this, XSet aState )
   /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
   EW_UNUSED_ARG( aState );
 
+  if ( _this->IsRunning.Object == 0 )
+    return;
+
+  if ( EwOnGetBool( _this->IsRunning ))
+    ViewsText_OnSetString( &_this->Text, EwLoadString( &_Const007E ));
+  else
+    ViewsText_OnSetString( &_this->Text, EwLoadString( &_Const007F ));
+
   if ( _this->TouchHandler.Down && _this->TouchHandler.Inside )
     ViewsRectangle_OnSetColor( &_this->Background, WasherStopColor );
   else
-    ViewsRectangle_OnSetColor( &_this->Background, WasherStartColor );
+  {
+    if ( EwOnGetBool( _this->IsRunning ))
+      ViewsRectangle_OnSetColor( &_this->Background, WasherStopColor );
+    else
+      ViewsRectangle_OnSetColor( &_this->Background, WasherStartColor );
+  }
 }
 
 /* This internal slot method is used to receive the corresponding signals form the 
@@ -7865,7 +8286,44 @@ void WasherStartButton_pressReleaseSlot( WasherStartButton _this, XObject sender
 
   if ( !_this->TouchHandler.Down && _this->TouchHandler.Inside )
   {
+    if ( _this->IsRunning.Object != 0 )
+      EwOnSetBool( _this->IsRunning, (XBool)!EwOnGetBool( _this->IsRunning ));
+
     EwSignal( _this->OnChange, ((XObject)_this ));
+  }
+}
+
+/* 'C' function for method : 'Washer::StartButton.OnSetIsRunning()' */
+void WasherStartButton_OnSetIsRunning( WasherStartButton _this, XRef value )
+{
+  if ( !EwCompRef( _this->IsRunning, value ))
+    return;
+
+  _this->IsRunning = value;
+}
+
+/* This slot method is executed when the associated system event handler 'SystemEventHandler' 
+   receives an event. */
+void WasherStartButton_onEvent( WasherStartButton _this, XObject sender )
+{
+  /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
+  EW_UNUSED_ARG( sender );
+
+  EwOnSetBool( _this->IsRunning, EwGetAutoObject( &WasherDevice, WasherDeviceClass )->Running );
+
+  if ( EwOnGetBool( _this->IsRunning ))
+    ViewsText_OnSetString( &_this->Text, EwLoadString( &_Const007E ));
+  else
+    ViewsText_OnSetString( &_this->Text, EwLoadString( &_Const007F ));
+
+  if ( _this->TouchHandler.Down && _this->TouchHandler.Inside )
+    ViewsRectangle_OnSetColor( &_this->Background, WasherStopColor );
+  else
+  {
+    if ( EwOnGetBool( _this->IsRunning ))
+      ViewsRectangle_OnSetColor( &_this->Background, WasherStopColor );
+    else
+      ViewsRectangle_OnSetColor( &_this->Background, WasherStartColor );
   }
 }
 
@@ -7874,7 +8332,7 @@ EW_DEFINE_CLASS_VARIANTS( WasherStartButton )
 EW_END_OF_CLASS_VARIANTS( WasherStartButton )
 
 /* Virtual Method Table (VMT) for the class : 'Washer::StartButton' */
-EW_DEFINE_CLASS( WasherStartButton, CoreGroup, OnChange, OnChange, Frame, Frame, 
+EW_DEFINE_CLASS( WasherStartButton, CoreGroup, OnChange, OnChange, IsRunning, Frame, 
                  _None, "Washer::StartButton" )
   CoreRectView_initLayoutContext,
   CoreView_GetRoot,

@@ -45,6 +45,7 @@
 #include "_CoreGroup.h"
 #include "_CoreSimpleTouchHandler.h"
 #include "_CoreSlideTouchHandler.h"
+#include "_CoreSystemEventHandler.h"
 #include "_CoreVerticalList.h"
 #include "_EffectsInt32Effect.h"
 #include "_ViewsRectangle.h"
@@ -107,6 +108,7 @@ EW_DEFINE_FIELDS( WasherSpinList, CoreGroup )
   EW_OBJECT  ( FadeListOut,     EffectsInt32Effect )
   EW_OBJECT  ( Int32Effect,     EffectsInt32Effect )
   EW_OBJECT  ( AutoDemoEffect,  EffectsInt32Effect )
+  EW_OBJECT  ( SystemEventHandler, CoreSystemEventHandler )
 EW_END_OF_FIELDS( WasherSpinList )
 
 /* Virtual Method Table (VMT) for the class : 'Washer::SpinList' */
@@ -171,6 +173,16 @@ void WasherSpinList_OnRelease( WasherSpinList _this, XObject sender );
 
 /* Slot method to trigger the next phase of the auto demo. */
 void WasherSpinList_AutoDemo( WasherSpinList _this, XObject sender );
+
+/* This slot method is executed when the associated system event handler 'SystemEventHandler' 
+   receives an event. */
+void WasherSpinList_onEvent( WasherSpinList _this, XObject sender );
+
+/* 'C' function for method : 'Washer::SpinList.DeviceStart()' */
+void WasherSpinList_DeviceStart( WasherSpinList _this, XObject sender );
+
+/* 'C' function for method : 'Washer::SpinList.DeviceEnd()' */
+void WasherSpinList_DeviceEnd( WasherSpinList _this, XObject sender );
 
 #ifdef __cplusplus
   }

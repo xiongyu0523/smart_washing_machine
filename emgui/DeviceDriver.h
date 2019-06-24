@@ -119,7 +119,6 @@ int DeviceDriver_ProcessData( void );
 *******************************************************************************/
 void DeviceDriver_SetLedStatus( XInt32 aValue );
 
-//void YourDevice_StopBrewing( XInt32 aValue );
 
 /*******************************************************************************
 * FUNCTION:
