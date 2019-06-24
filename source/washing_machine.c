@@ -601,7 +601,7 @@ static void wm_finish_timer_periodic_cb(int cnt_left){
 	
 
 	wm_ib.left_time--;
-	DeviceDriver_updateLeftTime((int )WM_CONVERT_COUNT2MINUTES(wm_ib.left_time));	
+	DeviceDriver_updateLeftTime((int )WM_CONVERT_COUNT2SECONDS(wm_ib.left_time));	
 	if(cnt++%6 == 0){
 		wm_property_post(LEFT_TIME_PRO);
 		
@@ -637,6 +637,46 @@ void wm_work_switch_changed(void ){
 
 }
 
+void wm_lefttime_set_handle(double minute){
+	if(wm_ib.work_state == WS_WORKING){
+		PRINTF("lefttime changed by app invalid state\r\n");
+		return;
+	}
+
+	wm_ib.left_time = WM_CONVERT_MINUTES2COUNT(minute);
+	DeviceDriver_updateLeftTime((int )WM_CONVERT_COUNT2SECONDS(wm_ib.left_time));
+
+
+}
+
+void wm_targetspin_set_handle(int ss){
+
+	
+	if(wm_ib.work_state == WS_WORKING){
+		PRINTF("target spin changed by app invalid state\r\n");
+		return;
+	}
+	wm_ib.target_ss = ss;
+	
+	DeviceDriver_updateSpinSpeed((wm_ib.target_ss - 400)/200);
+
+
+}
+
+void wm_watertemp_set_handle(double watertemp){
+
+	
+	if(wm_ib.work_state == WS_WORKING){
+		PRINTF("water temp changed by app invalid state\r\n");
+		return;
+	}
+	wm_ib.target_wtem = watertemp;
+	
+	DeviceDriver_updateWaterTemp(((int )wm_ib.target_wtem - 20)/10);
+
+
+}
+
 static void wm_property_ib_set(wm_propertity_e epro, cJSON *cvalue){
 	switch(epro){
 		case WORK_SW_PRO:{
@@ -668,8 +708,10 @@ static void wm_property_ib_set(wm_propertity_e epro, cJSON *cvalue){
 		}
 		break;
 		case LEFT_TIME_PRO:{
-			if(cJSON_IsNumber(cvalue))
-				wm_ib.left_time = WM_CONVERT_MINUTES2COUNT(cvalue->valuedouble);
+			if(cJSON_IsNumber(cvalue)){
+				wm_lefttime_set_handle(cvalue->valuedouble);
+				
+			}
 		}
 		break;
 		case SOAK_TIME_PRO:{
@@ -705,14 +747,15 @@ static void wm_property_ib_set(wm_propertity_e epro, cJSON *cvalue){
 		break;
 		case TARGET_SPINSPEED_PRO:{
 			if(cJSON_IsNumber(cvalue))
-				wm_ib.target_ss = cvalue->valueint;
+				wm_targetspin_set_handle(cvalue->valueint);
+				
 	
 
 		}
 		break;
 		case TARGET_WATERTEM_PRO:{
 			if(cJSON_IsNumber(cvalue))
-				wm_ib.target_wtem = cvalue->valuedouble;
+				wm_watertemp_set_handle(cvalue->valuedouble);
 		}
 		break;
 		case DRY_TIME_PRO:{
@@ -1204,7 +1247,7 @@ void wm_report_all_to_gui(void ){
 	DeviceDriver_updateWashMode(wm_ib.washing_mode);
 	DeviceDriver_updateWaterTemp(((int )wm_ib.target_wtem - 20)/10);
 	DeviceDriver_updateSpinSpeed((wm_ib.target_ss - 400)/200);
-	DeviceDriver_updateLeftTime((int )WM_CONVERT_COUNT2MINUTES(wm_ib.left_time));
+	DeviceDriver_updateLeftTime((int )WM_CONVERT_COUNT2SECONDS(wm_ib.left_time));
 }
 
 void wm_report_dryswitch_to_gui(void ){
@@ -1213,6 +1256,62 @@ void wm_report_dryswitch_to_gui(void ){
 
 	//update left time attribute
 	DeviceDriver_updateLeftTime((int )WM_CONVERT_COUNT2MINUTES(wm_ib.left_time));
+
+}
+
+
+void wm_minute_changed_by_gui(int minute){
+	if(wm_ib.work_state == WS_WORKING){
+		PRINTF("Minute changed by gui invalid state\r\n");
+		return;
+	}
+
+	
+	int seconds_local = WM_CONVERT_COUNT2SECONDS(wm_ib.left_time);
+	int seconds_re = seconds_local%60;
+	wm_ib.left_time = WM_CONVERT_MINUTES2COUNT(minute);
+	wm_ib.left_time += WM_CONVERT_SECONDS2COUNT(seconds_re);
+	wm_property_post(LEFT_TIME_PRO);
+
+}
+
+void wm_second_changed_by_gui(int second){
+	if(wm_ib.work_state == WS_WORKING){
+		PRINTF("Second changed by gui invalid state\r\n");
+		return;
+	}
+
+	int minutes_local = WM_CONVERT_COUNT2MINUTES(wm_ib.left_time);
+	wm_ib.left_time = WM_CONVERT_MINUTES2COUNT(minutes_local);
+	wm_ib.left_time += WM_CONVERT_SECONDS2COUNT(second);
+	wm_property_post(LEFT_TIME_PRO);
+}
+
+
+
+
+void wm_targetspin_changed_by_ui(int target_spin){
+	if(wm_ib.work_state == WS_WORKING){
+		PRINTF("Target Spin changed by gui invalid state\r\n");
+		return;
+	}
+	
+	wm_ib.target_ss = target_spin*200 + 400;
+	wm_property_post(TARGET_SPINSPEED_PRO);
+
+}
+
+
+void wm_watertemp_changed_by_ui(int water_temp){
+
+	if(wm_ib.work_state == WS_WORKING){
+		PRINTF("Target water temperature changed by gui invalid state\r\n");
+		return;
+	}
+
+	wm_ib.target_wtem = water_temp*10 + 20;
+	
+	wm_property_post(TARGET_WATERTEM_PRO);
 
 }
 

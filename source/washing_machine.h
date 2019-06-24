@@ -138,8 +138,10 @@ typedef struct{
 
 
 
-#define		WM_CBTIMER_PERIOD_MS			6000//0.5 second					
+#define		WM_CBTIMER_PERIOD_MS			1000//0.5 second					
 #define		WM_CONVERT_MINUTES2COUNT(minutes)		((double)(((minutes*60)*1000)/WM_CBTIMER_PERIOD_MS))
+
+#define		WM_CONVERT_SECONDS2COUNT(seconds)		((double)((seconds*1000)/WM_CBTIMER_PERIOD_MS))
 #define		WM_CONVERT_COUNT2SECONDS(countv)		((double)((countv*WM_CBTIMER_PERIOD_MS)/1000))
 #define		WM_CONVERT_COUNT2MINUTES(countv)		((double)(WM_CONVERT_COUNT2SECONDS(countv)/60))
 
