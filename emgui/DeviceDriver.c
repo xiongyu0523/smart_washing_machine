@@ -294,42 +294,101 @@ int DeviceDriver_ProcessData( void )
     if ( isUpdateProgram == 1000 )
     {
       WasherDeviceClass__UpdateProgram( DeviceObject, 1 );
+      WasherDeviceClass__UpdateTemp( DeviceObject, 1 );
+      WasherDeviceClass__UpdateSpin( DeviceObject, 1 );
+      WasherDeviceClass__UpdateOption( DeviceObject, 1 );
+      WasherDeviceClass__UpdateHour( DeviceObject, 1 );
+      WasherDeviceClass__UpdateMinute( DeviceObject, 5 );
+      WasherDeviceClass__UpdateRunning( DeviceObject, 1 );
       isUpdateProgram++;
     }
     else if ( isUpdateProgram == 2000 )
     {
       WasherDeviceClass__UpdateProgram( DeviceObject, 2 );
+      WasherDeviceClass__UpdateTemp( DeviceObject, 2 );
+      WasherDeviceClass__UpdateSpin( DeviceObject, 2 );
+      WasherDeviceClass__UpdateOption( DeviceObject, 0 );
+      WasherDeviceClass__UpdateHour( DeviceObject, 2 );
+      WasherDeviceClass__UpdateMinute( DeviceObject, 10 );
+      WasherDeviceClass__UpdateRunning( DeviceObject, 0 );
       isUpdateProgram++;
     }
     else if ( isUpdateProgram == 3000 )
     {
       WasherDeviceClass__UpdateProgram( DeviceObject, 3 );
+      WasherDeviceClass__UpdateTemp( DeviceObject, 3 );
+      WasherDeviceClass__UpdateSpin( DeviceObject, 3 );
+      WasherDeviceClass__UpdateOption( DeviceObject, 1 );
+      WasherDeviceClass__UpdateHour( DeviceObject, 3 );
+      WasherDeviceClass__UpdateMinute( DeviceObject, 15 );
+      WasherDeviceClass__UpdateRunning( DeviceObject, 1 );
       isUpdateProgram++;
     }
     else if ( isUpdateProgram == 4000 )
     {
       WasherDeviceClass__UpdateProgram( DeviceObject, 4 );
+      WasherDeviceClass__UpdateTemp( DeviceObject, 4 );
+      WasherDeviceClass__UpdateSpin( DeviceObject, 4 );
+      WasherDeviceClass__UpdateOption( DeviceObject, 0 );
+      WasherDeviceClass__UpdateHour( DeviceObject, 4 );
+      WasherDeviceClass__UpdateMinute( DeviceObject, 20 );
+      WasherDeviceClass__UpdateRunning( DeviceObject, 0 );
       isUpdateProgram++;
     }
     else if ( isUpdateProgram == 5000 )
     {
       WasherDeviceClass__UpdateProgram( DeviceObject, 5 );
+      WasherDeviceClass__UpdateTemp( DeviceObject, 5 );
+      WasherDeviceClass__UpdateSpin( DeviceObject, 5 );
+      WasherDeviceClass__UpdateOption( DeviceObject, 1 );
+      WasherDeviceClass__UpdateHour( DeviceObject, 5 );
+      WasherDeviceClass__UpdateMinute( DeviceObject, 25 );
+      WasherDeviceClass__UpdateRunning( DeviceObject, 1 );
       isUpdateProgram++;
     }
     else if ( isUpdateProgram == 6000 )
     {
       WasherDeviceClass__UpdateProgram( DeviceObject, 6 );
+      WasherDeviceClass__UpdateTemp( DeviceObject, 0 );
+      WasherDeviceClass__UpdateSpin( DeviceObject, 0 );
+      WasherDeviceClass__UpdateOption( DeviceObject, 0 );
+      WasherDeviceClass__UpdateHour( DeviceObject, 6 );
+      WasherDeviceClass__UpdateMinute( DeviceObject, 30 );
+      WasherDeviceClass__UpdateRunning( DeviceObject, 0 );
       isUpdateProgram++;
     }
     else if ( isUpdateProgram == 7000 )
     {
       WasherDeviceClass__UpdateProgram( DeviceObject, 7 );
+      WasherDeviceClass__UpdateTemp( DeviceObject, 1 );
+      WasherDeviceClass__UpdateSpin( DeviceObject, 1 );
+      WasherDeviceClass__UpdateOption( DeviceObject, 1 );
+      WasherDeviceClass__UpdateHour( DeviceObject, 7 );
+      WasherDeviceClass__UpdateMinute( DeviceObject, 35 );
+      WasherDeviceClass__UpdateRunning( DeviceObject, 1 );
       isUpdateProgram++;
     }
     else if ( isUpdateProgram == 8000 )
     {
+      WasherDeviceClass__UpdateProgram( DeviceObject, 8 );
+      WasherDeviceClass__UpdateTemp( DeviceObject, 2 );
+      WasherDeviceClass__UpdateSpin( DeviceObject, 2 );
+      WasherDeviceClass__UpdateOption( DeviceObject, 0 );
+      WasherDeviceClass__UpdateHour( DeviceObject, 8 );
+      WasherDeviceClass__UpdateMinute( DeviceObject, 40 );
+      WasherDeviceClass__UpdateRunning( DeviceObject, 0 );
+      isUpdateProgram++;
+    }
+    else if ( isUpdateProgram == 9000 )
+    {
       isUpdateProgram = 0;
       WasherDeviceClass__UpdateProgram( DeviceObject, 0 );
+      WasherDeviceClass__UpdateTemp( DeviceObject, 0 );
+      WasherDeviceClass__UpdateSpin( DeviceObject, 0 );
+      WasherDeviceClass__UpdateOption( DeviceObject, 0 );
+      WasherDeviceClass__UpdateHour( DeviceObject, 1 );
+      WasherDeviceClass__UpdateMinute( DeviceObject, 30 );
+      WasherDeviceClass__UpdateRunning( DeviceObject, 1 );
     }
     else
       isUpdateProgram++;
@@ -400,22 +459,39 @@ void DeviceDriver_SetLedStatus( XInt32 aValue )
     EwBspLedOff();
 }
 
-void YourDevice_StopBrewing( XInt32 aValue )
+void Device_SetProgram( XInt32 aValue )
 {
-  /*
-     In case you are using an operating system to communicate with your
-     device driver that is running within its own thread/task/process,
-     send a message to the device driver and transmit the new value.
-     Please note, that this function is called within the context of the main
-     GUI thread.
-  */ 
-
-  /*
-     Here we are accessing directly the device driver by calling a certain
-     BSP / driver function.
-  */
-
   EwPrint( "Change the Washer program value to %u \n", aValue );
+}
+
+void Device_SetTemp( XInt32 aValue )
+{
+  EwPrint( "Change the Washer temp value to %u \n", aValue );
+}
+
+void Device_SetSpin( XInt32 aValue )
+{
+  EwPrint( "Change the Washer spin value to %u \n", aValue );
+}
+
+void Device_SetOption( XInt32 aValue )
+{
+  EwPrint( "Change the Washer option value to %u \n", aValue );
+}
+
+void Device_SetHour( XInt32 aValue )
+{
+  EwPrint( "Change the Washer hour value to %u \n", aValue );
+}
+
+void Device_SetMinute( XInt32 aValue )
+{
+  EwPrint( "Change the Washer minute value to %u \n", aValue );
+}
+
+void Device_SetRunning( XInt32 aValue )
+{
+  EwPrint( "Change the Washer running value to %u \n", aValue );
 }
 
 /*******************************************************************************
