@@ -418,8 +418,8 @@ void WasherDeviceClass_OnSetHour( WasherDeviceClass _this, XInt32 value )
   if ( value < 0 )
     value = 0;
 
-  if ( value > 59 )
-    value = 59;
+  if ( value > 99 )
+    value = 99;
 
   if ( value == _this->Hour )
     return;
@@ -610,8 +610,8 @@ void WasherDeviceClass_UpdateMinute( WasherDeviceClass _this, XInt32 aArg1 )
   if ( aArg1 < 0 )
     aArg1 = 0;
 
-  if ( aArg1 > 59 )
-    aArg1 = 59;
+  if ( aArg1 > 99 )
+    aArg1 = 99;
 
   if ( aArg1 == _this->Hour )
     return;
@@ -5636,16 +5636,16 @@ void WasherTimeList__Init( WasherTimeList _this, XObject aLink, XHandle aArg )
   CoreRectView__OnSetBounds( &_this->BottomListH, _Const0063 );
   CoreGroup__OnSetOpacity( &_this->BottomListH, 0 );
   CoreVerticalList_OnSetItemHeight( &_this->BottomListH, 24 );
-  CoreVerticalList_OnSetNoOfItems( &_this->BottomListH, 24 );
+  CoreVerticalList_OnSetNoOfItems( &_this->BottomListH, 75 );
   CoreVerticalList_OnSetItemClass( &_this->BottomListH, EW_CLASS( WasherHourItemS ));
   CoreRectView__OnSetBounds( &_this->MainListH, _Const0064 );
   CoreVerticalList_OnSetItemHeight( &_this->MainListH, 96 );
-  CoreVerticalList_OnSetNoOfItems( &_this->MainListH, 60 );
+  CoreVerticalList_OnSetNoOfItems( &_this->MainListH, 100 );
   CoreVerticalList_OnSetItemClass( &_this->MainListH, EW_CLASS( WasherHourItemL ));
   CoreRectView__OnSetBounds( &_this->TopListH, _Const0065 );
   CoreGroup__OnSetOpacity( &_this->TopListH, 0 );
   CoreVerticalList_OnSetItemHeight( &_this->TopListH, 24 );
-  CoreVerticalList_OnSetNoOfItems( &_this->TopListH, 24 );
+  CoreVerticalList_OnSetNoOfItems( &_this->TopListH, 74 );
   CoreVerticalList_OnSetItemClass( &_this->TopListH, EW_CLASS( WasherHourItemS ));
   EffectsEffect_OnSetTiming((EffectsEffect)&_this->FadeListIn, EffectsTimingFastIn_EaseOut );
   EffectsEffect_OnSetNoOfCycles((EffectsEffect)&_this->FadeListIn, 1 );
@@ -6085,6 +6085,12 @@ void WasherTimeList_OnReleaseH( WasherTimeList _this, XObject sender )
     {
       XInt32 item = ( -_this->MainListH.ScrollOffset / _this->MainListH.ItemHeight ) 
         + delta;
+
+      if ( item > 74 )
+      {
+        item = 74;
+      }
+
       CoreVerticalList_EnsureVisible( &_this->MainListH, item, 1, &_this->Int32EffectH, 
       EwNullSlot );
     }
@@ -6146,8 +6152,22 @@ void WasherTimeList_OnReleaseM( WasherTimeList _this, XObject sender )
 void WasherTimeList_DeviceStart( WasherTimeList _this, XObject sender )
 {
   /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
-  EW_UNUSED_ARG( _this );
   EW_UNUSED_ARG( sender );
+
+  if ( EwGetAutoObject( &WasherDevice, WasherDeviceClass )->Running )
+  {
+    CoreSimpleTouchHandler_OnSetEnabled( &_this->SimpleTouchHandlerH, 0 );
+    CoreSlideTouchHandler_OnSetEnabled( &_this->SlideTouchHandlerH, 0 );
+    CoreSimpleTouchHandler_OnSetEnabled( &_this->SimpleTouchHandlerM, 0 );
+    CoreSlideTouchHandler_OnSetEnabled( &_this->SlideTouchHandlerM, 0 );
+  }
+  else
+  {
+    CoreSimpleTouchHandler_OnSetEnabled( &_this->SimpleTouchHandlerH, 1 );
+    CoreSlideTouchHandler_OnSetEnabled( &_this->SlideTouchHandlerH, 1 );
+    CoreSimpleTouchHandler_OnSetEnabled( &_this->SimpleTouchHandlerM, 1 );
+    CoreSlideTouchHandler_OnSetEnabled( &_this->SlideTouchHandlerM, 1 );
+  }
 }
 
 /* 'C' function for method : 'Washer::TimeList.DeviceEnd()' */
@@ -6160,8 +6180,21 @@ void WasherTimeList_DeviceEnd( WasherTimeList _this, XObject sender )
   _this->FadeCaption.Value1 = _this->Caption.Opacity;
   _this->FadeCaption.Value2 = 255;
   EffectsEffect_OnSetEnabled((EffectsEffect)&_this->FadeCaption, 1 );
-  CoreSimpleTouchHandler_OnSetEnabled( &_this->SimpleTouchHandlerH, 1 );
-  CoreSimpleTouchHandler_OnSetEnabled( &_this->SimpleTouchHandlerM, 1 );
+
+  if ( EwGetAutoObject( &WasherDevice, WasherDeviceClass )->Running )
+  {
+    CoreSimpleTouchHandler_OnSetEnabled( &_this->SimpleTouchHandlerH, 0 );
+    CoreSlideTouchHandler_OnSetEnabled( &_this->SlideTouchHandlerH, 0 );
+    CoreSimpleTouchHandler_OnSetEnabled( &_this->SimpleTouchHandlerM, 0 );
+    CoreSlideTouchHandler_OnSetEnabled( &_this->SlideTouchHandlerM, 0 );
+  }
+  else
+  {
+    CoreSimpleTouchHandler_OnSetEnabled( &_this->SimpleTouchHandlerH, 1 );
+    CoreSlideTouchHandler_OnSetEnabled( &_this->SlideTouchHandlerH, 1 );
+    CoreSimpleTouchHandler_OnSetEnabled( &_this->SimpleTouchHandlerM, 1 );
+    CoreSlideTouchHandler_OnSetEnabled( &_this->SlideTouchHandlerM, 1 );
+  }
 }
 
 /* This slot method is executed when the associated system event handler 'SystemEventHandler' 
