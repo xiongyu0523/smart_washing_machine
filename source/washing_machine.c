@@ -590,6 +590,7 @@ static void wm_finishtimer_timeout_cb(void *args){
   wm_ib.work_switch = false;
   report_started = true;
   wm_report_all_pro_to_cloud();
+  wm_ui_handle_work_switch_off();
 
 
 }
