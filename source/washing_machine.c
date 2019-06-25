@@ -43,6 +43,7 @@ typedef struct {
     int master_devid;
     int cloud_connected;
     int master_initialized;
+	bool time_set_triggered;
 } wm_example_ctx_t;
 
 
@@ -88,10 +89,20 @@ static void wm_property_ib_set(wm_propertity_e epro, cJSON *cvalue);
 void wm_report_all_pro_to_cloud(void );
 
 static void wm_left_time_calculate(void ){
+	if(g_wm_ctx.time_set_triggered == true){
+		g_wm_ctx.time_set_triggered = false;
+		HAL_Printf("No need to update time, as time set by GUI\r\n");
+		return;
+	}
 	wm_ib.left_time = wm_ib.soak_time + wm_ib.wash_time;
 			
 	wm_ib.left_time += wm_ib.rinsh_time*wm_ib.rinsh_times;
 	wm_ib.left_time += wm_ib.spin_time;
+	if(wm_ib.dry_switch){
+
+		wm_ib.left_time += (int )WM_CONVERT_MINUTES2COUNT(25);
+
+	}
 
 }
 static void wm_ib_default_set(void ){
@@ -415,10 +426,10 @@ uint8_t wm_dry_switch_set_handle(bool sws){
 	}
 	wm_ib.dry_switch = sws;
 	if(wm_ib.dry_switch){
-		wm_ib.left_time += WM_CONVERT_MINUTES2COUNT(30);
+		wm_ib.left_time += WM_CONVERT_MINUTES2COUNT(25);
 
 	}else{
-		wm_ib.left_time -= WM_CONVERT_MINUTES2COUNT(30);
+		wm_ib.left_time -= WM_CONVERT_MINUTES2COUNT(25);
 	}
 	return 0;
 
@@ -431,6 +442,7 @@ uint8_t wm_washing_mode_set_handle(wm_washing_mode_e  		      	 wm ){
 		HAL_Printf("Failed to set washing mode properties, stop it first\r\n");
 		return 1;
 	}
+	wm_ib.work_state = WS_IDLE;
 	wm_ib.washing_mode = wm;
 	switch (wm_ib.washing_mode){
 	case WM_WM_STANDARD:{
@@ -1256,7 +1268,7 @@ void wm_report_dryswitch_to_gui(void ){
 	DeviceDriver_updateDrySwitch(wm_ib.dry_switch);
 
 	//update left time attribute
-	DeviceDriver_updateLeftTime((int )WM_CONVERT_COUNT2MINUTES(wm_ib.left_time));
+	DeviceDriver_updateLeftTime((int )WM_CONVERT_COUNT2SECONDS(wm_ib.left_time));
 
 }
 
@@ -1267,7 +1279,7 @@ void wm_minute_changed_by_gui(int minute){
 		return;
 	}
 
-	
+	g_wm_ctx.time_set_triggered = true;
 	int seconds_local = WM_CONVERT_COUNT2SECONDS(wm_ib.left_time);
 	int seconds_re = seconds_local%60;
 	wm_ib.left_time = WM_CONVERT_MINUTES2COUNT(minute);
@@ -1281,6 +1293,7 @@ void wm_second_changed_by_gui(int second){
 		HAL_Printf("Second changed by gui invalid state\r\n");
 		return;
 	}
+	g_wm_ctx.time_set_triggered = true;
 
 	int minutes_local = WM_CONVERT_COUNT2MINUTES(wm_ib.left_time);
 	wm_ib.left_time = WM_CONVERT_MINUTES2COUNT(minutes_local);
@@ -1324,6 +1337,7 @@ void wm_dryswitch_changed_by_gui(int dry_switch){
 	}else{
 		wm_property_post(LEFT_TIME_PRO);
 		wm_property_post(DRY_SW_PRO);
+		DeviceDriver_updateLeftTime((int )WM_CONVERT_COUNT2SECONDS(wm_ib.left_time));
 	}
 }
 
@@ -1381,15 +1395,7 @@ int wm_run(int argc, char **argv)
     iotx_linkkit_dev_meta_info_t wm_meta_info;
     int domain_type = 0, dynamic_register = 0, post_reply_need = 0;
 
-#ifdef ATM_ENABLED
-    if (IOT_ATM_Init() < 0) {
-        EXAMPLE_TRACE("IOT ATM init failed!\n");
-        return -1;
-    }
-#endif
-    
-	app_wait_wifi_connect();
-	wm_init();
+
 
     gpio_pin_config_t led_config = {
       .direction = kGPIO_DigitalOutput,
@@ -1420,7 +1426,16 @@ int wm_run(int argc, char **argv)
     IOT_RegisterCallback(ITE_INITIALIZE_COMPLETED, wm_initialized);
     IOT_RegisterCallback(ITE_FOTA, wm_fota_event_handler);
     IOT_RegisterCallback(ITE_COTA, wm_cota_event_handler);
-
+    wm_init();
+    
+#ifdef ATM_ENABLED
+    if (IOT_ATM_Init() < 0) {
+        EXAMPLE_TRACE("IOT ATM init failed!\n");
+        return -1;
+    }
+#endif
+    app_wait_wifi_connect();
+	
     domain_type = IOTX_CLOUD_REGION_SHANGHAI;
     IOT_Ioctl(IOTX_IOCTL_SET_DOMAIN, (void *)&domain_type);
 
