@@ -435,9 +435,9 @@ void DeviceDriver_updateSpinSpeed(XInt32 aValue){
 }
 
 void DeviceDriver_updateLeftTime(XInt32 aValue){
-	XInt32 hour = aValue/60;
-	XInt32 minutes = aValue%60;
-	WasherDeviceClass__UpdateHour( DeviceObject, hour);
+	XInt32 minutes = aValue/60;
+	XInt32 seconds = aValue%60;
+	WasherDeviceClass__UpdateSecond( DeviceObject, seconds);
 	WasherDeviceClass__UpdateMinute( DeviceObject, minutes);
 }
 
@@ -504,32 +504,36 @@ void Device_SetProgram( XInt32 aValue )
 
   EwPrint( "Change the Washer program value to %u \n", aValue );
   wm_workmode_changed_by_ui(aValue);
-
 }
-void Device_SetTemp( XInt32 aValue )
+
+void Device_SetTemp( XInt32 aValue)
 {
   EwPrint( "Change the Washer temp value to %u \n", aValue );
+  wm_watertemp_changed_by_ui(aValue);
 }
 
-void Device_SetSpin( XInt32 aValue )
+void Device_SetSpin( XInt32 aValue)
 {
   EwPrint( "Change the Washer spin value to %u \n", aValue );
+  wm_targetspin_changed_by_ui(aValue);
 }
 
-void Device_SetOption( XInt32 aValue )
+void Device_SetOption( XInt32 aValue)
 {
   EwPrint( "Change the Washer option value to %u \n", aValue );
   wm_dryswitch_changed_by_gui(aValue);
 }
 
-void Device_SetHour( XInt32 aValue )
+void Device_SetSecond( XInt32 aValue )
 {
-  EwPrint( "Change the Washer hour value to %u \n", aValue );
+  EwPrint( "Change the Washer second value to %u \n", aValue );
+  wm_second_changed_by_gui(aValue);
 }
 
 void Device_SetMinute( XInt32 aValue )
 {
   EwPrint( "Change the Washer minute value to %u \n", aValue );
+  wm_minute_changed_by_gui(aValue);
 }
 
 void Device_SetRunning( XInt32 aValue )
