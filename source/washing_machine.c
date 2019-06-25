@@ -640,7 +640,7 @@ void wm_work_switch_changed(void ){
 
 void wm_lefttime_set_handle(double minute){
 	if(wm_ib.work_state == WS_WORKING){
-		PRINTF("lefttime changed by app invalid state\r\n");
+		HAL_Printf("lefttime changed by app invalid state\r\n");
 		return;
 	}
 
@@ -654,7 +654,7 @@ void wm_targetspin_set_handle(int ss){
 
 	
 	if(wm_ib.work_state == WS_WORKING){
-		PRINTF("target spin changed by app invalid state\r\n");
+		HAL_Printf("target spin changed by app invalid state\r\n");
 		return;
 	}
 	wm_ib.target_ss = ss;
@@ -668,7 +668,7 @@ void wm_watertemp_set_handle(double watertemp){
 
 	
 	if(wm_ib.work_state == WS_WORKING){
-		PRINTF("water temp changed by app invalid state\r\n");
+		HAL_Printf("water temp changed by app invalid state\r\n");
 		return;
 	}
 	wm_ib.target_wtem = watertemp;
@@ -1263,7 +1263,7 @@ void wm_report_dryswitch_to_gui(void ){
 
 void wm_minute_changed_by_gui(int minute){
 	if(wm_ib.work_state == WS_WORKING){
-		PRINTF("Minute changed by gui invalid state\r\n");
+		HAL_Printf("Minute changed by gui invalid state\r\n");
 		return;
 	}
 
@@ -1278,7 +1278,7 @@ void wm_minute_changed_by_gui(int minute){
 
 void wm_second_changed_by_gui(int second){
 	if(wm_ib.work_state == WS_WORKING){
-		PRINTF("Second changed by gui invalid state\r\n");
+		HAL_Printf("Second changed by gui invalid state\r\n");
 		return;
 	}
 
@@ -1293,7 +1293,7 @@ void wm_second_changed_by_gui(int second){
 
 void wm_targetspin_changed_by_ui(int target_spin){
 	if(wm_ib.work_state == WS_WORKING){
-		PRINTF("Target Spin changed by gui invalid state\r\n");
+		HAL_Printf("Target Spin changed by gui invalid state\r\n");
 		return;
 	}
 	
@@ -1306,7 +1306,7 @@ void wm_targetspin_changed_by_ui(int target_spin){
 void wm_watertemp_changed_by_ui(int water_temp){
 
 	if(wm_ib.work_state == WS_WORKING){
-		PRINTF("Target water temperature changed by gui invalid state\r\n");
+		HAL_Printf("Target water temperature changed by gui invalid state\r\n");
 		return;
 	}
 
