@@ -57,17 +57,17 @@ const char *wm_properties[] = {"WorkSwitch","WorkState","ChildLockSwitch","Water
 
 //Washing mode standard
 static wm_data_info_t wm_ib={
-	
+		
 		.water_level = WL_MIDDLE,
 
-		.soak_time = WM_CONVERT_MINUTES2COUNT(10),
-		.wash_time = WM_CONVERT_MINUTES2COUNT(35),
+		.soak_time = WM_CONVERT_MINUTES2COUNT(1),
+		.wash_time = WM_CONVERT_MINUTES2COUNT(3),
 
-		.rinsh_time = WM_CONVERT_MINUTES2COUNT(5),
+		.rinsh_time = WM_CONVERT_MINUTES2COUNT(1),
 		.rinsh_times = 2,
 
-		.spin_time = WM_CONVERT_MINUTES2COUNT(5),
-		.target_wtem = 40,
+		.spin_time = WM_CONVERT_MINUTES2COUNT(2),
+		.target_wtem = 30,
 		.target_ss = 1000,
 
 
