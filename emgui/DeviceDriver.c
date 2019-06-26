@@ -106,6 +106,8 @@ void HardButtonIsrCallback( int aButtonPresssed )
   {
     IsHardButtonPressed = 1;
     IsHardButtonDown = 1;
+	 
+	
   }
   else
     IsHardButtonDown = 0;
@@ -118,7 +120,11 @@ void HardButtonIsrCallback( int aButtonPresssed )
   */
 
 #endif
+	if(aButtonPresssed){
 
+		wm_button_pressed();
+
+	}
 }
 
 
