@@ -44,6 +44,7 @@ typedef struct {
     int cloud_connected;
     int master_initialized;
 	bool time_set_triggered;
+	bool report_error_to_cloud;
 } wm_example_ctx_t;
 
 
@@ -100,7 +101,7 @@ static void wm_left_time_calculate(void ){
 	wm_ib.left_time += wm_ib.spin_time;
 	if(wm_ib.dry_switch){
 
-		wm_ib.left_time += (int )WM_CONVERT_MINUTES2COUNT(25);
+		wm_ib.left_time += (int )WM_CONVERT_MINUTES2COUNT(9);
 
 	}
 
@@ -426,10 +427,10 @@ uint8_t wm_dry_switch_set_handle(bool sws){
 	}
 	wm_ib.dry_switch = sws;
 	if(wm_ib.dry_switch){
-		wm_ib.left_time += WM_CONVERT_MINUTES2COUNT(25);
+		wm_ib.left_time += WM_CONVERT_MINUTES2COUNT(9);
 
 	}else{
-		wm_ib.left_time -= WM_CONVERT_MINUTES2COUNT(25);
+		wm_ib.left_time -= WM_CONVERT_MINUTES2COUNT(9);
 	}
 	return 0;
 
@@ -448,13 +449,13 @@ uint8_t wm_washing_mode_set_handle(wm_washing_mode_e  		      	 wm ){
 	case WM_WM_STANDARD:{
 		wm_ib.water_level = WL_MIDDLE;
 		
-		wm_ib.soak_time =  WM_CONVERT_MINUTES2COUNT(10);
-		wm_ib.wash_time =  WM_CONVERT_MINUTES2COUNT(35);
+		wm_ib.soak_time =  WM_CONVERT_MINUTES2COUNT(1);
+		wm_ib.wash_time =  WM_CONVERT_MINUTES2COUNT(3);
 		
-		wm_ib.rinsh_time =  WM_CONVERT_MINUTES2COUNT(5);
+		wm_ib.rinsh_time =  WM_CONVERT_MINUTES2COUNT(1);
 		wm_ib.rinsh_times = 2;
 		
-		wm_ib.spin_time =  WM_CONVERT_MINUTES2COUNT(5);
+		wm_ib.spin_time =  WM_CONVERT_MINUTES2COUNT(2);
 		wm_ib.target_wtem = 30;
 		wm_ib.target_ss = 1000;
 
@@ -463,10 +464,10 @@ uint8_t wm_washing_mode_set_handle(wm_washing_mode_e  		      	 wm ){
 	case WM_WM_SOFT:{
 		wm_ib.water_level = WL_MIDDLE;
 		
-		wm_ib.soak_time =  WM_CONVERT_MINUTES2COUNT(20);
-		wm_ib.wash_time =  WM_CONVERT_MINUTES2COUNT(15);
+		wm_ib.soak_time =  WM_CONVERT_MINUTES2COUNT(2);
+		wm_ib.wash_time =  WM_CONVERT_MINUTES2COUNT(2);
 		
-		wm_ib.rinsh_time =  WM_CONVERT_MINUTES2COUNT(5);
+		wm_ib.rinsh_time =  WM_CONVERT_MINUTES2COUNT(2);
 		wm_ib.rinsh_times = 3;
 		
 		wm_ib.spin_time =  WM_CONVERT_MINUTES2COUNT(3);
@@ -478,13 +479,13 @@ uint8_t wm_washing_mode_set_handle(wm_washing_mode_e  		      	 wm ){
 	case WM_WM_STRONG:{
 		wm_ib.water_level = WL_HIGH;
 		
-		wm_ib.soak_time =  WM_CONVERT_MINUTES2COUNT(20);
-		wm_ib.wash_time =  WM_CONVERT_MINUTES2COUNT(45);
+		wm_ib.soak_time =  WM_CONVERT_MINUTES2COUNT(15);
+		wm_ib.wash_time =  WM_CONVERT_MINUTES2COUNT(25);
 		
-		wm_ib.rinsh_time =  WM_CONVERT_MINUTES2COUNT(8);
+		wm_ib.rinsh_time =  WM_CONVERT_MINUTES2COUNT(2);
 		wm_ib.rinsh_times = 3;
 		
-		wm_ib.spin_time =  WM_CONVERT_MINUTES2COUNT(5);
+		wm_ib.spin_time =  WM_CONVERT_MINUTES2COUNT(4);
 		wm_ib.target_wtem = 70;
 		wm_ib.target_ss = 1400;
 
@@ -493,13 +494,13 @@ uint8_t wm_washing_mode_set_handle(wm_washing_mode_e  		      	 wm ){
 	case WM_WM_QUICK:{
 		wm_ib.water_level = WL_LOW;
 		
-		wm_ib.soak_time =  WM_CONVERT_MINUTES2COUNT(2);
-		wm_ib.wash_time =  WM_CONVERT_MINUTES2COUNT(5);
+		wm_ib.soak_time =  WM_CONVERT_MINUTES2COUNT(1);
+		wm_ib.wash_time =  WM_CONVERT_MINUTES2COUNT(2);
 		
-		wm_ib.rinsh_time =  WM_CONVERT_MINUTES2COUNT(3);
+		wm_ib.rinsh_time =  WM_CONVERT_MINUTES2COUNT(2);
 		wm_ib.rinsh_times = 1;
 		
-		wm_ib.spin_time =  WM_CONVERT_MINUTES2COUNT(2);
+		wm_ib.spin_time =  WM_CONVERT_MINUTES2COUNT(1);
 		wm_ib.target_wtem = 20;
 		wm_ib.target_ss = 1200;
 
@@ -508,10 +509,10 @@ uint8_t wm_washing_mode_set_handle(wm_washing_mode_e  		      	 wm ){
 	case WM_WM_WOOL:{
 		wm_ib.water_level = WL_LOW;
 		
-		wm_ib.soak_time =  WM_CONVERT_MINUTES2COUNT(25);
-		wm_ib.wash_time =  WM_CONVERT_MINUTES2COUNT(20);
+		wm_ib.soak_time =  WM_CONVERT_MINUTES2COUNT(3);
+		wm_ib.wash_time =  WM_CONVERT_MINUTES2COUNT(2);
 		
-		wm_ib.rinsh_time =  WM_CONVERT_MINUTES2COUNT(3);
+		wm_ib.rinsh_time =  WM_CONVERT_MINUTES2COUNT(2);
 		wm_ib.rinsh_times = 3;
 		
 		wm_ib.spin_time =  WM_CONVERT_MINUTES2COUNT(3);
@@ -523,13 +524,13 @@ uint8_t wm_washing_mode_set_handle(wm_washing_mode_e  		      	 wm ){
 	case WM_WM_CHEMFIBER:{
 		wm_ib.water_level = WL_LOW;
 		
-		wm_ib.soak_time =  WM_CONVERT_MINUTES2COUNT(30);
-		wm_ib.wash_time =  WM_CONVERT_MINUTES2COUNT(20);
+		wm_ib.soak_time =  WM_CONVERT_MINUTES2COUNT(4);
+		wm_ib.wash_time =  WM_CONVERT_MINUTES2COUNT(5);
 		
-		wm_ib.rinsh_time =  WM_CONVERT_MINUTES2COUNT(5);
+		wm_ib.rinsh_time =  WM_CONVERT_MINUTES2COUNT(1);
 		wm_ib.rinsh_times = 3;
 		
-		wm_ib.spin_time =  WM_CONVERT_MINUTES2COUNT(5);
+		wm_ib.spin_time =  WM_CONVERT_MINUTES2COUNT(2);
 		wm_ib.target_wtem = 50;
 		wm_ib.target_ss = 1200;
 
@@ -538,10 +539,10 @@ uint8_t wm_washing_mode_set_handle(wm_washing_mode_e  		      	 wm ){
 	case WM_WM_COTTON:{
 		wm_ib.water_level = WL_LOW;
 		
-		wm_ib.soak_time =  WM_CONVERT_MINUTES2COUNT(20);
-		wm_ib.wash_time =  WM_CONVERT_MINUTES2COUNT(10);
+		wm_ib.soak_time =  WM_CONVERT_MINUTES2COUNT(2);
+		wm_ib.wash_time =  WM_CONVERT_MINUTES2COUNT(1);
 		
-		wm_ib.rinsh_time =  WM_CONVERT_MINUTES2COUNT(3);
+		wm_ib.rinsh_time =  WM_CONVERT_MINUTES2COUNT(4);
 		wm_ib.rinsh_times = 2;
 		
 		wm_ib.spin_time =  WM_CONVERT_MINUTES2COUNT(5);
@@ -553,13 +554,13 @@ uint8_t wm_washing_mode_set_handle(wm_washing_mode_e  		      	 wm ){
 	case WM_WM_JEANS:{
 		wm_ib.water_level = WL_LOW;
 		
-		wm_ib.soak_time =  WM_CONVERT_MINUTES2COUNT(20);
-		wm_ib.wash_time =  WM_CONVERT_MINUTES2COUNT(10);
+		wm_ib.soak_time =  WM_CONVERT_MINUTES2COUNT(3);
+		wm_ib.wash_time =  WM_CONVERT_MINUTES2COUNT(2);
 		
-		wm_ib.rinsh_time =  WM_CONVERT_MINUTES2COUNT(3);
+		wm_ib.rinsh_time =  WM_CONVERT_MINUTES2COUNT(4);
 		wm_ib.rinsh_times = 2;
 		
-		wm_ib.spin_time =  WM_CONVERT_MINUTES2COUNT(5);
+		wm_ib.spin_time =  WM_CONVERT_MINUTES2COUNT(6);
 		wm_ib.target_wtem = 40;
 		wm_ib.target_ss = 600;
 
@@ -571,10 +572,10 @@ uint8_t wm_washing_mode_set_handle(wm_washing_mode_e  		      	 wm ){
 		wm_ib.soak_time =  WM_CONVERT_MINUTES2COUNT(10);
 		wm_ib.wash_time =  WM_CONVERT_MINUTES2COUNT(5);
 		
-		wm_ib.rinsh_time =  WM_CONVERT_MINUTES2COUNT(3);
+		wm_ib.rinsh_time =  WM_CONVERT_MINUTES2COUNT(1);
 		wm_ib.rinsh_times = 2;
 		
-		wm_ib.spin_time =  WM_CONVERT_MINUTES2COUNT(5);
+		wm_ib.spin_time =  WM_CONVERT_MINUTES2COUNT(3);
 		wm_ib.target_wtem = 20;
 		wm_ib.target_ss = 1400;
 
@@ -1174,9 +1175,9 @@ void wm_post_event(void)
 {
     int res = 0;
     char *event_id = "HardwareError";
-    char *event_payload = "{\"ErrorCode\": 0}";
+    char *event_payload = "{\"ErrorCode\": 1}";
 
-    res = IOT_Linkkit_TriggerEvent(EXAMPLE_MASTER_DEVID, event_id, strlen(event_id),
+    res = IOT_Linkkit_TriggerEvent(g_wm_ctx.master_devid, event_id, strlen(event_id),
                                    event_payload, strlen(event_payload));
     EXAMPLE_TRACE("Post Event Message ID: %d", res);
 }
@@ -1362,6 +1363,12 @@ void wm_workswitch_changed_by_ui(int work_switch){
 
 }
 
+void wm_button_pressed(void ){
+	//Report Error Code to cloud
+	g_wm_ctx.report_error_to_cloud = true;
+	
+
+}
 
 void wm_report_all_enable(void ){
 	if(g_wm_ctx.cloud_connected){
@@ -1468,7 +1475,12 @@ int wm_run(int argc, char **argv)
         IOT_Linkkit_Yield(EXAMPLE_YIELD_TIMEOUT_MS);
         
         cnt++;
+		if(g_wm_ctx.report_error_to_cloud){
+			wm_post_event();
+			g_wm_ctx.report_error_to_cloud = false;
 
+
+		}
         /* Post Event Example */
         if ((cnt % 500) == 0) {
             wm_property_post(WORK_ST_PRO);
