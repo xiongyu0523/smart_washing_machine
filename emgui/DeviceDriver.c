@@ -185,6 +185,14 @@ void DeviceDriver_Initialize( void )
 
   EwLockObject( DeviceObject );
 
+  WasherDeviceClass__UpdateProgram( DeviceObject, 0 );
+  WasherDeviceClass__UpdateTemp( DeviceObject, 1 );
+  WasherDeviceClass__UpdateSpin( DeviceObject, 3 );
+  WasherDeviceClass__UpdateOption( DeviceObject, 0 );
+  WasherDeviceClass__UpdateMinute( DeviceObject, 8 );
+  WasherDeviceClass__UpdateSecond( DeviceObject, 0 );
+  WasherDeviceClass__UpdateRunning( DeviceObject, 0 );
+  
 #endif
 
 }
