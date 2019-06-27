@@ -89,6 +89,18 @@ bool report_started = false;
 static void wm_property_ib_set(wm_propertity_e epro, cJSON *cvalue);
 void wm_report_all_pro_to_cloud(void );
 
+//left time shouldn't excet 60 minutes
+static void wm_left_time_valid_check(void ){
+
+	if((int )WM_CONVERT_COUNT2MINUTES(wm_ib.left_time)>=60){
+
+		wm_ib.left_time = (int )WM_CONVERT_MINUTES2COUNT(59);
+
+	}
+
+
+}
+
 static void wm_left_time_calculate(void ){
 	if(g_wm_ctx.time_set_triggered == true){
 		g_wm_ctx.time_set_triggered = false;
@@ -104,7 +116,7 @@ static void wm_left_time_calculate(void ){
 		wm_ib.left_time += (int )WM_CONVERT_MINUTES2COUNT(9);
 
 	}
-
+	wm_left_time_valid_check();
 }
 static void wm_ib_default_set(void ){
 	wm_ib.work_state = WS_IDLE;
@@ -432,6 +444,7 @@ uint8_t wm_dry_switch_set_handle(bool sws){
 	}else{
 		wm_ib.left_time -= WM_CONVERT_MINUTES2COUNT(9);
 	}
+	wm_left_time_valid_check();
 	return 0;
 
 
@@ -587,7 +600,8 @@ uint8_t wm_washing_mode_set_handle(wm_washing_mode_e  		      	 wm ){
 	
 
 }
-	
+	//Enable time update after washing mode changed
+	g_wm_ctx.time_set_triggered = false;
 	wm_left_time_calculate();
 	return 0;
 
@@ -1285,7 +1299,9 @@ void wm_minute_changed_by_gui(int minute){
 	int seconds_re = seconds_local%60;
 	wm_ib.left_time = WM_CONVERT_MINUTES2COUNT(minute);
 	wm_ib.left_time += WM_CONVERT_SECONDS2COUNT(seconds_re);
+	wm_left_time_valid_check();
 	wm_property_post(LEFT_TIME_PRO);
+	DeviceDriver_updateLeftTime((int )WM_CONVERT_COUNT2SECONDS(wm_ib.left_time));
 
 }
 
@@ -1299,7 +1315,9 @@ void wm_second_changed_by_gui(int second){
 	int minutes_local = WM_CONVERT_COUNT2MINUTES(wm_ib.left_time);
 	wm_ib.left_time = WM_CONVERT_MINUTES2COUNT(minutes_local);
 	wm_ib.left_time += WM_CONVERT_SECONDS2COUNT(second);
+	wm_left_time_valid_check();
 	wm_property_post(LEFT_TIME_PRO);
+	DeviceDriver_updateLeftTime((int )WM_CONVERT_COUNT2SECONDS(wm_ib.left_time));
 }
 
 
