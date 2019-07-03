@@ -27,12 +27,23 @@
 
 #define UINT32_IPADDR_TO_CSV_BYTES(a) ((uint8_t)((a) >> 24) & 0xFF), (uint8_t)(((a) >> 16) & 0xFF), (uint8_t)(((a) >> 8) & 0xFF), (uint8_t)((a)&0xFF)
 #define CSV_BYTES_TO_UINT32_IPADDR(a0, a1, a2, a3)  (((uint32_t)(a0)&0xFF) << 24) | (((uint32_t)(a1)&0xFF) << 16) | (((uint32_t)(a2)&0xFF) << 8) | ((uint32_t)(a3)&0xFF)
+#if (DEMO_OPTION == DEMO_RGB_LIGHT)
+static char _product_key[IOTX_PRODUCT_KEY_LEN + 1]       = "a1jhtm1uKRW";//"a1ymMP3cHNl";//
+static char _product_secret[IOTX_PRODUCT_SECRET_LEN + 1] = "xa5x9tWKYaTxcfQN";//"xZ5vuNVnL4lsYhom";//
+static char _device_name[IOTX_DEVICE_NAME_LEN + 1]       = "rgb_light1";//"light_s";//
+static char _device_secret[IOTX_DEVICE_SECRET_LEN + 1]   = "i5ZIr76MzmjbK4yl3BR7xOm9bpEhUilZ";//"ADzNMcnnW37pQPdLFJkZiJFDsv5BkGJy";// 
+#elif (DEMO_OPTION == DEMO_DIM_LIGHT)
+static char _product_key[IOTX_PRODUCT_KEY_LEN + 1]       = "a1ymMP3cHNl";//"a1ymMP3cHNl";//
+static char _product_secret[IOTX_PRODUCT_SECRET_LEN + 1] = "xZ5vuNVnL4lsYhom";//"xZ5vuNVnL4lsYhom";//
+static char _device_name[IOTX_DEVICE_NAME_LEN + 1]       = "nxptest";//"light_s";//
+static char _device_secret[IOTX_DEVICE_SECRET_LEN + 1]   = "YU1zDB1jSpi8NMOyFJ8BjU3eMT6NtyQr";//"ADzNMcnnW37pQPdLFJkZiJFDsv5BkGJy";// 
+#elif (DEMO_OPTION == DEMO_WASHING_MACHINE)
+static char _product_key[IOTX_PRODUCT_KEY_LEN + 1]       = "a11YVxsGk3F";//"a1yTPNyMPfs";//
+static char _product_secret[IOTX_PRODUCT_SECRET_LEN + 1] = "nyvvTvStgB8RuUR8";//"UmRzdvUNtrhEWnja";//
+static char _device_name[IOTX_DEVICE_NAME_LEN + 1]       = "smart_wm_test1";//"test_light_03";//
+static char _device_secret[IOTX_DEVICE_SECRET_LEN + 1]   = "QtWqlFIuhCHTWzr1bdSpFiuNkygLycn6";//"8Z1sE1ik57d7FyTAC2HOfS8Lr43hXrGO";//
 
-static char _product_key[IOTX_PRODUCT_KEY_LEN + 1]       = "a1I5Y6v8HwT";
-static char _product_secret[IOTX_PRODUCT_SECRET_LEN + 1] = "S56FG57Rqjr24CHo";
-static char _device_name[IOTX_DEVICE_NAME_LEN + 1]       = "smart_wm_test1";
-static char _device_secret[IOTX_DEVICE_SECRET_LEN + 1]   = "3qLxqnrCCxhEVJUJjq88jEYkPwi2CZCr";
-
+#endif
 uint64_t HAL_UptimeMs(void);
 
 static uint64_t _linux_get_time_ms(void)

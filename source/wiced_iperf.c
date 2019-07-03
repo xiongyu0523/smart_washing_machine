@@ -18,6 +18,7 @@
 
 #include "fsl_debug_console.h"
 
+
 #include "pin_mux.h"
 #include "clock_config.h"
 #include "fsl_common.h"
@@ -127,16 +128,25 @@ static void BOARD_InitNetwork()
 /*!
  * @brief The main function containing client thread.
  */
-static void linkkit_task(void *arg)
+static void demo_task(void *arg)
 {
     PRINTF("\r\n************************************************\r\n");
-    PRINTF(" Link Kit example\r\n");
+    PRINTF(" CSDK Demo task example\r\n");
     PRINTF("************************************************\r\n");
 
     
     BOARD_InitNetwork();
+    
+#if (DEMO_OPTION == DEMO_DIM_LIGHT)
+	PRINTF("Run Dimmable Light Demo...\r\n");
+    lighting_run(NULL,NULL);
+#elif (DEMO_OPTION == DEMO_RGB_LIGHT)
+	PRINTF("Run RGB Lighting Demo...\r\n");
+	rgb_light_run(NULL,NULL);
+#elif (DEMO_OPTION == DEMO_WASHING_MACHINE)
+	PRINTF("Run Washing Machine Demo...\r\n");
     wm_run(NULL, NULL);
-   // linkkit_example_solo(NULL, NULL);
+#endif
 }
 
 /*******************************************************************************
@@ -192,7 +202,7 @@ void app_wait_wifi_connect(void ){
 					err = wwd_wifi_join(&ap_ssid, AP_SEC, (uint8_t *)wifi_key, strlen(wifi_key), NULL, WWD_STA_INTERFACE);
 					if (err != WWD_SUCCESS)
 					{
-						PRINTF("Failed to join  : %s",wifi_ssid);
+						PRINTF("Failed to join  : %s\r\n",wifi_ssid);
 					}
 					else
 					{
@@ -298,31 +308,35 @@ int main(void)
 {
     BOARD_ConfigMPU();
     BOARD_InitPins();
-    BOARD_InitI2C1Pins();
-    BOARD_InitSemcPins();
+
+
+    
+
     BOARD_BootClockRUN();
     BOARD_USDHCClockConfiguration();
     BOARD_InitDebugConsole();
 	ShellInit();
-    //log_init();
-	#if 1
+
     flexspi_hyper_flash_init();
     kv_init();
     
+   
     tcpip_init(NULL, NULL);
-#if 1
+#if (DEMO_OPTION == DEMO_WASHING_MACHINE)
+	BOARD_InitI2C1Pins();
+	BOARD_InitSemcPins();
     /* create thread that drives the Embedded Wizard GUI application... */
     EwPrint( "Create UI thread...                          " );
     xTaskCreate( GuiThread, "EmWi_Task", 1280, NULL, 2, NULL );
     EwPrint( "[OK]\n" );
 #endif
-    if (xTaskCreate(linkkit_task, "linkkit_task", 1000, NULL, 3, NULL) != pdPASS)
+
+    if (xTaskCreate(demo_task, "demo_task", 1000, NULL, 3, NULL) != pdPASS)
     {
         PRINTF("Task creation failed!.\r\n");
-        while (1)
-            ;
+        while (1);
     }
-#endif
+	
     vTaskStartScheduler();
 
     return 0;

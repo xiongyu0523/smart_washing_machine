@@ -5368,6 +5368,24 @@
             </file>
         </group>
         <group>
+            <name>demo_dim</name>
+            <file>
+                <name>$PROJ_DIR$\source\demo_dim\lighting.c</name>
+            </file>
+        </group>
+        <group>
+            <name>demo_rgb</name>
+            <file>
+                <name>$PROJ_DIR$\source\demo_rgb\i2c.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\source\demo_rgb\pca9634.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\source\demo_rgb\rgb_light.c</name>
+            </file>
+        </group>
+        <group>
             <name>demo_wm</name>
             <file>
                 <name>$PROJ_DIR$\source\demo_wm\washing_machine.c</name>
