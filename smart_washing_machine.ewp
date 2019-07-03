@@ -368,6 +368,8 @@
                     <name>CCIncludePath2</name>
                     <state>$PROJ_DIR$/board</state>
                     <state>$PROJ_DIR$/source</state>
+                    <state>$PROJ_DIR$/source/common_drivers</state>
+                    <state>$PROJ_DIR$/source/demo_wm</state>
                     <state>$PROJ_DIR$/43xxx_wifi/WICED/RTOS/FreeRTOS/WWD</state>
                     <state>$PROJ_DIR$/43xxx_wifi/WICED/WWD</state>
                     <state>$PROJ_DIR$/43xxx_wifi/WICED/WWD/include</state>
@@ -5327,56 +5329,48 @@
     </group>
     <group>
         <name>source</name>
+        
+
+            <name>common_drivers</name>
+            <file>
+                <name>$PROJ_DIR$\source\common_drivers\flexspi_hyper_flash_ops.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\source\common_drivers\ip_cmd.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\source\common_drivers\ip_cmd.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\source\common_drivers\shell.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\source\common_drivers\shell.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\source\common_drivers\virtual_com.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\source\common_drivers\virtual_com.h</name>
+            </file>
+        </group>
+        <group>
+            <name>demo_wm</name>
+            <file>
+                <name>$PROJ_DIR$\source\demo_wm\washing_machine.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\source\demo_wm\washing_machine.h</name>
+            </file>
+        </group>
         <file>
             <name>$PROJ_DIR$\source\app_preinclude.h</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\source\flexspi_hyper_flash_ops.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\source\flexspi_hyper_flash_ops.h</name>
         </file>
         <file>
             <name>$PROJ_DIR$\source\FreeRTOSConfig.h</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\source\ip_cmd.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\source\ip_cmd.h</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\source\linkkit_example_solo.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\source\log.c</name>
-        </file>
-        <file>
             <name>$PROJ_DIR$\source\lwipopts.h</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\source\shell.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\source\shell.h</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\source\usb_device_config.h</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\source\usb_device_descriptor.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\source\usb_device_descriptor.h</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\source\virtual_com.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\source\virtual_com.h</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\source\washing_machine.c</name>
         </file>
         <file>
             <name>$PROJ_DIR$\source\wiced_iperf.c</name>
@@ -5415,17 +5409,17 @@
                 <group>
                     <name>cdc</name>
                     <file>
-                        <name>$PROJ_DIR$\source\usb_device_cdc_acm.c</name>
+                        <name>$PROJ_DIR$\usb\device\usb_device_cdc_acm.c</name>
                     </file>
                     <file>
-                        <name>$PROJ_DIR$\source\usb_device_cdc_acm.h</name>
+                        <name>$PROJ_DIR$\usb\device\usb_device_cdc_acm.h</name>
                     </file>
                 </group>
                 <file>
-                    <name>$PROJ_DIR$\source\usb_device_class.c</name>
+                    <name>$PROJ_DIR$\usb\device\usb_device_class.c</name>
                 </file>
                 <file>
-                    <name>$PROJ_DIR$\source\usb_device_class.h</name>
+                    <name>$PROJ_DIR$\usb\device\usb_device_class.h</name>
                 </file>
             </group>
             <group>
@@ -5449,16 +5443,19 @@
                     </file>
                 </group>
                 <file>
-                    <name>$PROJ_DIR$\source\usb_device_ch9.c</name>
+                    <name>$PROJ_DIR$\usb\device\usb_device_ch9.c</name>
                 </file>
                 <file>
-                    <name>$PROJ_DIR$\source\usb_device_ch9.h</name>
+                    <name>$PROJ_DIR$\usb\device\usb_device_ch9.h</name>
                 </file>
                 <file>
                     <name>$PROJ_DIR$\usb\device\usb_device_dci.c</name>
                 </file>
                 <file>
                     <name>$PROJ_DIR$\usb\device\usb_device_dci.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\usb\device\usb_device_descriptor.c</name>
                 </file>
             </group>
         </group>
