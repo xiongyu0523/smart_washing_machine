@@ -370,6 +370,8 @@
                     <state>$PROJ_DIR$/source</state>
                     <state>$PROJ_DIR$/source/common_drivers</state>
                     <state>$PROJ_DIR$/source/demo_wm</state>
+                    <state>$PROJ_DIR$/source/demo_rgb</state>
+                    <state>$PROJ_DIR$/source/demo_dim</state>
                     <state>$PROJ_DIR$/43xxx_wifi/WICED/RTOS/FreeRTOS/WWD</state>
                     <state>$PROJ_DIR$/43xxx_wifi/WICED/WWD</state>
                     <state>$PROJ_DIR$/43xxx_wifi/WICED/WWD/include</state>
@@ -2982,6 +2984,12 @@
             <name>$PROJ_DIR$\drivers\fsl_lpuart.h</name>
         </file>
         <file>
+            <name>$PROJ_DIR$\drivers\fsl_pwm.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\drivers\fsl_pwm.h</name>
+        </file>
+        <file>
             <name>$PROJ_DIR$\drivers\fsl_pxp.c</name>
         </file>
         <file>
@@ -3004,6 +3012,12 @@
         </file>
         <file>
             <name>$PROJ_DIR$\drivers\fsl_usdhc.h</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\drivers\fsl_xbara.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\drivers\fsl_xbara.h</name>
         </file>
     </group>
     <group>
@@ -5329,8 +5343,7 @@
     </group>
     <group>
         <name>source</name>
-        
-
+        <group>
             <name>common_drivers</name>
             <file>
                 <name>$PROJ_DIR$\source\common_drivers\flexspi_hyper_flash_ops.c</name>
@@ -5352,6 +5365,24 @@
             </file>
             <file>
                 <name>$PROJ_DIR$\source\common_drivers\virtual_com.h</name>
+            </file>
+        </group>
+        <group>
+            <name>demo_dim</name>
+            <file>
+                <name>$PROJ_DIR$\source\demo_dim\lighting.c</name>
+            </file>
+        </group>
+        <group>
+            <name>demo_rgb</name>
+            <file>
+                <name>$PROJ_DIR$\source\demo_rgb\i2c.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\source\demo_rgb\pca9634.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\source\demo_rgb\rgb_light.c</name>
             </file>
         </group>
         <group>
