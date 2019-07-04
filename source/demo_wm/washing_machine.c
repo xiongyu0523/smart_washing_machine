@@ -1500,7 +1500,7 @@ int wm_run(int argc, char **argv)
 
 		}
         /* Post Event Example */
-        if ((cnt % 500) == 0) {
+        if ((cnt % 50) == 0) {
             wm_property_post(WORK_SW_PRO);
 			//wm_property_post(WATER_LEVEL_PRO);
         }

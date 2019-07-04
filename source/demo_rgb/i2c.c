@@ -3,21 +3,49 @@
 #include "fsl_iomuxc.h"
 #include "fsl_gpio.h"
 
+#define USE_DSB_BLOCK					0
+
+
 #define I2C_CLK_PIN                     IOMUXC_GPIO_AD_B0_09_GPIO1_IO09
 #define I2C_DATA_PIN                    IOMUXC_GPIO_AD_B0_10_GPIO1_IO10
 #define I2C_MASTER_CLK_GPIO             GPIO1
 #define I2C_MASTER_CLK_GPIO_PIN         (9U)
 #define I2C_MASTER_DATA_GPIO            GPIO1
 #define I2C_MASTER_DATA_GPIO_PIN        (10U)
-#define I2C_SETUP_TIME					20000
-#define I2C_HOLD_TIME					40000
+#define I2C_SETUP_TIME					5000
+#define I2C_HOLD_TIME					10000
 
+#if USE_DSB_BLOCK
+#define I2C_SCL_LOW						do{\
+											__DSB();\
+											GPIO_PinWrite(I2C_MASTER_CLK_GPIO,I2C_MASTER_CLK_GPIO_PIN,0);\
+										}while(0)
+										
+#define I2C_SCL_HIGH					do{\
+											GPIO_PinWrite(I2C_MASTER_CLK_GPIO,I2C_MASTER_CLK_GPIO_PIN,1);\
+											__DSB();\
+											__ISB();\
+										}while(0)
+
+#define I2C_SDA_LOW						do{\
+											GPIO_PinWrite(I2C_MASTER_DATA_GPIO,I2C_MASTER_DATA_GPIO_PIN,0);\
+											__DSB();\
+											__ISB();\
+										}while(0)
+										
+#define I2C_SDA_HIGH					do{\
+											GPIO_PinWrite(I2C_MASTER_DATA_GPIO,I2C_MASTER_DATA_GPIO_PIN,1);\
+											__DSB();\
+											__ISB();\
+										}while(0)
+
+#else
 #define I2C_SCL_LOW						GPIO_PinWrite(I2C_MASTER_CLK_GPIO,I2C_MASTER_CLK_GPIO_PIN,0)
 #define I2C_SCL_HIGH					GPIO_PinWrite(I2C_MASTER_CLK_GPIO,I2C_MASTER_CLK_GPIO_PIN,1)
 
 #define I2C_SDA_LOW						GPIO_PinWrite(I2C_MASTER_DATA_GPIO,I2C_MASTER_DATA_GPIO_PIN,0)
 #define I2C_SDA_HIGH					GPIO_PinWrite(I2C_MASTER_DATA_GPIO,I2C_MASTER_DATA_GPIO_PIN,1)
-
+#endif
 
 
 void i2c_master_init(void ){
@@ -69,15 +97,32 @@ static void i2c_internal_delay(int delay_loop){
 }
 
 static void i2c_clock(void ){
+#if USE_DSB_BLOCK
+	I2C_SCL_LOW;
+	i2c_internal_delay(I2C_HOLD_TIME);
+	I2C_SCL_HIGH;
+	i2c_internal_delay(I2C_HOLD_TIME);
+
+#else
+
 	i2c_internal_delay(I2C_HOLD_TIME);
 	I2C_SCL_HIGH;
 	i2c_internal_delay(I2C_HOLD_TIME);
 	I2C_SCL_LOW;
 	i2c_internal_delay(I2C_SETUP_TIME);
+#endif
 
 }
 
 static void i2c_ack(void ){
+#if USE_DSB_BLOCK
+	I2C_SCL_LOW;
+	I2C_SDA_LOW;
+	i2c_internal_delay(I2C_SETUP_TIME);
+	I2C_SCL_HIGH;
+	i2c_internal_delay(I2C_SETUP_TIME);
+#else
+
 	I2C_SDA_LOW;
 	i2c_internal_delay(I2C_SETUP_TIME);
 	I2C_SCL_HIGH;
@@ -90,7 +135,7 @@ static void i2c_ack(void ){
 	//Release CLK Line
 	I2C_SCL_HIGH;
 	i2c_internal_delay(I2C_HOLD_TIME);
-	
+#endif	
 
 }
 
@@ -98,6 +143,16 @@ static void i2c_ack(void ){
 
 
 static void i2c_noack(void ){
+#if USE_DSB_BLOCK
+	I2C_SCL_LOW;
+	I2C_SDA_HIGH;
+	i2c_internal_delay(I2C_HOLD_TIME);
+	//Release CLK Line
+	I2C_SCL_HIGH;
+	i2c_internal_delay(I2C_HOLD_TIME);
+
+#else
+
 	I2C_SDA_HIGH;
 	i2c_internal_delay(I2C_SETUP_TIME);
 	I2C_SCL_HIGH;
@@ -110,12 +165,20 @@ static void i2c_noack(void ){
 	//Release CLK Line
 	I2C_SCL_HIGH;
 	i2c_internal_delay(I2C_HOLD_TIME);
-
+#endif
 
 
 }
 static void i2c_write_bit(uint8_t bitv){
   bitv = (bitv > 0)?1:0;
+
+  #if USE_DSB_BLOCK
+	I2C_SCL_LOW;
+	GPIO_PinWrite(I2C_MASTER_DATA_GPIO,I2C_MASTER_DATA_GPIO_PIN,bitv);
+	i2c_internal_delay(I2C_HOLD_TIME);
+	I2C_SCL_HIGH;
+	i2c_internal_delay(I2C_HOLD_TIME);
+  #else
   I2C_SCL_LOW;
   i2c_internal_delay(I2C_SETUP_TIME);
   GPIO_PinWrite(I2C_MASTER_DATA_GPIO,I2C_MASTER_DATA_GPIO_PIN,bitv);
@@ -123,6 +186,7 @@ static void i2c_write_bit(uint8_t bitv){
   i2c_internal_delay(I2C_HOLD_TIME);
   I2C_SCL_LOW;
   i2c_internal_delay(I2C_SETUP_TIME);
+  #endif
 }
 
 static unsigned char i2c_read_bit(void ){
@@ -130,7 +194,15 @@ static unsigned char i2c_read_bit(void ){
   //i2c_internal_delay(I2C_SETUP_TIME);
   //I2C_SDA_HIGH;//release to idle
   //i2c_internal_delay(I2C_SETUP_TIME);
-  
+#if USE_DSB_BLOCK
+	I2C_SCL_LOW;
+	i2c_internal_delay(I2C_HOLD_TIME);
+
+	I2C_SCL_HIGH;
+	i2c_internal_delay(I2C_SETUP_TIME);
+	unsigned char rb = GPIO_ReadPinInput(I2C_MASTER_DATA_GPIO,I2C_MASTER_DATA_GPIO_PIN);
+	i2c_internal_delay(I2C_SETUP_TIME);
+#else
   I2C_SCL_LOW;
   i2c_internal_delay(I2C_SETUP_TIME);
   
@@ -141,11 +213,15 @@ static unsigned char i2c_read_bit(void ){
   
   I2C_SCL_LOW;
   i2c_internal_delay(I2C_SETUP_TIME);
+#endif
   return rb;
 }
 
 void i2c_start_signal(void ){
-
+#if USE_DSB_BLOCK
+	I2C_SCL_HIGH;
+	I2C_SDA_LOW;
+#else
 	I2C_SCL_HIGH;
 	i2c_internal_delay(I2C_SETUP_TIME);
 	
@@ -153,10 +229,20 @@ void i2c_start_signal(void ){
 	i2c_internal_delay(I2C_SETUP_TIME);
 	I2C_SCL_LOW;
 	i2c_internal_delay(I2C_SETUP_TIME);
+#endif
 }
 
 
-void i2c_stop_signal(void ){
+void i2c_stop_signal(void ){
+#if USE_DSB_BLOCK
+	I2C_SCL_LOW;
+	I2C_SDA_LOW;
+	i2c_internal_delay(I2C_SETUP_TIME);
+	I2C_SCL_HIGH;
+	I2C_SDA_HIGH;
+	i2c_internal_delay(I2C_SETUP_TIME);
+#else
+
   //A LOW-to-HIGH transition of the data line while the clock is HIGH is defined as the STOP condition
   I2C_SCL_LOW;
   i2c_internal_delay(I2C_SETUP_TIME);
@@ -166,14 +252,21 @@ void i2c_stop_signal(void ){
   i2c_internal_delay(I2C_SETUP_TIME);
   I2C_SDA_HIGH;
   i2c_internal_delay(I2C_SETUP_TIME);
+#endif
   
 }
 
 void i2c_back2idle_state(void ){
+#if USE_DSB_BLOCK
+	I2C_SCL_LOW;
+	I2C_SDA_HIGH;
+#else
+
 	I2C_SCL_LOW;
 	i2c_internal_delay(I2C_SETUP_TIME);
 	I2C_SDA_HIGH;
 	i2c_internal_delay(I2C_SETUP_TIME);
+#endif
 }
 
 
@@ -196,8 +289,12 @@ unsigned char i2c_write_byte(unsigned char wv){
 		i2c_write_bit((wv<<loop_cnt)&0x80);
 	}
 	if(wv&0x01){
-		GPIO_PinWrite(I2C_MASTER_DATA_GPIO,I2C_MASTER_DATA_GPIO_PIN,0);//release to idle
+		#if USE_DSB_BLOCK
+		I2C_SDA_LOW;
+		#else
+		I2C_SDA_LOW;
 		i2c_internal_delay(I2C_SETUP_TIME);
+		#endif
 	}
 	//GPIO_PinWrite(I2C_MASTER_DATA_GPIO,I2C_MASTER_DATA_GPIO_PIN,1);//release to idle
   	//i2c_internal_delay(I2C_SETUP_TIME);
