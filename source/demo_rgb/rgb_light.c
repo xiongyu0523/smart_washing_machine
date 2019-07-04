@@ -62,11 +62,11 @@ static rgb_light_example_ctx_t g_rgb_light_ctx;
 
 unsigned char rgb_light_on(void ){
 	unsigned char ret = 1;
-	//uint8_t read_value = 0;
+	uint8_t read_value = 0;
 	//uint8_t pca_ret = pca_read_reg(0,&read_value);
 	//PRINTF("Read reg 0 result %d, read value %d\r\n",pca_ret,read_value);
 	//pca_ret = pca_read_reg(1,&read_value);
-	//PRINTF("Read reg 1 result %d, read value %d\r\n",pca_ret,read_value);
+	///PRINTF("Read reg 1 result %d, read value %d\r\n",pca_ret,read_value);
 	ret = pca_red_value_set(g_rgb_light_ctx.red_value);
 	if(ret != 0){
 
@@ -216,7 +216,18 @@ static int rgb_light_property_set_event_handler(const int devid, const char *req
 
     RGBColor = cJSON_GetObjectItemCaseSensitive(p_root, "RGBColor");
 	if(RGBColor != NULL) {
-        light_rgb_set_hdl(RGBColor->valueint,RGBColor->valueint,RGBColor->valueint);
+		cJSON *redV = cJSON_GetObjectItem(RGBColor,"Red");
+		cJSON *greenV = cJSON_GetObjectItem(RGBColor,"Green");
+		cJSON *blueV = cJSON_GetObjectItem(RGBColor,"Blue");
+		
+		if(!redV||!cJSON_IsNumber(redV)||
+			!greenV||!cJSON_IsNumber(greenV)||
+			!blueV||!cJSON_IsNumber(blueV)){
+
+			HAL_Printf("Invalid RGB vlaue set\r\n");
+		}else{
+       		rgb_light_set_hdl(redV->valueint,RGBColor->valueint,RGBColor->valueint);
+		}
     }
     cJSON_Delete(p_root);
 
